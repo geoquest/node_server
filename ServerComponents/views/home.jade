@@ -2,10 +2,10 @@
   h2 Not Authenticated
   #fb-login.fb_button(style='background-position: left -188px')
     a.fb_button_medium(href='/auth/facebook')
-      img(style='border: 0px', src='http://kevyang.com/uploads/Facebook-Favicon-Glossy.png')
+      img(style='border: 0px', src='http://kevyang.com/uploads/Facebook-Favicon-Glossy.png', width = 50)
   #google-login
     a(href='/auth/google', style='border: 0px')
-      img(style='border: 0px', src='https://www.google.com/favicon.ico')
+      img(style='border: 0px', src='https://www.google.com/favicon.ico', width = 50)
 - else
   h2 Authenticated
   - if (everyauth.facebook)

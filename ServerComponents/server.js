@@ -1,7 +1,6 @@
 var express = require('express')
   , everyauth = require('everyauth')
-  , conf = require('./conf')
-  , everyauthRoot = __dirname + '/..';
+  , conf = require('./conf');
 
 everyauth.debug = true;
 
@@ -61,15 +60,10 @@ var app = express.createServer(
   , express.session({ secret: 'htuayreve'})
   , everyauth.middleware()
 );
-/*
-app.configure( function () {
-  app.set('view engine', 'jade');
-  app.set('views', everyauthRoot + '/example/views');
-});
-*/
+
 app.configure(function() {
   app.set('port', process.env.PORT || 3000)
-  app.set('views', everyauthRoot + '/example/views')
+  app.set('views', 'views')
   app.set('view engine', 'jade')
   app.use(express.favicon())
   app.use(express.logger('dev'))
