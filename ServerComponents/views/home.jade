@@ -1,0 +1,18 @@
+- if (!everyauth.loggedIn)
+  h2 Not Authenticated
+  #fb-login.fb_button(style='background-position: left -188px')
+    a.fb_button_medium(href='/auth/facebook')
+      img(style='border: 0px', src='http://kevyang.com/uploads/Facebook-Favicon-Glossy.png')
+  #google-login
+    a(href='/auth/google', style='border: 0px')
+      img(style='border: 0px', src='https://www.google.com/favicon.ico')
+- else
+  h2 Authenticated
+  - if (everyauth.facebook)
+    h3 Facebook User Data
+    p= JSON.stringify(everyauth.facebook.user)
+  - if (everyauth.google)
+    h3 Google User Data
+    p= JSON.stringify(everyauth.google.user)
+  h3
+    a(href='/logout') Logout
