@@ -94,6 +94,35 @@ function externalAuth(user, callback){
 }
 module.exports.externalAuth = externalAuth;
 
+function insertNewExternalUser(user, fName, lName, link, callback){
+    var result = false;
+    if (user[0]=="_" && user[0] === user[3]){
+        
+        db.REGISTERED.insert(
+                {
+                    firstName:fName,
+                    lastName:lName,
+                    email:link,
+                    user:user, 
+                    password:""
+                },
+                function(err, extUserRegister){
+                    if ( err || !extUserRegister ){
+                        console.log("Error accesing database");
+                    } else { 
+                        console.log("GeoQuest User is now saved in the DB.");
+                        return true;
+                    }
+                    callback(err, result);
+                }
+        );
+    } else {
+        console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
+        callback(err,result);
+    }
+}
+module.exports.insertNewExternalUser = insertNewExternalUser;
+
 /**
  * TODO: Complete JavaDoc...
  * @param user
@@ -126,7 +155,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                                 console.log("Error accesing database");
                             } else { 
                                 console.log("GeoQuest User is now saved in the DB.");
-                                return true;
+                                result = true;
                             }
                             callback(err, result);
                         }

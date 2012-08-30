@@ -46,12 +46,36 @@ db.externalAuth(
             if (checkUserPresence){
                 console.log("NOW LET THE " + tentativeUser[1] + tentativeUser[2] + " LOG IN...");
             } else {
-                db.insertExternalUser(
+                db.insertNewExternalUser(
                         tentativeFBUser,
                         tentativeFBFName,
                         tentativeFBLName,
                         tentativeFBLink,
-                        function(err, insertNewExternalUser){
+                        function(err, insertExternalUser){
+                            console.log("ADDED NEW EXTERNAL USER TO DB");
+                        }
+                );
+            }
+        }
+);
+
+//sample external login
+var tentativeFBUser = "_G+_16787654454171873";
+var tentativeFBFName = "Vasile";
+var tentativeFBLName = "...escu";
+var tentativeFBLink = "http://fatzaCarte.com/vvvvv";
+db.externalAuth(
+        tentativeFBUser,
+        function(err, checkUserPresence){
+            if (checkUserPresence){
+                console.log("NOW LET THE " + tentativeUser[1] + tentativeUser[2] + " LOG IN...");
+            } else {
+                db.insertNewExternalUser(
+                        tentativeFBUser,
+                        tentativeFBFName,
+                        tentativeFBLName,
+                        tentativeFBLink,
+                        function(err, insertExternalUser){
                             console.log("ADDED NEW EXTERNAL USER TO DB");
                         }
                 );
