@@ -58,3 +58,20 @@ db.externalAuth(
             }
         }
 );
+
+//sample GeoQuestUser sign up
+var tentativeUser = "newUsername";
+var tentativeFName = "SomeFN";
+var tentativeLName = "SomeLN";
+var tentativeEmail = "gigel@example.com";
+var tentativePass = "some password";
+db.insertGQUser(
+        tentativeUser,
+        tentativePass,
+        tentativeFName,
+        tentativeLName,
+        tentativeEmail,
+        function(err, insertNewExternalUser){
+            console.log("new user signed up: " + insertNewExternalUser);
+        }
+);

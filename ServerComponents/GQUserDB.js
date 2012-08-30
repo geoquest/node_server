@@ -11,7 +11,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 console.log("Connected to DB!");
 
-private function userAlreadyInDB(user){
+function userAlreadyInDB(user){
     var result = false;
     db.REGISTERED.find(
             {user:user},
@@ -79,9 +79,9 @@ function externalAuth(user, callback){
                     } else { 
                         if ( extAuth.length > 0 ){
                             result = true;
-                            console.log("ExternalLoginUser Recognized!");
+                            console.log("External Login User Recognized!");
                         } else {
-                            console.log("ExternalLoginUser never logged in before!");
+                            console.log("External Login User never logged in before!");
                         }
                     }
                     callback(err, result);
@@ -122,8 +122,8 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         if ( err || !GQUserRegister ){
                             console.log("Error accesing database");
                         } else { 
-                            console.log("ExternalLoginUser is now saved in the DB.");
-                            
+                            console.log("GeoQuest User is now saved in the DB.");
+                            return true;
                         }
                         callback(err, result);
                     }
