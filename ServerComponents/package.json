@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "everyauth": "https://github.com/akinsella/everyauth/tarball/master",
+    "ejs": "*",
     "request": "2.9.x",
     "connect": ">=1 <2",
     "openid": ">=0.2.0",
