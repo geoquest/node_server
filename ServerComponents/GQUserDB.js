@@ -11,7 +11,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 console.log("Connected to DB!");
 
-function userAlreadyInDB(user){
+function userAlreadyInDB(user, callback){
     var result = false;
     db.REGISTERED.find(
             {user:user},
@@ -26,9 +26,9 @@ function userAlreadyInDB(user){
                         result = true;
                     }
                 }
+                callback(result);
             }
     );
-    return result;
 }
 
 /**
@@ -94,6 +94,35 @@ function externalAuth(user, callback){
 }
 module.exports.externalAuth = externalAuth;
 
+function insertNewExternalUser(user, fName, lName, link, callback){
+    var result = false;
+    if (user[0]=="_" && user[0] === user[3]){
+        
+        db.REGISTERED.insert(
+                {
+                    firstName:fName,
+                    lastName:lName,
+                    email:link,
+                    user:user, 
+                    password:""
+                },
+                function(err, extUserRegister){
+                    if ( err || !extUserRegister ){
+                        console.log("Error accesing database");
+                    } else { 
+                        console.log("GeoQuest User is now saved in the DB.");
+                        return true;
+                    }
+                    callback(err, result);
+                }
+        );
+    } else {
+        console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
+        callback(err,result);
+    }
+}
+module.exports.insertNewExternalUser = insertNewExternalUser;
+
 /**
  * TODO: Complete JavaDoc...
  * @param user
@@ -109,26 +138,31 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
         callback(err,result);
     } else {
-        if (!userAlreadyInDB(user)){
-            db.REGISTERED.insert(
-                    {
-                        firstName:fName,
-                        lastName:lName,
-                        email:email,
-                        user:user, 
-                        password:pass
-                    },
-                    function(err, GQUserRegister){
-                        if ( err || !GQUserRegister ){
-                            console.log("Error accesing database");
-                        } else { 
-                            console.log("GeoQuest User is now saved in the DB.");
-                            return true;
+        
+        userAlreadyInDB(user, function(alreadyInDBresult){
+            
+            if(!alreadyInDBresult){
+                db.REGISTERED.insert(
+                        {
+                            firstName:fName,
+                            lastName:lName,
+                            email:email,
+                            user:user, 
+                            password:pass
+                        },
+                        function(err, GQUserRegister){
+                            if ( err || !GQUserRegister ){
+                                console.log("Error accesing database");
+                            } else { 
+                                console.log("GeoQuest User is now saved in the DB.");
+                                result = true;
+                            }
+                            callback(err, result);
                         }
-                        callback(err, result);
-                    }
-            );
-        }
+                );
+            }
+            
+        });
     }
 }
 module.exports.insertGQUser = insertGQUser;
