@@ -1,6 +1,7 @@
 var express = require('express')
   , everyauth = require('everyauth')
-  , conf = require('./conf');
+  , conf = require('./conf')
+  , userDB = require('./GQUserDB');
 
 everyauth.debug = true;
 
@@ -14,9 +15,46 @@ function addUser (source, sourceUser) {
     user = sourceUser = source;
     user.id = ++nextUserId;
     return usersById[nextUserId] = user;
-  } else { // non-password-based
+  } else { // non-password-based (G+/Facebook)
+	if (source == 'facebook'){
+		var userEAuth="_FB_" + sourceUser.id;
+		
+		//\todo
+		//Here first do a query on the DB to check if userEAuth exists
+		
+		//if not do a db insertion
+		console.log(userEAuth);
+	    console.log(sourceUser.id);
+	    console.log(sourceUser.first_name);
+	    console.log(sourceUser.last_name);
+	} 
+	else if(source == 'google'){
+		var userEAuth="_G+_" + sourceUser.id;
+		
+		//\todo
+		//Here first do a query on the DB to check if userEAuth exists
+		
+		//if not do a db insertion
+		
+		console.log(userEAuth);
+	    console.log(sourceUser.id);
+	    console.log(sourceUser.given_name);
+	    console.log(sourceUser.family_name);
+	    
+	    
+	    
+	}
+	else{
+		//error
+	}
+	  
     user = usersById[++nextUserId] = {id: nextUserId};
     user[source] = sourceUser;
+    
+    console.log('Now in addUser');
+
+    
+   
   }
   return user;
 }
@@ -135,6 +173,10 @@ app.get('/login/geoquestUser', function (req, res) {
 	var supplies = new Array("name");
 	res.render('index.ejs', { title: 'Login' , supplies: supplies});
 });
+
+app.get('/signup/geoquestUser', require('./routes/signup').signup);
+
+app.post('/signup', require('./routes/signup').handleSignupPost);
 
 everyauth.helpExpress(app);
 

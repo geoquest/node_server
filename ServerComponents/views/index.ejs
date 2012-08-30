@@ -1,13 +1,27 @@
 <html>
-<form action="login/geoquestUser">
+
+<form name="loginform" action="login/geoquestUser">
 <h1>Log In</h1>
 <label>Username</label>
-<input></input> <br>
+<input type='text' name='username'/> <br>
 
 <label>Password</label>
-<input></input>
-<button type= "SUbMIT" >Log In</button>
+<input type='text' name='password'/> <br>
+
+<a href="javascript: submitform()">Login</a>
+
+<!--   <button type= "SUbMIT" >Log In</button>  -->
+
 </form>
+
+<script type="text/javascript">
+
+function submitform()
+{
+  document.loginform.submit();
+}
+</script>
+
 
 <hr>
 <a href='/auth/google'>
