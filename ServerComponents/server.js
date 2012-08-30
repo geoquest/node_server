@@ -137,23 +137,9 @@ app.get('/login/geoquestUser', function (req, res) {
 	res.render('index.ejs', { title: 'Login' , supplies: supplies});
 });
 
-app.get('/signup/geoquestUser', function (req, res) {
-    res.render('signup.ejs');    
-});
+app.get('/signup/geoquestUser', require('./routes/signup').signup);
 
-app.post('/signup', function (req, res){
-    userDB.insertGQUser(req.param('username'),
-                        req.param('password'),
-                        req.param('fName'),
-                        req.param('lName'),
-                        req.param('email'),
-                        function(err, result){
-        if(result){
-            console.log("SignUp for a new GQUser done");
-        }
-    });
-    console.log( "Data user:" + req.param('username') + "password" + req.param('password', null) + "email" + req.param('email', null));
-});
+app.post('/signup', require('./routes/signup').handleSignupPost);
 
 everyauth.helpExpress(app);
 
