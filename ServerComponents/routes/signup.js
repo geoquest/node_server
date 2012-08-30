@@ -17,8 +17,13 @@ function handleSignupPost(req, res){
             req.param('lName'),
             req.param('email'),
             function(err, result){
+                console.log(result);
                 if(result){
                     console.log("SignUp for a new GQUser done");
+                    res.render('signupResult.ejs', { title: 'SignUp Succeed.', result: 'Hi, ' +  req.param('fName') + '!'});
+                } else{
+                    console.log("SignUp failed.");
+                    res.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'Please retry.'});                    
                 }
             }
     );

@@ -26,7 +26,7 @@ function userAlreadyInDB(user, callback){
                         result = true;
                     }
                 }
-                callback(result);
+                callback(err, result);
             }
     );
 }
@@ -139,7 +139,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         callback(err,result);
     } else {
         
-        userAlreadyInDB(user, function(alreadyInDBresult){
+        userAlreadyInDB(user, function(err, alreadyInDBresult){
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -161,9 +161,11 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         }
                 );
             }
-            
+        callback(err, result);
         });
+
     }
+    
 }
 module.exports.insertGQUser = insertGQUser;
 
