@@ -39,6 +39,7 @@ function userAlreadyInDB(user, callback){
  */
 function authGQUser(user, pass, callback){
     var result = false;
+    var fName = "";
     if (user[0]=="_"){
         console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
         callback(err,result);
@@ -51,12 +52,14 @@ function authGQUser(user, pass, callback){
                     } else { 
                         if ( loginGQUser.length > 0 ){
                             result = true;
+                            fName = loginGQUser[0]["firstName"];
+                            //console.log(fName);
                             console.log("User Authenticated!");
                         } else {
                             console.log("User auth REJECTED!");
                         }
                     }
-                    callback(err, result);
+                    callback(err, result, fName);
                 }
         );
     }

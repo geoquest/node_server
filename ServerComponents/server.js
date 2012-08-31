@@ -174,6 +174,7 @@ app.get('/', require('./routes/login').loginWithFbGp);
 app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
 app.get('/signup/geoquestUser', require('./routes/signup').signup);
 app.post('/signup', require('./routes/signup').handleSignupPost);
+app.post('/login', require('./routes/login').handleLoginPost);
 
 //everyauth.helpExpress(app); //deprecated. Now not needed
 
