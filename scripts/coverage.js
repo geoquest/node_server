@@ -1,13 +1,3 @@
-//instrument.bat & 
-//rmdir /s /q "build" & mkdir build & 
-//node ../node_modules/mocha/bin/mocha ../tests --reporter html-cov > build/coverage.html & 
-//restore.bat
-
-
-//require("./instrument");
-
-//require("./restore");
-
 // Instrument the source files.
 var process = require('child_process');
 // Instrument source files...
