@@ -43,8 +43,10 @@ var tentativeFBLink = "http://fatzaCarte.com/gigel";
 db.externalAuth(
         tentativeFBUser,
         function(err, checkUserPresence){
+        	console.log("#############################################################################");
+
             if (checkUserPresence){
-                console.log("NOW LET THE " + tentativeUser[1] + tentativeUser[2] + " LOG IN...");
+                console.log("NOW LET THE " + tentativeFBUser[1] + tentativeFBUser[2] + " LOG IN...");
             } else {
                 db.insertNewExternalUser(
                         tentativeFBUser,
@@ -60,21 +62,21 @@ db.externalAuth(
 );
 
 //sample external login
-var tentativeFBUser = "_G+_16787654454171873";
-var tentativeFBFName = "Vasile";
-var tentativeFBLName = "...escu";
-var tentativeFBLink = "http://fatzaCarte.com/vvvvv";
+var tentativeGPUser = "_G+_16787654454171873";
+var tentativeGPFName = "Vasile";
+var tentativeGPLName = "...escu";
+var tentativeGPLink = "http://fatzaCarte.com/vvvvv";
 db.externalAuth(
-        tentativeFBUser,
+        tentativeGPUser,
         function(err, checkUserPresence){
             if (checkUserPresence){
-                console.log("NOW LET THE " + tentativeUser[1] + tentativeUser[2] + " LOG IN...");
+                console.log("NOW LET THE " + tentativeGPUser[1] + tentativeGPUser[2] + " LOG IN...");
             } else {
                 db.insertNewExternalUser(
-                        tentativeFBUser,
-                        tentativeFBFName,
-                        tentativeFBLName,
-                        tentativeFBLink,
+                        tentativeGPUser,
+                        tentativeGPFName,
+                        tentativeGPLName,
+                        tentativeGPLink,
                         function(err, insertExternalUser){
                             console.log("ADDED NEW EXTERNAL USER TO DB");
                         }
@@ -95,7 +97,7 @@ db.insertGQUser(
         tentativeFName,
         tentativeLName,
         tentativeEmail,
-        function(err, insertNewExternalUser){
-            console.log("new user signed up: " + insertNewExternalUser);
+        function(err, insertNewInternalUser){
+            console.log("new user signed up: " + insertNewInternalUser);
         }
 );
