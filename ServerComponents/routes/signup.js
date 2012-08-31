@@ -17,13 +17,16 @@ function handleSignupPost(req, res){
             req.param('lName'),
             req.param('email'),
             function(err, result){
+                console.log(result);
                 if(result){
                     console.log("SignUp for a new GQUser done");
+                    res.render('signupResult.ejs', { title: 'SignUp Succeed.', result: 'Hi, ' +  req.param('fName') + '!'});
+                } else{
+                    console.log("SignUp failed.");
+                    res.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'Please retry.'});                    
                 }
             }
     );
     
     console.log( "Data user:" + req.param('username') + "password" + req.param('password', null) + "email" + req.param('email', null));
-    
-    res.render('index.ejs', { title: 'Log In' , msg: 'user ' + req.param('username') + ' signed up successfully. Please login now.'});
 }
