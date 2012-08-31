@@ -1,7 +1,17 @@
 <html>
+<head>
+
+<!-- Dirty hack to avoid FB appending #_=_ when redirecting url -->
+<script type="text/javascript">
+if (window.location.hash == '#_=_')window.location.hash = '';
+</script>
+
+</head>
+
 
 <form name="loginform" action="login/geoquestUser">
 <h1>Log In</h1>
+<h3> <%= msg %> </h3>
 <label>Username</label>
 <input type='text' name='username'/> <br>
 
@@ -10,7 +20,7 @@
 
 <a href="javascript: submitform()">Login</a>
 
-<!--   <button type= "SUbMIT" >Log In</button>  -->
+<!--   <button type= "Submit" >Log In</button>  -->
 
 </form>
 

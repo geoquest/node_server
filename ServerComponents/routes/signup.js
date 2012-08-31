@@ -24,4 +24,6 @@ function handleSignupPost(req, res){
     );
     
     console.log( "Data user:" + req.param('username') + "password" + req.param('password', null) + "email" + req.param('email', null));
+    
+    res.render('index.ejs', { title: 'Log In' , msg: 'user ' + req.param('username') + ' signed up successfully. Please login now.'});
 }
