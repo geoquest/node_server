@@ -170,30 +170,9 @@ function postEveryauthMiddlewareHack() {
   };
 };
 
-app.get('/', function (req, res) {
-	var supplies = new Array("name");
-	if(!req.user){
-		res.render('index.ejs', { title: 'Login' , msg: 'login using your GeoQuest account or through FB/Google'});
-	}
-	else{
-		console.log(req.user);
-		if(req.user.facebook){
-	  	res.render('index.ejs', { title: 'Login' , msg: 'logged in through facebook'});
-	  }
-	  if(req.user.google){
-	  	res.render('index.ejs', { title: 'Login' , msg: 'logged in through google'});
-	  }
-	}
-});
-
-app.get('/login/geoquestUser', function (req, res) {
-	var supplies = new Array("name");
-	res.render('index.ejs', { title: 'Login' , msg: 'logged in as GeoQuest user'});
-});
-
-
+app.get('/', require('./routes/login').loginWithFbGp);
+app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
 app.get('/signup/geoquestUser', require('./routes/signup').signup);
-
 app.post('/signup', require('./routes/signup').handleSignupPost);
 
 //everyauth.helpExpress(app); //deprecated. Now not needed
