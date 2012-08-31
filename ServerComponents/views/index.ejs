@@ -35,7 +35,7 @@ if (window.location.hash == '#_=_')window.location.hash = '';
                     <input name="password" id="textinput2" placeholder="" value="" type="password">
                 </fieldset>
             </div>
-            <input data-inline="true" value="Submit" type="submit">
+            <input data-inline="true" value="Login" type="submit">
         </form>
         Not a user yet? <a href='/signup/geoquestUser/'> Sign Up to GeoQuest now!</a>
     </div>
@@ -50,13 +50,16 @@ function submitform()
 
 
 <hr />
+<div data-role="content" style="padding: 15px">
+<h3>Or Login via &nbsp
 <a href='/auth/google'>
-	<img alt="Google Login" src="./views/images/GoogleLogo.png"/>
-</a>
+	<img alt="Google Login" src="./views/images/GoogleLogo.png"/> 
+</a>&nbsp
 <a href='/auth/facebook'>
-	<img alt="Facebook Login" src="./views/images/FacebookLogo.png"/>
+	<img alt="Facebook Login" src="./views/images/FacebookLogo.png"/> 
 </a>
-
+</h3>
+</div>
 
 </body>
 
