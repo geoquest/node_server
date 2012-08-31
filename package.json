@@ -1,0 +1,13 @@
+{
+  "name": "node_server"
+  , "version": "0.0.1"
+  , "scripts": { 
+      "test": "node node_modules/mocha/bin/mocha tests",
+      "coverage": "node scripts/coverage.js"
+  }
+  , "description": "Geoquest server user management application."
+  , "devDependencies": {
+      "mocha": "*",
+      "rimraf": "*"
+  }
+}

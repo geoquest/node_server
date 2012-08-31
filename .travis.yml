@@ -1,4 +1,24 @@
 language: node_js
+
 node_js:
   - 0.8
+
 services: mongodb
+
+env:
+  - TYPE=JavaScript
+
+before_install:
+  - CWD=`pwd`
+  - echo $CWD
+  - chmod -R +x $CWD/scripts
+  - sh $CWD/scripts/$TYPE/before_install.sh
+
+before_script:
+  - sh $CWD/scripts/$TYPE/before_script.sh
+
+script:
+  - sh $CWD/scripts/$TYPE/script.sh
+
+after_script:
+  - sh $CWD/scripts/$TYPE/after_script.sh
