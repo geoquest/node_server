@@ -161,7 +161,9 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         }
                 );
             }
-        callback(err, result);
+            else {
+                callback(err, result);
+            }
         });
 
     }
