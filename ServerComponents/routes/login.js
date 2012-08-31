@@ -15,12 +15,16 @@ function loginWithFbGp(req, res) {
     }
     else{
         console.log(req.user);
+        
+        if(req.user.facebook && req.user.google){
+            res.render('index.ejs', { title: 'Log In' , msg: 'logged in.'});
+        }
         if(req.user.facebook){
-        res.render('index.ejs', { title: 'Log In' , msg: 'logged in through facebook'});
-      }
-      if(req.user.google){
-        res.render('index.ejs', { title: 'Log In' , msg: 'logged in through google'});
-      }
+            res.render('index.ejs', { title: 'Log In' , msg: 'logged in through facebook'});
+        }
+        if(req.user.google){
+            res.render('index.ejs', { title: 'Log In' , msg: 'logged in through google'});
+        }
     }
     
 }
