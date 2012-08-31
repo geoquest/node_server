@@ -26,7 +26,7 @@ function userAlreadyInDB(user, callback){
                         result = true;
                     }
                 }
-                callback(result);
+                callback(err, result);
             }
     );
 }
@@ -73,11 +73,11 @@ function externalAuth(user, callback){
     if (user[0]=="_" && user[0] === user[3]){
         db.REGISTERED.find(
                 {user:user, password:""},
-                function(err, extAuth){
-                    if ( err || !extAuth ){
-                        console.log("Error accesing database");
+                function(err, res){
+                    if ( err || !res ){
+                        console.log("Error accessing database");  
                     } else { 
-                        if ( extAuth.length > 0 ){
+                        if ( res.length > 0 ){
                             result = true;
                             console.log("External Login User Recognized!");
                         } else {
@@ -110,7 +110,7 @@ function insertNewExternalUser(user, fName, lName, link, callback){
                     if ( err || !extUserRegister ){
                         console.log("Error accesing database");
                     } else { 
-                        console.log("GeoQuest User is now saved in the DB.");
+                        console.log("EXTERNAL User is now saved in the DB.");
                         return true;
                     }
                     callback(err, result);
@@ -139,7 +139,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         callback(err,result);
     } else {
         
-        userAlreadyInDB(user, function(alreadyInDBresult){
+        userAlreadyInDB(user, function(err, alreadyInDBresult){
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -161,9 +161,13 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         }
                 );
             }
-            
+            else {
+                callback(err, result);
+            }
         });
+
     }
+    
 }
 module.exports.insertGQUser = insertGQUser;
 
