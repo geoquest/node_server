@@ -21,11 +21,13 @@ function addUser (source, sourceUser) {
 			var userEAuth="_FB_" + sourceUser.id;
 		  var fNameEAuth = sourceUser.first_name;
 		  var lNameEAuth = sourceUser.last_name;
+		  var linkEAuth = sourceUser.link;
 		} 
 		else if(source == 'google'){
 			var userEAuth="_G+_" + sourceUser.id;
 			var fNameEAuth = sourceUser.given_name;
-		  var lNameEAuth = sourceUser.family_name;
+		    var lNameEAuth = sourceUser.family_name;
+		    var linkEAuth = sourceUser.link;
 		}
 		else{//neither FB/G+ nor login
 			//error
@@ -46,7 +48,7 @@ function addUser (source, sourceUser) {
 				}						
 				else{
 				  //not so sure about this coding style...
-					require('.//GQUserDB').insertNewExternalUser(userEAuth, fNameEAuth, lNameEAuth, 'no_e-mail_from_Google_or_FB@now', function(err, result){
+					require('.//GQUserDB').insertNewExternalUser(userEAuth, fNameEAuth, lNameEAuth, linkEAuth, function(err, result){
 						if(err){
 							return false;
 						}
