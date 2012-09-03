@@ -8,6 +8,8 @@ var databaseUrl = "localhost:27017/test"; // "username:password@example.com/mydb
 //use db.getName() to get the databse name. Here it is "test" (on pool-c-03)
 var collections = ["REGISTERED"]; //array of table names
 var db = require("mongojs").connect(databaseUrl, collections);
+var crypto = require('crypto');
+var salt = '1@#4%^78()';
 
 console.log("Connected to DB!");
 
@@ -44,8 +46,10 @@ function authGQUser(user, pass, callback){
         console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
         callback(err,result);
     } else {
+        
+        var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
         db.REGISTERED.find(
-                { user:user, password:pass }, 
+                { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
                     if ( err || !loginGQUser ){
                         console.log("Error accesing database");
@@ -144,6 +148,8 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
             
+            var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
+            
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
                         {
@@ -151,7 +157,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                             lastName:lName,
                             email:email,
                             user:user, 
-                            password:pass
+                            password:encryptedPW
                         },
                         function(err, GQUserRegister){
                             if ( err || !GQUserRegister ){
