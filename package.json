@@ -8,6 +8,10 @@
   , "description": "Geoquest server user management application."
   , "devDependencies": {
       "mocha": "*",
-      "rimraf": "*"
+      "rimraf": "*",
+      "mongojs": "*",
+      "express": "*",
+      "ejs": "*",
+      "everyauth": "*"
   }
 }
