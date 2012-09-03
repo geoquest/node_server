@@ -53,6 +53,7 @@ function authGQUser(user, pass, callback){
                 function( err, loginGQUser ){
                     if ( err || !loginGQUser ){
                         console.log("Error accesing database");
+                        callback(err, false, "");
                     } else { 
                         if ( loginGQUser.length > 0 ){
                             result = true;
@@ -60,6 +61,7 @@ function authGQUser(user, pass, callback){
                             //console.log(fName);
                             console.log("User Authenticated!");
                         } else {
+                        	result = false;
                             console.log("User auth REJECTED!");
                         }
                     }
