@@ -10,5 +10,10 @@
  */
 
 exports.class = function() {
+	this.username = null;
+	this.password = null;
+	this.firstname = null;
+	this.lastname = null;
+	this.email = null;
 	
 }
