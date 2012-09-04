@@ -12,6 +12,7 @@
       "express": "*",
       "everyauth": "*",
       "mongojs": "*",
-      "ejs": "*"
+      "ejs": "*",
+      "validator": "*"
   }
 }
