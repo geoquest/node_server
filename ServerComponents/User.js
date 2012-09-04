@@ -175,6 +175,10 @@ User.prototype.getPassword = function()
  */
 User.prototype.hasPassword = function(rawPassword)
 {
+	if (this._password === null) {
+		// No password is defined for this user.
+		return false;
+	}
 	var salt = this._password.substr(0, 32);
 	var hashedPassword = this._hashPassword(rawPassword, salt);
 	return hashedPassword === this._password;
