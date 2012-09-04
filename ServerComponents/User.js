@@ -198,7 +198,7 @@ User.prototype.hasPassword = function(rawPassword)
  */
 User.prototype.setFirstname = function(firstname)
 {
-	
+	this._firstname = firstname;
 };
 
 /**
@@ -208,7 +208,7 @@ User.prototype.setFirstname = function(firstname)
  */
 User.prototype.getFirstname = function()
 {
-	
+	return this._firstname;
 };
 
 /**
@@ -218,7 +218,7 @@ User.prototype.getFirstname = function()
  */
 User.prototype.setLastname = function(lastname)
 {
-	
+	this._lastname = lastname;
 };
 
 /**
@@ -228,7 +228,7 @@ User.prototype.setLastname = function(lastname)
  */
 User.prototype.getLastname = function()
 {
-	
+	return this._lastname;
 };
 
 /**
@@ -242,6 +242,7 @@ User.prototype.setEmail = function(email)
 	if (!check(email).isEmail()) {
 		throw new Error(email + " is not a valid email address.");
 	}
+	this._email = email;
 };
 
 /**
@@ -251,7 +252,7 @@ User.prototype.setEmail = function(email)
  */
 User.prototype.getEmail = function()
 {
-	
+	return this._email;
 };
 
 exports.class = User;
