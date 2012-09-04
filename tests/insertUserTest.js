@@ -96,5 +96,36 @@ describe('Testing user insertions: GQUserDB', function(){
         );
     });
 
+    it('Test successful DB connection. err should be null!', function(done){
+        var tentativeUser = "_UserName00";
+        var tentativePass = "whatever password";
+        var tentativeFName = "First Name";
+        var tentativeLName = "Last Name";
+        var tentativeEmail = "someone@example.com";
+
+        //now the test starts
+        assert.doesNotThrow(function(){
+            db.dropCollection();
+        });
+        
+        assert.doesNotThrow(function(){
+            db.createCollection();
+        });
+
+        assert.doesNotThrow(function(){
+                db.insertGQUser(
+                    tentativeUser,
+                    tentativePass,
+                    tentativeFName,
+                    tentativeLName,
+                    tentativeEmail,
+                    function(err, insertUnderscoreUser){
+                        assert.equal(null, err);
+                        done();
+                    }
+                );
+        });
+    });
+
   });
 });
