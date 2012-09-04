@@ -168,6 +168,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         function(err, GQUserRegister){
                             if ( err || !GQUserRegister ){
                                 console.log("Error accesing database");
+                                throw err;
                             } else { 
                                 console.log("GeoQuest User is now saved in the DB.");
                                 result = true;
@@ -177,6 +178,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                 );
             }
             else {
+                //returns false (because the user was already found in the database)
                 callback(err, result);
             }
         });
