@@ -41,5 +41,6 @@ describe('User', function() {
     			user.setLoginType('Invalid');
     		});
     	});
+    	
     });
 });

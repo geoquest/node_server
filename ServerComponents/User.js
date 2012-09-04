@@ -65,6 +65,12 @@ User = function()
 	 */
 	this._email = null;
 	
+	/**
+	 * List of valid Login Types
+	 * 
+	 * @var {String[]}
+	 */
+	this._validLoginTypes = ["Facebook", "Google", "GeoQuest"];	
 };
 
 /**
@@ -74,6 +80,9 @@ User = function()
  */
 User.prototype.setLoginType = function(type)
 {
+	if(this._validLoginTypes.indexOf(type) === -1) {
+		throw type + " is an invalid Login Type.";
+	}		
 	this._loginType = type;
 };
 
