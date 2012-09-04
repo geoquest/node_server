@@ -64,6 +64,9 @@ describe('User', function() {
 			user.setPassword('secret');
     		assert.ok(user.hasPassword('secret') === true);
         });
+		it('returns false if no password is available', function() {
+			assert.ok(user.hasPassword('any') === false);
+		});
     });
     
     describe('getFirstname', function() {
