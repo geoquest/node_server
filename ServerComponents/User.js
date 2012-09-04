@@ -153,7 +153,14 @@ User.prototype._hashPassword = function(rawPassword, salt)
 		// A fixed application salt is used in this step.
 		salt = crypto.createHmac('md5', "3hfjkgasfg%$jh%").update(salt).digest('hex');
 	}
-	var hashedPassword = crypto.createHmac('sha512', salt).update(rawPassword).digest('hex');
+	// Hash the password multiple times.
+	// That increases the time that is needed to create the hash and slows
+	// down bruteforce attacks against the user database, but it does not really 
+	// affect a single user on login.
+	var hashedPassword = rawPassword;
+	for (var i = 0; i < 1000; i++) {
+		hashedPassword = crypto.createHmac('sha512', salt).update(hashedPassword).digest('hex');
+	}
 	return salt + hashedPassword;
 };
 
