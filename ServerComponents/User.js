@@ -128,6 +128,17 @@ User.prototype.getPassword = function()
 };
 
 /**
+ * Checks if the user has the provided password.
+ * 
+ * @param {String} rawPassword
+ * @return {boolean} True if the password is correct, false otherwise.
+ */
+User.prototype.hasPassword = function(rawPassword)
+{
+	
+};
+
+/**
  * Sets the firstname.
  * 
  * @param {String} firstname
