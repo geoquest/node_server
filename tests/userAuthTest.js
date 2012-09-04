@@ -22,9 +22,7 @@ describe('User Login Authentication: ', function(){
     	        tentativeUser, 
     	        tentativePass, 
     	        function(err, authSuccessful, plm){
-    	            // if(err) throw err
     	            assert.equal(true, authSuccessful);
-    	            //if(!authSuccessful) throw "Not authenticated!";
                     done();    	
     	        }
     	 )
@@ -49,9 +47,7 @@ describe('User Login Authentication: ', function(){
     	        tentativeUser, 
     	        wrongPass, 
     	        function(err, authSuccessful, plm){
-    	            // if(err) throw err
     	            assert.equal(false, authSuccessful);
-    	            //if(!authSuccessful) throw "Not authenticated!";
                     done();    	
     	        }
     	 )	 
@@ -76,10 +72,7 @@ describe('User Login Authentication: ', function(){
     			nonExistUser, 
     			tentativePass, 
     	        function(err, authSuccessful, plm){
-    	            
-    	            // if(err) throw err
     	            assert.equal(false, authSuccessful);
-    	            //if(!authSuccessful) throw "Not authenticated!";
                     done();    	
     	        }
     	 )	 
@@ -87,7 +80,7 @@ describe('User Login Authentication: ', function(){
 
     
     
-    it('Should return false when log in as GQ User with password length < 6', function(done){
+    it('Should return false when log in as with password length < 6', function(done){
 
     	var tentativeUser = "UserName00";
     	var tentativePass = "short";
@@ -105,17 +98,39 @@ describe('User Login Authentication: ', function(){
     			tentativeUser, 
     			tentativePass, 
     	        function(err, authSuccessful, plm){
-        	            // if(err) throw err
     	            assert.equal(false, authSuccessful);
-    	            //if(!authSuccessful) throw "Not authenticated!";
                     done();    	
     	        }
     	 )	 
     });
     
-    it('Should return false when log in as GQ User with FB authenticated account like \"_FB_xxxxxxxxx\"', function(done){
+    it('Should return false when log in as FB User with FB authenticated account like \"_FB_xxxxxxxxx\"', function(done){
 
     	var tentativeUser = "_FB_1234567989";
+    	var tentativePass = "";
+    	
+    	//before we test the authentication, we have to insert that user manually
+    	//\question not sure if that follows the correct paradigm
+    	
+    	db.dropCollection();
+    	db.createCollection();
+    	db.addTestingUserEntry("First Name","Last Name","someone@example.com",tentativeUser, tentativePass);
+    	
+    	//now the test starts
+    	//expect authSuccessful == true
+    	db.authGQUser(
+    			tentativeUser, 
+    			tentativePass, 
+    	        function(err, authSuccessful, plm){
+    	            assert.equal(false, authSuccessful);
+                    done();    	
+    	        }
+    	 )	 
+    });
+    
+    it('Should return false when log in as GQ User with G+ authenticated account like \"_G+_xxxxxxxxx\"', function(done){
+
+    	var tentativeUser = "_G+_1234567989";
     	var tentativePass = "";
     	
     	//before we test the authentication, we have to insert that user manually
@@ -139,5 +154,9 @@ describe('User Login Authentication: ', function(){
     	 )	 
     });
     
+  });  
+  describe('Login as GQUser (authGQUser(user, pass, callback()))', function(){
+	  
+  
   });
 });

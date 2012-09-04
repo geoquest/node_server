@@ -109,25 +109,35 @@ module.exports.externalAuth = externalAuth;
 function insertNewExternalUser(user, fName, lName, link, callback){
     var result = false;
     if (user[0]=="_" && user[0] === user[3]){
-        
-        db.REGISTERED.insert(
-                {
-                    firstName:fName,
-                    lastName:lName,
-                    email:link,
-                    user:user, 
-                    password:""
-                },
-                function(err, extUserRegister){
-                    if ( err || !extUserRegister ){
-                        console.log("Error accesing database");
-                    } else { 
-                        console.log("EXTERNAL User is now saved in the DB.");
-                        return true;
-                    }
-                    callback(err, result);
-                }
-        );
+
+    	userAlreadyInDB(user, function(err, alreadyInDBresult){
+    		
+    		if(!alreadyInDBresult){
+		        db.REGISTERED.insert(
+		                {
+		                    firstName:fName,
+		                    lastName:lName,
+		                    email:link,
+		                    user:user, 
+		                    password:""
+		                },
+		                function(err, extUserRegister){
+		                    if ( err || !extUserRegister ){
+		                        //console.log("Error accesing database");
+		                    } else { 
+		                        //console.log("EXTERNAL User is now saved in the DB.");
+		                        return true;
+		                    }
+		                    callback(err, result);
+		                }
+		        );
+	        } else {
+	        	//ExtUser already in DB
+	        	callback(err, result);
+	        }
+    	});
+    	
+
     } else {
         console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
         callback(err,result);

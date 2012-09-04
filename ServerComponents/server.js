@@ -34,43 +34,25 @@ function addUser (source, sourceUser) {
 		}
 		
 		//not so sure about this coding style...
-    require('.//GQUserDB').externalAuth(userEAuth, function(err, result){
+		
+		userDB.insertNewExternalUser(userEAuth, fNameEAuth, lNameEAuth, linkEAuth, function(err, result){
 			if(err){
-				res.render('index.ejs', { title: 'Login' , msg: 'login error'});
+				return false;
 			}
 			else{
 				if(result){
-				  //existing FB/G+ user
-				  //\todo
-					//some thread management here to maintain the connection state?
-					
+					//FB/G+ user added
 					return true;
-				}						
+					//\todo
+					//some thread management here to maintain the connection state?
+				}
 				else{
-				  //not so sure about this coding style...
-					require('.//GQUserDB').insertNewExternalUser(userEAuth, fNameEAuth, lNameEAuth, linkEAuth, function(err, result){
-						if(err){
-							return false;
-						}
-						else{
-							if(result){
-								//FB/G+ user added
-								return true;
-								//\todo
-								//some thread management here to maintain the connection state?
-								
-							}
-							else{
-								return false;
-							}
-						}
-					});
+					return false;
 				}
 			}
-		});  
-		
+		});			
 		//not sure about this 2 lines...
-		user = usersById[++nextUserId] = {id: nextUserId};
+	user = usersById[++nextUserId] = {id: nextUserId};
     user[source] = sourceUser;
    
   }
