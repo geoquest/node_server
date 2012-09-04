@@ -4,8 +4,8 @@
  * 
  * Create a new User instance:
  * <code>
- * var type = require("User");
- * var newUser = new type.class();
+ * var User = require("User");
+ * var newUser = new User.class();
  * </code>
  */
 
