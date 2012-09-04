@@ -1,18 +1,10 @@
-/**
- * The server code skeleton. 
- */
-
-
-
-var databaseUrl = "localhost:27017/test"; // "username:password@example.com/mydb"
-//use db.getName() to get the databse name. Here it is "test" (on pool-c-03)
-var collections = ["REGISTERED"]; //array of table names
-var db = require("mongojs").connect(databaseUrl, collections);
+var dbconf = require('./dbconf');
 var crypto = require('crypto');
-var salt = '1@#4%^78()';
 
-console.log("Connected to DB!");
+var db = require("mongojs").connect(dbconf.url, dbconf.collections);
 
+// for local use only (aka PRIVATE)
+// author: RB
 function userAlreadyInDB(user, callback){
     var result = false;
     db.REGISTERED.find(
@@ -35,6 +27,7 @@ function userAlreadyInDB(user, callback){
 
 /**
  * Authenticate GeoQuest User ... TODO: JavaDoc...
+ * author: RB
  * @param user
  * @param pass
  * @param callback
@@ -42,17 +35,18 @@ function userAlreadyInDB(user, callback){
 function authGQUser(user, pass, callback){
     var result = false;
     var fName = "";
-    if (user[0]=="_"){
+    if ((user[0]=="_") || (pass.length<6)){
         console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
         callback(err,result);
     } else {
         
-        var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
+        var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
         db.REGISTERED.find(
                 { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
                     if ( err || !loginGQUser ){
                         console.log("Error accesing database");
+                        callback(err, false, "");
                     } else { 
                         if ( loginGQUser.length > 0 ){
                             result = true;
@@ -60,6 +54,7 @@ function authGQUser(user, pass, callback){
                             //console.log(fName);
                             console.log("User Authenticated!");
                         } else {
+                        	result = false;
                             console.log("User auth REJECTED!");
                         }
                     }
@@ -72,6 +67,7 @@ module.exports.authGQUser = authGQUser;
 
 /**
  * TODO: complete JavaDoc...
+ * author: RB
  * @param user
  * @param callback
  */
@@ -100,7 +96,16 @@ function externalAuth(user, callback){
     }
 }
 module.exports.externalAuth = externalAuth;
-
+/**
+ * TODO: JavaDoc
+ * 
+ * author: RB
+ * @param user
+ * @param fName
+ * @param lName
+ * @param link
+ * @param callback
+ */
 function insertNewExternalUser(user, fName, lName, link, callback){
     var result = false;
     if (user[0]=="_" && user[0] === user[3]){
@@ -132,6 +137,7 @@ module.exports.insertNewExternalUser = insertNewExternalUser;
 
 /**
  * TODO: Complete JavaDoc...
+ * author: RB
  * @param user
  * @param pass
  * @param fName
@@ -148,7 +154,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
             
-            var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
+            var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -162,6 +168,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         function(err, GQUserRegister){
                             if ( err || !GQUserRegister ){
                                 console.log("Error accesing database");
+                                throw err;
                             } else { 
                                 console.log("GeoQuest User is now saved in the DB.");
                                 result = true;
@@ -171,6 +178,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                 );
             }
             else {
+                //returns false (because the user was already found in the database)
                 callback(err, result);
             }
         });
@@ -180,4 +188,63 @@ function insertGQUser(user, pass, fName, lName, email, callback){
 }
 module.exports.insertGQUser = insertGQUser;
 
+/**
+ * Author: Song
+ */
+function dropCollection(){
+	db.REGISTERED.drop(function(err){
+		if(err){
+			console.log("Drop collection \"REGISTERED\" error ");
+		}
+		else{
+			console.log("Drop collection \"REGISTERED\" succeeds ");
+		}
+	});
+}
+module.exports.dropCollection = dropCollection;
 
+/**
+ * Author: Song
+ */
+function createCollection(){
+	db.createCollection("REGISTERED", function(err){
+		if(err){
+			console.log("Create collection \"REGISTERED\" error ");
+		}
+		else{
+			console.log("Create collection \"REGISTERED\" succeeds ");
+		}
+	});
+	
+}
+module.exports.createCollection = createCollection;
+
+
+/**
+ * Author: Song
+ * @param fName
+ * @param lName
+ * @param email
+ * @param user
+ * @param password
+ */
+function addTestingUserEntry(fName, lName, email, user, password ){
+	var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(password).digest('hex');
+    db.REGISTERED.insert(
+        {
+            firstName:fName, 
+            lastName:lName, 
+            email:email, 
+            user:user, 
+            password:encryptedPW
+        }, 
+        function(err, schemaDefine){
+            if (err || !schemaDefine || (schemaDefine.length==0) ){
+                console.log("Could not complete request!");
+            } else {
+                console.log("User entry added!");
+            }
+        }
+    );
+}
+module.exports.addTestingUserEntry = addTestingUserEntry;
