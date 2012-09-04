@@ -13,11 +13,25 @@ describe('UserDataAccess', function() {
 	
 	var connectionMock = null;
 	
+	var connection = require("mongojs").connect(dbconf.url, dbconf.collections);
+	
 	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
-		connectionMock = {};
+		connectionMock = {
+			users: {
+				/**
+				 * 
+				 * @param {Object} query JSON object that specifies the query criteria.
+				 * @param {function} callback Callback that receives an error and the result.
+				 */
+				find: function(query, callback) {
+					// Simulate an empty result per default.
+					callback(null, {});
+				}
+			}
+		};
 		repository =  new Repository.class(connectionMock);
 	});
 	
