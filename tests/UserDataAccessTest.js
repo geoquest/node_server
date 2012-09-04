@@ -20,6 +20,33 @@ describe('UserDataAccess', function() {
 	var connectionMock = null;
 	
 	/**
+	 * Simulates a MongoDB result set that contains the
+	 * requested number of users.
+	 * 
+	 * @param {integer} numberOfUsers
+	 * @return {Object}
+	 */
+	var createResult = function(numberOfUsers) {
+		var result = {};
+		// Simulate the requested number of user entries.
+		for (var i = 0; i < numberOfUsers; i++) {
+			result[i] = {
+				"identifier": i, 
+				"password": "werwew",
+				"firstname": "bfbv",
+				"lastname": "fdfdf",
+				"loginType": "Facebook",
+				"email": "lulu@yahoo.com"
+			};
+		}
+		// Simulate the count() operation that is available
+		// on result collection.
+		result.count = function() {
+	    	return numberOfUsers;
+	    };
+	};
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
@@ -33,11 +60,7 @@ describe('UserDataAccess', function() {
 				 */
 				find: function(query, callback) {
 					// Simulate an empty result per default.
-					var result = {
-					    'count': function() {
-					    	return 0;
-					    }
-					};
+					var result = createResult(0);
 					callback(null, result);
 				}
 			}
@@ -71,12 +94,17 @@ describe('UserDataAccess', function() {
     
     describe('byGoogleIdentifier', function() {
         it('returns a user if found', function() {
-            
+        	// TODO: simulate user
+        	repository.byGoogleIdentifier('identifier', function(result) {
+        		assert.ok(result instanceof User.class);
+        		done();
+        	});
         });
-        it('returns null if user was not found', function() {
-            assert.throws(function() {
-            	
-            });
+        it('returns null if user was not found', function(done) {
+        	repository.byGoogleIdentifier('identifier', function(result) {
+        		assert.strictEqual(result, null);
+        		done();
+        	});
         });
         it('throws exception if an internal mongodb error occurred', function() {
             assert.throws(function() {
@@ -90,9 +118,7 @@ describe('UserDataAccess', function() {
             
         });
         it('returns null if user was not found', function() {
-            assert.throws(function() {
-            	
-            });
+        	
         });
         it('throws exception if an internal mongodb error occurred', function() {
             assert.throws(function() {
@@ -106,9 +132,7 @@ describe('UserDataAccess', function() {
             
         });
         it('returns null if user was not found', function() {
-            assert.throws(function() {
-            	
-            });
+    		
         });
         it('throws exception if an internal mongodb error occurred', function() {
             assert.throws(function() {
