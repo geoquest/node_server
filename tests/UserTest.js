@@ -34,7 +34,7 @@ describe('User', function() {
     describe('getLoginType', function() {
     	it('returns correct value', function() {
     		user.setLoginType('Facebook');
-            assert.equal('Facebook', user.getLoginType());
+            assert.equal(user.getLoginType(), 'Facebook');
         });
     	it('throws an exception if value is not valid', function() {
     		assert.throws(function() {
@@ -46,12 +46,12 @@ describe('User', function() {
     describe('getPassword', function() {
     	it('returns a value if password was provided', function() {
     		user.setPassword('secret');
-    		assert.equal('String', typeof user.getPassword());
+    		assert.equal(typeof user.getPassword(), 'string');
         });
     	it('does not return the unencrypted password', function() {
     		var password = 'secret';
     		user.setPassword(password);
-    		assert.notStrictEqual(password, user.getPassword());
+    		assert.notStrictEqual(user.getPassword(), password);
         });
     });
     
@@ -69,14 +69,14 @@ describe('User', function() {
     describe('getFirstname', function() {
 		it('returns correct value', function() {
     		user.setFirstname('Max');
-    		assert.equal('Max', user.getFirstname());
+    		assert.equal(user.getFirstname(), 'Max');
         });
     });
     
     describe('getLastname', function() {
 		it('returns correct value', function() {
 			user.setLastname('Mustermann');
-    		assert.equal('Mustermann', user.getLastname());
+    		assert.equal(user.getLastname(), 'Mustermann');
         });
     });
     
@@ -86,7 +86,7 @@ describe('User', function() {
         });
 		it('returns correct value', function() {
     		user.setEmail('example@geoquest.com');
-    		assert.equal('example@geoquest.com', user.getEmail());
+    		assert.equal(user.getEmail(), 'example@geoquest.com');
         });
 		it('throws exception if invalid address is provided', function() {
     		assert.throws(function() {
@@ -94,4 +94,12 @@ describe('User', function() {
     		});
         });
     });
+    
+    describe('getIdentifier', function() {
+		it('returns expected value', function() {
+			user.setIdentifier("12243435436345235");
+    		assert.equal(user.getIdentifier(), "12243435436345235");
+        });
+    }); 
+    
 });
