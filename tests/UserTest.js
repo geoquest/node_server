@@ -31,7 +31,15 @@ describe('User', function() {
         });
     });
     
-    describe('set', function() {
-    	
+    describe('getLoginType', function() {
+    	it('returns correct value', function() {
+    		user.setLoginType('Facebook');
+            assert.equal('Facebook', user.getLoginType());
+        });
+    	it('throws an exception if value is not valid', function() {
+    		assert.throws(function() {
+    			user.setLoginType('Invalid');
+    		});
+    	});
     });
 });

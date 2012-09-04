@@ -21,7 +21,7 @@ User = function()
 	 * 
 	 * @var {String}
 	 */
-	this.loginType = null;
+	this._loginType = null;
 	
 	/**
 	 * Identifier for this user that is unique among this loginType.
@@ -74,7 +74,7 @@ User = function()
  */
 User.prototype.setLoginType = function(type)
 {
-	
+	this._loginType = type;
 };
 
 /**
@@ -84,7 +84,7 @@ User.prototype.setLoginType = function(type)
  */
 User.prototype.getLoginType = function()
 {
-	
+	return this._loginType;
 };
 
 /**
