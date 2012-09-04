@@ -67,9 +67,64 @@ User = function()
 	
 };
 
-User.prototype.getUsername = function()
+User.prototype.setLoginType = function(type)
 {
-	return this.username;
+	
+};
+
+User.prototype.getLoginType = function()
+{
+	
+};
+
+User.prototype.setIdentifier = function(identifier)
+{
+	
+};
+
+User.prototype.getIdentifier = function()
+{
+	
+};
+
+User.prototype.setPassword = function(rawPassword)
+{
+	
+};
+
+User.prototype.getPassword = function()
+{
+	
+};
+
+User.prototype.setFirstname = function(firstname)
+{
+	
+};
+
+User.prototype.getFirstname = function()
+{
+	
+};
+
+User.prototype.setLastname = function(lastname)
+{
+	
+};
+
+User.prototype.getLastname = function()
+{
+	
+};
+
+User.prototype.setEmail = function(email)
+{
+	
+};
+
+User.prototype.getEmail = function()
+{
+	
 };
 
 exports.class = User;
