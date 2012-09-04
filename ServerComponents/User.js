@@ -67,61 +67,121 @@ User = function()
 	
 };
 
+/**
+ * Sets the login type.
+ * 
+ * @param {String} type
+ */
 User.prototype.setLoginType = function(type)
 {
 	
 };
 
+/**
+ * Returns the login type.
+ * 
+ * return {String}
+ */
 User.prototype.getLoginType = function()
 {
 	
 };
 
+/**
+ * Sets the identifier.
+ * 
+ * @param {String} identifier
+ */
 User.prototype.setIdentifier = function(identifier)
 {
 	
 };
 
+/**
+ * Returns user identifier.
+ * 
+ * return {String}
+ */
 User.prototype.getIdentifier = function()
 {
 	
 };
 
+/**
+ * Sets a new password.
+ * 
+ * @param {String} rawPassword The not encrypted password.
+ */
 User.prototype.setPassword = function(rawPassword)
 {
 	
 };
 
+/**
+ * Returns the encrypted password of the user.
+ * 
+ * return {String} The encrypted password.
+ */
 User.prototype.getPassword = function()
 {
 	
 };
 
+/**
+ * Sets the firstname.
+ * 
+ * @param {String} firstname
+ */
 User.prototype.setFirstname = function(firstname)
 {
 	
 };
 
+/**
+ * Returns the firstname.
+ * 
+ * return {String}
+ */
 User.prototype.getFirstname = function()
 {
 	
 };
 
+/**
+ * Sets the lastname.
+ * 
+ * @param {String} lastname
+ */
 User.prototype.setLastname = function(lastname)
 {
 	
 };
 
+/**
+ * Returns the lastname.
+ * 
+ * return {String}
+ */
 User.prototype.getLastname = function()
 {
 	
 };
 
+/**
+ * Sets the email address.
+ * 
+ * @param {String} email
+ */
 User.prototype.setEmail = function(email)
 {
 	
 };
 
+/**
+ * Returns the email address if available.
+ * 
+ * return {String}|null
+ */
 User.prototype.getEmail = function()
 {
 	
