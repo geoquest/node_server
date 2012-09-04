@@ -11,11 +11,11 @@
 
 User = function() 
 {
-	this.username = null;
-	this.password = null;
-	this.firstname = null;
-	this.lastname = null;
-	this.email = null;
+	this._username = null;
+	this._password = null;
+	this._firstname = null;
+	this._lastname = null;
+	this._email = null;
 	
 };
 
