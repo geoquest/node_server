@@ -10,6 +10,7 @@
  */
 
 var check = require('validator').check;
+var crypto = require('crypto');
 
 User = function() 
 {
@@ -106,7 +107,7 @@ User.prototype.getLoginType = function()
  */
 User.prototype.setIdentifier = function(identifier)
 {
-	
+	this._identifier = identifier;
 };
 
 /**
@@ -116,7 +117,7 @@ User.prototype.setIdentifier = function(identifier)
  */
 User.prototype.getIdentifier = function()
 {
-	
+	return this._identifier;
 };
 
 /**
@@ -126,7 +127,34 @@ User.prototype.getIdentifier = function()
  */
 User.prototype.setPassword = function(rawPassword)
 {
-	
+	this._password = this._hashPassword(rawPassword, null);
+};
+
+/**
+ * Hashes the provided password.
+ * 
+ * If a salt is provided it will be used for hashing.
+ * The salt must have a length of exactly 32 bytes.
+ * 
+ * Provide null as salt to trigger automatic generation of
+ * a new salt.
+ * 
+ * @param {String} rawPassword The not hashed password.
+ * @param {String}|null salt The salt to use (optional)
+ * @returns {String} The hashed password, preceded by the salt.
+ */
+User.prototype._hashPassword = function(rawPassword, salt)
+{
+	if (salt === null) {
+		// No salt was provided, we have to generate a new one.
+		// On password change we generate a new salt for this user.
+		salt = (new Date()).toUTCString();
+		// We use md5 hashing to ensure that our salt is 32 characters long.
+		// A fixed application salt is used in this step.
+		salt = crypto.createHmac('md5', "3hfjkgasfg%$jh%").update(salt).digest('hex');
+	}
+	var hashedPassword = crypto.createHmac('sha512', salt).update(rawPassword).digest('hex');
+	return salt + hashedPassword;
 };
 
 /**
@@ -136,7 +164,7 @@ User.prototype.setPassword = function(rawPassword)
  */
 User.prototype.getPassword = function()
 {
-	
+	return this._password;
 };
 
 /**
@@ -147,7 +175,9 @@ User.prototype.getPassword = function()
  */
 User.prototype.hasPassword = function(rawPassword)
 {
-	
+	var salt = this._password.substr(0, 32);
+	var hashedPassword = this._hashPassword(rawPassword, salt);
+	return hashedPassword === this._password;
 };
 
 /**
