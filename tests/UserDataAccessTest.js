@@ -11,9 +11,12 @@ describe('UserDataAccess', function() {
 	 */
 	var repository = null;
 	
+	/**
+	 * Simple object that is used to simulate the mongodb connection.
+	 * 
+	 * @var {Object}
+	 */
 	var connectionMock = null;
-	
-	var connection = require("mongojs").connect(dbconf.url, dbconf.collections);
 	
 	/**
 	 * Is executed before each test runs and sets up the environment.
@@ -28,7 +31,12 @@ describe('UserDataAccess', function() {
 				 */
 				find: function(query, callback) {
 					// Simulate an empty result per default.
-					callback(null, {});
+					var result = {
+					    'count': function() {
+					    	return 0;
+					    }
+					};
+					callback(null, result);
 				}
 			}
 		};
@@ -55,6 +63,54 @@ describe('UserDataAccess', function() {
         it('throws exception if connection is invalid or could not be established', function() {
             assert.throws(function() {
             	new Repository.class(null);
+            });
+        });
+    });
+    
+    describe('byGoogleIdentifier', function() {
+        it('returns a user if found', function() {
+            
+        });
+        it('returns null if user was not found', function() {
+            assert.throws(function() {
+            	
+            });
+        });
+        it('throws exception if an internal mongodb error occurred', function() {
+            assert.throws(function() {
+            	
+            });
+        });
+    });
+    
+    describe('byFacebookIdentifier', function() {
+        it('returns a user if found', function() {
+            
+        });
+        it('returns null if user was not found', function() {
+            assert.throws(function() {
+            	
+            });
+        });
+        it('throws exception if an internal mongodb error occurred', function() {
+            assert.throws(function() {
+            	
+            });
+        });
+    });
+    
+    describe('byGeoQuestIdentifier', function() {
+        it('returns a user if found', function() {
+            
+        });
+        it('returns null if user was not found', function() {
+            assert.throws(function() {
+            	
+            });
+        });
+        it('throws exception if an internal mongodb error occurred', function() {
+            assert.throws(function() {
+            	
             });
         });
     });
