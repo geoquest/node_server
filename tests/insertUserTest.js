@@ -62,7 +62,7 @@ describe('Testing user insertions: GQUserDB', function(){
                 tentativeLName,
                 tentativeEmail,
                 function(err, inserttentativeUserToDB){
-                    assert.equal(false, inserttentativeUserToDB);
+                    assert.equal(true, inserttentativeUserToDB);
                     done();
                 }
         );
