@@ -8,3 +8,10 @@
  * var user = repository.byGoogleIdentifier("1513235656");
  * </code>
  */
+
+UserRepository = function(connection) 
+{
+	
+};
+
+exports.class = UserRepository;
