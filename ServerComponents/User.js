@@ -77,11 +77,12 @@ User = function()
  * Sets the login type.
  * 
  * @param {String} type
+ * @throws {Error} If invalid type is passed.
  */
 User.prototype.setLoginType = function(type)
 {
 	if(this._validLoginTypes.indexOf(type) === -1) {
-		throw type + " is an invalid Login Type.";
+		throw new Error(type + " is an invalid Login Type.");
 	}		
 	this._loginType = type;
 };
@@ -89,7 +90,7 @@ User.prototype.setLoginType = function(type)
 /**
  * Returns the login type.
  * 
- * return {String}
+ * @return {String}
  */
 User.prototype.getLoginType = function()
 {
