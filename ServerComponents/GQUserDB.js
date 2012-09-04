@@ -1,18 +1,9 @@
-/**
- * The server code skeleton. 
- */
-
-
-
-var databaseUrl = "localhost:27017/test"; // "username:password@example.com/mydb"
-//use db.getName() to get the databse name. Here it is "test" (on pool-c-03)
-var collections = ["REGISTERED"]; //array of table names
-var db = require("mongojs").connect(databaseUrl, collections);
+var dbconf = require('./dbconf');
 var crypto = require('crypto');
-var salt = '1@#4%^78()';
 
-console.log("Connected to DB!");
+var db = require("mongojs").connect(dbconf.url, dbconf.collections);
 
+// for local use only (aka PRIVATE)
 function userAlreadyInDB(user, callback){
     var result = false;
     db.REGISTERED.find(
@@ -47,7 +38,7 @@ function authGQUser(user, pass, callback){
         callback(err,result);
     } else {
         
-        var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
+        var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
         db.REGISTERED.find(
                 { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
@@ -150,7 +141,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
             
-            var encryptedPW = crypto.createHmac('sha1', salt).update(pass).digest('hex');
+            var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -182,4 +173,50 @@ function insertGQUser(user, pass, fName, lName, email, callback){
 }
 module.exports.insertGQUser = insertGQUser;
 
+function dropCollection(){
+	db.REGISTERED.drop(function(err){
+		if(err){
+			console.log("Drop collection \"REGISTERED\" error ");
+		}
+		else{
+			console.log("Drop collection \"REGISTERED\" succeeds ");
+		}
+	});
+}
+module.exports.dropCollection = dropCollection;
 
+function createCollection(){
+	db.createCollection("REGISTERED", function(err){
+		if(err){
+			console.log("Create collection \"REGISTERED\" error ");
+		}
+		else{
+			console.log("Create collection \"REGISTERED\" succeeds ");
+		}
+	});
+	
+}
+module.exports.createCollection = createCollection;
+
+
+
+function addTestingUserEntry(fName, lName, email, user, password ){
+	var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(password).digest('hex');
+    db.REGISTERED.insert(
+        {
+            firstName:fName, 
+            lastName:lName, 
+            email:email, 
+            user:user, 
+            password:encryptedPW
+        }, 
+        function(err, schemaDefine){
+            if (err || !schemaDefine || (schemaDefine.length==0) ){
+                console.log("Could not complete request!");
+            } else {
+                console.log("User entry added!");
+            }
+        }
+    );
+}
+module.exports.addTestingUserEntry = addTestingUserEntry;
