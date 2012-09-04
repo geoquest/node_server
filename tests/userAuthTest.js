@@ -4,7 +4,7 @@ var db = require("../ServerComponents/GQUserDB");
 describe('User Login Authentication: ', function(){
 	
   describe('Login as GQUser (authGQUser(user, pass, callback()))', function(){
-    it('Expect true when feed in corrrect password', function(done){
+    it('Should return true when feed in corrrect password', function(done){
 
     	var tentativeUser = "UserName00";
     	var tentativePass = "whatever password";
@@ -30,7 +30,7 @@ describe('User Login Authentication: ', function(){
     	 )
     });
 
-    it('Expect false when feed in wrong password', function(done){
+    it('Should return false when feed in wrong password', function(done){
 
     	var tentativeUser = "UserName00";
     	var tentativePass = "whatever password";
@@ -57,7 +57,7 @@ describe('User Login Authentication: ', function(){
     	 )	 
     });
 
-    it('Expect false when feed in non-existing user', function(done){
+    it('Should return false when feed in non-existing user', function(done){
 
     	var tentativeUser = "UserName00";
     	var tentativePass = "whatever password";
@@ -87,7 +87,33 @@ describe('User Login Authentication: ', function(){
 
     
     
-    it('Expect false when log in as GQ User with FB authenticated account like \"_FB_xxxxxxxxx\"', function(done){
+    it('Should return false when log in as GQ User with password length < 6', function(done){
+
+    	var tentativeUser = "UserName00";
+    	var tentativePass = "short";
+    	
+    	//before we test the authentication, we have to insert that user manually
+    	//\question not sure if that follows the correct paradigm
+    	
+    	db.dropCollection();
+    	db.createCollection();
+    	db.addTestingUserEntry("First Name","Last Name","someone@example.com",tentativeUser, tentativePass);
+    	
+    	//now the test starts
+    	//expect authSuccessful == true
+    	db.authGQUser(
+    			tentativeUser, 
+    			tentativePass, 
+    	        function(err, authSuccessful, plm){
+        	            // if(err) throw err
+    	            assert.equal(false, authSuccessful);
+    	            //if(!authSuccessful) throw "Not authenticated!";
+                    done();    	
+    	        }
+    	 )	 
+    });
+    
+    it('Should return false when log in as GQ User with FB authenticated account like \"_FB_xxxxxxxxx\"', function(done){
 
     	var tentativeUser = "_FB_1234567989";
     	var tentativePass = "";
