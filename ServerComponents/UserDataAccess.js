@@ -36,11 +36,25 @@ UserRepository.prototype.byGoogleIdentifier = function(identifier, callback)
 	
 };
 
+
+/**
+ * Searches for a user with the given Facebook identifier.
+ * 
+ * @param {String} identifier
+ * @param {function} callback A callback that will receive the lookup result. 
+ */
 UserRepository.prototype.byFacebookIdentifier = function(identifier, callback)
 {
 	
 };
 
+/**
+ * Searches for a user with the given GeoQuest identifier (also
+ * called GeoQuest username).
+ * 
+ * @param {String} identifier
+ * @param {function} callback A callback that will receive the lookup result. 
+ */
 UserRepository.prototype.byGeoQuestIdentifier = function(identifier, callback)
 {
 	
