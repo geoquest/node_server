@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var db = require("mongojs").connect(dbconf.url, dbconf.collections);
 
 // for local use only (aka PRIVATE)
+// author: RB
 function userAlreadyInDB(user, callback){
     var result = false;
     db.REGISTERED.find(
@@ -26,6 +27,7 @@ function userAlreadyInDB(user, callback){
 
 /**
  * Authenticate GeoQuest User ... TODO: JavaDoc...
+ * author: RB
  * @param user
  * @param pass
  * @param callback
@@ -38,7 +40,7 @@ function authGQUser(user, pass, callback){
         callback(err,result);
     } else {
         
-        var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
+        var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
         db.REGISTERED.find(
                 { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
@@ -65,6 +67,7 @@ module.exports.authGQUser = authGQUser;
 
 /**
  * TODO: complete JavaDoc...
+ * author: RB
  * @param user
  * @param callback
  */
@@ -93,7 +96,16 @@ function externalAuth(user, callback){
     }
 }
 module.exports.externalAuth = externalAuth;
-
+/**
+ * TODO: JavaDoc
+ * 
+ * author: RB
+ * @param user
+ * @param fName
+ * @param lName
+ * @param link
+ * @param callback
+ */
 function insertNewExternalUser(user, fName, lName, link, callback){
     var result = false;
     if (user[0]=="_" && user[0] === user[3]){
@@ -125,6 +137,7 @@ module.exports.insertNewExternalUser = insertNewExternalUser;
 
 /**
  * TODO: Complete JavaDoc...
+ * author: RB
  * @param user
  * @param pass
  * @param fName
@@ -141,7 +154,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
             
-            var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
+            var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -173,6 +186,9 @@ function insertGQUser(user, pass, fName, lName, email, callback){
 }
 module.exports.insertGQUser = insertGQUser;
 
+/**
+ * Author: Song
+ */
 function dropCollection(){
 	db.REGISTERED.drop(function(err){
 		if(err){
@@ -185,6 +201,9 @@ function dropCollection(){
 }
 module.exports.dropCollection = dropCollection;
 
+/**
+ * Author: Song
+ */
 function createCollection(){
 	db.createCollection("REGISTERED", function(err){
 		if(err){
@@ -199,9 +218,16 @@ function createCollection(){
 module.exports.createCollection = createCollection;
 
 
-
+/**
+ * Author: Song
+ * @param fName
+ * @param lName
+ * @param email
+ * @param user
+ * @param password
+ */
 function addTestingUserEntry(fName, lName, email, user, password ){
-	var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(password).digest('hex');
+	var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(password).digest('hex');
     db.REGISTERED.insert(
         {
             firstName:fName, 
