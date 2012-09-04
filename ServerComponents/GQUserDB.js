@@ -36,8 +36,8 @@ function authGQUser(user, pass, callback){
     var result = false;
     var fName = "";
     if ((user[0]=="_") || (pass.length<6)){
-        console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
-        callback(err,result);
+        //console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
+        callback(result, fName);
     } else {
         
         var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
@@ -194,10 +194,10 @@ module.exports.insertGQUser = insertGQUser;
 function dropCollection(){
 	db.REGISTERED.drop(function(err){
 		if(err){
-			console.log("Drop collection \"REGISTERED\" error ");
+			//console.log("Drop collection \"REGISTERED\" error ");
 		}
 		else{
-			console.log("Drop collection \"REGISTERED\" succeeds ");
+			//console.log("Drop collection \"REGISTERED\" succeeds ");
 		}
 	});
 }
@@ -209,10 +209,10 @@ module.exports.dropCollection = dropCollection;
 function createCollection(){
 	db.createCollection("REGISTERED", function(err){
 		if(err){
-			console.log("Create collection \"REGISTERED\" error ");
+			//console.log("Create collection \"REGISTERED\" error ");
 		}
 		else{
-			console.log("Create collection \"REGISTERED\" succeeds ");
+			//console.log("Create collection \"REGISTERED\" succeeds ");
 		}
 	});
 	
@@ -240,9 +240,9 @@ function addTestingUserEntry(fName, lName, email, user, password ){
         }, 
         function(err, schemaDefine){
             if (err || !schemaDefine || (schemaDefine.length==0) ){
-                console.log("Could not complete request!");
+                //console.log("Could not complete request!");
             } else {
-                console.log("User entry added!");
+                //console.log("User entry added!");
             }
         }
     );
