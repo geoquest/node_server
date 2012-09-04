@@ -14,4 +14,19 @@ UserRepository = function(connection)
 	
 };
 
+UserRepository.prototype.byGoogleIdentifier = function(identifier)
+{
+	
+};
+
+UserRepository.prototype.byFacebookIdentifier = function(identifier)
+{
+	
+};
+
+UserRepository.prototype.byGeoQuestIdentifier = function(identifier)
+{
+	
+};
+
 exports.class = UserRepository;
