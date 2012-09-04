@@ -25,6 +25,7 @@ describe('UserDataAccess', function() {
 		connectionMock = {
 			users: {
 				/**
+				 * Simulates the find() function of MongoDB.
 				 * 
 				 * @param {Object} query JSON object that specifies the query criteria.
 				 * @param {function} callback Callback that receives an error and the result.
