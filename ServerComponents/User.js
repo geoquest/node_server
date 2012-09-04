@@ -9,7 +9,7 @@
  * </code>
  */
 
-exports.class = function() 
+User = function() 
 {
 	this.username = null;
 	this.password = null;
@@ -19,7 +19,9 @@ exports.class = function()
 	
 };
 
-exports.class.prototype.getUsername = function()
+User.prototype.getUsername = function()
 {
 	return this.username;
 };
+
+exports.class = User;
