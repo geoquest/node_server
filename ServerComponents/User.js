@@ -9,6 +9,8 @@
  * </code>
  */
 
+var check = require('validator').check;
+
 User = function() 
 {
 	/**
@@ -181,7 +183,7 @@ User.prototype.setLastname = function(lastname)
 /**
  * Returns the lastname.
  * 
- * return {String}
+ * @return {String}
  */
 User.prototype.getLastname = function()
 {
@@ -192,16 +194,19 @@ User.prototype.getLastname = function()
  * Sets the email address.
  * 
  * @param {String} email
+ * @throws {Error} If the address is not valid.
  */
 User.prototype.setEmail = function(email)
 {
-	
+	if (!check(email).isEmail()) {
+		throw new Error(email + " is not a valid email address.");
+	}
 };
 
 /**
  * Returns the email address if available.
  * 
- * return {String}|null
+ * @return {String}|null
  */
 User.prototype.getEmail = function()
 {
