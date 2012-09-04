@@ -33,7 +33,7 @@ function userAlreadyInDB(user, callback){
 function authGQUser(user, pass, callback){
     var result = false;
     var fName = "";
-    if (user[0]=="_"){
+    if ((user[0]=="_") || (pass.length<6)){
         console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
         callback(err,result);
     } else {
