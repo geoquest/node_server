@@ -10,7 +10,7 @@ describe('Testing user insertions: GQUserDB', function(){
         var tentativeLName = "Last Name";
         var tentativeEmail = "someone@example.com";
 
-        //before we test the authentication, we have to insert that user manually
+        //before we test the authentication, we insert a user manually
         //\question not sure if that follows the correct paradigm
 
         db.dropCollection();
@@ -54,18 +54,77 @@ describe('Testing user insertions: GQUserDB', function(){
         db.addTestingUserEntry(tentativeFName, tentativeLName, tentativeEmail, tentativeUser, tentativePass);
 
         //now the test starts
-        //expect insertNewUserToDB == true;
+        //expect insertTentativeUserToDB == false;
         db.insertGQUser(
                 tentativeUser,
                 tentativePass,
                 tentativeFName,
                 tentativeLName,
                 tentativeEmail,
-                function(err, inserttentativeUserToDB){
-                    assert.equal(false, inserttentativeUserToDB);
+                function(err, insertTentativeUserToDB){
+                    assert.equal(false, insertTentativeUserToDB);
                     done();
                 }
         );
+    });
+    
+    it('Adding some user name that starts with "_". Should return false!', function(done){
+        var tentativeUser = "_UserName00";
+        var tentativePass = "whatever password";
+        var tentativeFName = "First Name";
+        var tentativeLName = "Last Name";
+        var tentativeEmail = "someone@example.com";
+
+        //before we test the authentication, make sure we have a constant testing environment
+        //\question not sure if that follows the correct paradigm
+
+        db.dropCollection();
+        db.createCollection();
+
+        //now the test starts
+        //expect insertUnderscoreUser == true;
+        db.insertGQUser(
+                tentativeUser,
+                tentativePass,
+                tentativeFName,
+                tentativeLName,
+                tentativeEmail,
+                function(err, insertUnderscoreUser){
+                    assert.equal(false, insertUnderscoreUser);
+                    done();
+                }
+        );
+    });
+    
+    it('Test successful DB connection. err should be null!', function(done){
+        var tentativeUser = "_UserName00";
+        var tentativePass = "whatever password";
+        var tentativeFName = "First Name";
+        var tentativeLName = "Last Name";
+        var tentativeEmail = "someone@example.com";
+
+        //now the test starts
+        assert.doesNotThrow(function(){
+            db.dropCollection();
+        });
+        
+        assert.doesNotThrow(function(){
+            db.createCollection();
+        });
+
+        assert.doesNotThrow(function(){
+                db.insertGQUser(
+                    tentativeUser,
+                    tentativePass,
+                    tentativeFName,
+                    tentativeLName,
+                    tentativeEmail,
+                    function(err, insertUnderscoreUser){
+                        assert.equal(null, err);
+                        done();
+                    }
+                );
+        });
     });
   });
 });

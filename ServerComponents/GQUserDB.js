@@ -3,7 +3,7 @@ var crypto = require('crypto');
 
 var db = require("mongojs").connect(dbconf.url, dbconf.collections);
 
-// for local use only (aka PRIVATE)
+// for local use only (therefore PRIVATE)
 // author: RB
 function userAlreadyInDB(user, callback){
     var result = false;
@@ -11,12 +11,12 @@ function userAlreadyInDB(user, callback){
             {user:user},
             function(err, userExistent){
                 if (err || !userExistent){
-                    //console.log("DB Access problem occured...");
+                    console.log("DB Access problem occured...");
                 } else {
                     if (userExistent.length == 0){
-                        //console.log("OK, this user may be added");
+                        console.log("OK, this user may be added");
                     } else {
-                        //console.log("User already in DB...");
+                        console.log("User already in DB...");
                         result = true;
                     }
                 }
@@ -36,8 +36,8 @@ function authGQUser(user, pass, callback){
     var result = false;
     var fName = "";
     if ((user[0]=="_") || (pass.length<6)){
-        //console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
-        callback(result, fName);
+        console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
+        callback(err,result);
     } else {
         
         var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
@@ -45,16 +45,17 @@ function authGQUser(user, pass, callback){
                 { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
                     if ( err || !loginGQUser ){
-                        //console.log("Error accesing database");
+                        console.log("Error accesing database");
                         callback(err, false, "");
                     } else { 
                         if ( loginGQUser.length > 0 ){
                             result = true;
                             fName = loginGQUser[0]["firstName"];
-                            //console.log("User Authenticated!");
+                            //console.log(fName);
+                            console.log("User Authenticated!");
                         } else {
                         	result = false;
-                            //console.log("User auth REJECTED!");
+                            console.log("User auth REJECTED!");
                         }
                     }
                     callback(err, result, fName);
@@ -77,20 +78,20 @@ function externalAuth(user, callback){
                 {user:user, password:""},
                 function(err, res){
                     if ( err || !res ){
-                        //console.log("Error accessing database");  
+                        console.log("Error accessing database");  
                     } else { 
                         if ( res.length > 0 ){
                             result = true;
-                            //console.log("External Login User Recognized!");
+                            console.log("External Login User Recognized!");
                         } else {
-                            //console.log("External Login User never logged in before!");
+                            console.log("External Login User never logged in before!");
                         }
                     }
                     callback(err, result);
                 }
         );
     } else {
-        //console.log("Possible illegal ExtAccess attempt!!!!!!!!!!!!!");
+        console.log("Possible illegal ExtAccess attempt!!!!!!!!!!!!!");
         callback(err,result);
     }
 }
@@ -119,16 +120,16 @@ function insertNewExternalUser(user, fName, lName, link, callback){
                 },
                 function(err, extUserRegister){
                     if ( err || !extUserRegister ){
-                        //console.log("Error accesing database");
+                        console.log("Error accesing database");
                     } else { 
-                        //console.log("EXTERNAL User is now saved in the DB.");
+                        console.log("EXTERNAL User is now saved in the DB.");
                         return true;
                     }
                     callback(err, result);
                 }
         );
     } else {
-        //console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
+        console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
         callback(err,result);
     }
 }
@@ -147,8 +148,8 @@ module.exports.insertNewExternalUser = insertNewExternalUser;
 function insertGQUser(user, pass, fName, lName, email, callback){
     var result = false;
     if (user[0]=="_"){
-        //console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
-        callback(err,result);
+        console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
+        callback(null,result);
     } else {
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
@@ -166,10 +167,10 @@ function insertGQUser(user, pass, fName, lName, email, callback){
                         },
                         function(err, GQUserRegister){
                             if ( err || !GQUserRegister ){
-                                //console.log("Error accesing database");
-                                throw err;
+                                console.log("Error accesing database");
+                                //err = "Error accessing database";
                             } else { 
-                                //console.log("GeoQuest User is now saved in the DB.");
+                                console.log("GeoQuest User is now saved in the DB.");
                                 result = true;
                             }
                             callback(err, result);
@@ -193,10 +194,10 @@ module.exports.insertGQUser = insertGQUser;
 function dropCollection(){
 	db.REGISTERED.drop(function(err){
 		if(err){
-			//console.log("Drop collection \"REGISTERED\" error ");
+			console.log("Drop collection \"REGISTERED\" error ");
 		}
 		else{
-			//console.log("Drop collection \"REGISTERED\" succeeds ");
+			console.log("Drop collection \"REGISTERED\" succeeds ");
 		}
 	});
 }
@@ -208,10 +209,10 @@ module.exports.dropCollection = dropCollection;
 function createCollection(){
 	db.createCollection("REGISTERED", function(err){
 		if(err){
-			//console.log("Create collection \"REGISTERED\" error ");
+			console.log("Create collection \"REGISTERED\" error ");
 		}
 		else{
-			//console.log("Create collection \"REGISTERED\" succeeds ");
+			console.log("Create collection \"REGISTERED\" succeeds ");
 		}
 	});
 	
@@ -239,9 +240,9 @@ function addTestingUserEntry(fName, lName, email, user, password ){
         }, 
         function(err, schemaDefine){
             if (err || !schemaDefine || (schemaDefine.length==0) ){
-                //console.log("Could not complete request!");
+                console.log("Could not complete request!");
             } else {
-                //console.log("User entry added!");
+                console.log("User entry added!");
             }
         }
     );
