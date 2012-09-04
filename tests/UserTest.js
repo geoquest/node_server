@@ -3,12 +3,24 @@ var assert = require("assert");
 var User = require("../ServerComponents/User.js");
 
 describe('User', function() {
+	
+	/**
+	 * System under test.
+	 * 
+	 * @var {User.class}
+	 */
 	var user = null;
 	
+	/**
+	 * Is executed before each test runs and sets up the environment.
+	 */
 	beforeEach(function() {
 		user =  new User.class();
 	});
 	
+	/**
+	 * Removes instances that were created for testing after each test.
+	 */
 	afterEach(function() {
 		user = null;
 	});
