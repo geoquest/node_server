@@ -89,7 +89,9 @@ describe('User', function() {
     		assert.equal('example@geoquest.com', user.getEmail());
         });
 		it('throws exception if invalid address is provided', function() {
-    		user.setEmail('invalid');
+    		assert.throws(function() {
+    			user.setEmail('invalid');
+    		});
         });
     });
 });
