@@ -1,5 +1,5 @@
 /**
- * The app to run ONLY once when defining the "DB Schema"...
+ * The app is to run ONLY once when defining the "DB Schema"...
  */
 
 

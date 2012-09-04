@@ -38,7 +38,7 @@ function authGQUser(user, pass, callback){
         callback(err,result);
     } else {
         
-        var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
+        var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
         db.REGISTERED.find(
                 { user:user, password:encryptedPW }, 
                 function( err, loginGQUser ){
@@ -141,7 +141,7 @@ function insertGQUser(user, pass, fName, lName, email, callback){
         
         userAlreadyInDB(user, function(err, alreadyInDBresult){
             
-            var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(pass).digest('hex');
+            var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
             
             if(!alreadyInDBresult){
                 db.REGISTERED.insert(
@@ -201,7 +201,7 @@ module.exports.createCollection = createCollection;
 
 
 function addTestingUserEntry(fName, lName, email, user, password ){
-	var encryptedPW = crypto.createHmac('sha1', dbconf.salt).update(password).digest('hex');
+	var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(password).digest('hex');
     db.REGISTERED.insert(
         {
             firstName:fName, 
