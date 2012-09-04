@@ -1,5 +1,6 @@
 var assert = require("assert");
 
+var User = require("../ServerComponents/User.js");
 var Repository = require("../ServerComponents/UserDataAccess.js");
 
 describe('UserDataAccess', function() {
