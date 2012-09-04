@@ -41,6 +41,47 @@ describe('User', function() {
     			user.setLoginType('Invalid');
     		});
     	});
-    	
+    });
+    
+    describe('getPassword', function() {
+    	it('returns a value if password was provided', function() {
+    		
+        });
+    	it('does not return the unencrypted password', function() {
+    		
+        });
+    });
+    
+    describe('hasPassword', function() {
+		it('returns false if an invalid password is given', function() {
+    		
+        });
+		it('returns true if the correct password is passed', function() {
+    		
+        });
+    });
+    
+    describe('getFirstname', function() {
+		it('returns correct value', function() {
+    		
+        });
+    });
+    
+    describe('getLastname', function() {
+		it('returns correct value', function() {
+    		
+        });
+    });
+    
+    describe('getEmail', function() {
+		it('returns null if no address was provided', function() {
+    		
+        });
+		it('returns correct value', function() {
+    		
+        });
+		it('throws exception if invalid address is provided', function() {
+    		
+        });
     });
 });
