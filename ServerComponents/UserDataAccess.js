@@ -11,7 +11,10 @@
 
 UserRepository = function(connection) 
 {
-	
+	if (connection === undefined)
+		throw new Error("Connection parameter omitted!");
+	else if(connection === null)
+		throw new Error("Invalid connection or connection could not be established!");
 };
 
 /**

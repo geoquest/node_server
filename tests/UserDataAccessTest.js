@@ -38,7 +38,7 @@ describe('UserDataAccess', function() {
             	new Repository.class();
             });
         });
-        it('throws exception if invalid connection is provided', function() {
+        it('throws exception if connection is invalid or could not be established', function() {
             assert.throws(function() {
             	new Repository.class(null);
             });
