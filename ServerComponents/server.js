@@ -1,6 +1,6 @@
 var express = require('express')
   , everyauth = require('everyauth')
-  , conf = require('./conf')
+  , extAuthConf = require('./extAuthConf')
   , userDB = require('./GQUserDB');
 
 everyauth.debug = true;
@@ -70,8 +70,8 @@ everyauth.everymodule
 
 everyauth
   .facebook
-    .appId(conf.fb.appId)
-    .appSecret(conf.fb.appSecret)
+    .appId(extAuthConf.fb.appId)
+    .appSecret(extAuthConf.fb.appSecret)
     .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
       return usersByFbId[fbUserMetadata.id] ||
         (usersByFbId[fbUserMetadata.id] = addUser('facebook', fbUserMetadata));
@@ -79,8 +79,8 @@ everyauth
     .redirectPath('/');
 
 everyauth.google
-  .appId(conf.google.clientId)
-  .appSecret(conf.google.clientSecret)
+  .appId(extAuthConf.google.clientId)
+  .appSecret(extAuthConf.google.clientSecret)
   .scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
   .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
     googleUser.refreshToken = extra.refresh_token;
