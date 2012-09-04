@@ -37,7 +37,7 @@ function authGQUser(user, pass, callback){
     var fName = "";
     if ((user[0]=="_") || (pass.length<6)){
         console.log("Possible illegal IntAccess attempt!!!!!!!!!!!!!");
-        callback(err,result);
+        callback(false,result);
     } else {
         
         var encryptedPW = crypto.createHmac('sha512', dbconf.salt).update(pass).digest('hex');
