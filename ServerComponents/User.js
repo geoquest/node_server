@@ -9,11 +9,17 @@
  * </code>
  */
 
-exports.class = function() {
+exports.class = function() 
+{
 	this.username = null;
 	this.password = null;
 	this.firstname = null;
 	this.lastname = null;
 	this.email = null;
 	
-}
+};
+
+exports.class.prototype.getUsername = function()
+{
+	return this.username;
+};
