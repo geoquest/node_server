@@ -106,6 +106,25 @@ describe('DependencyInjector', function() {
 				injector.inject(object);
 			});
 		});
+		it('injects objects by reference', function() {
+			var dependency = {
+				globalCounter: 0
+			};
+			// Create an injector with a dependency that stays always the same.
+			injector = new DependencyInjector.class({setDependency: function() { return dependency; }});
+			var object = {
+				dependency: null,
+				setDependency: function(dependency) {
+					this.dependency = dependency;
+				}
+			};
+			// Inject the dependency...
+			injector.inject(object);
+			// ... and modify the original object.
+			dependency.globalCounter = 1;
+			// Now the injected object should reflect that change:
+			assert.equal(object.dependency.globalCounter, 1);
+		});
 	});
 	
 });
