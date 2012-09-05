@@ -17,7 +17,6 @@ app.configure(function() {
   // Use the EJS engine for template rendering.
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
-  app.use(express.favicon());
   app.use(express.cookieParser());
   app.use(express.session());
   app.use(express.bodyParser());
