@@ -12,7 +12,7 @@ var app = express();
 
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
-  app.set('views', 'views');
+  app.set('views', __dirname + '/views');
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
   app.use(express.favicon());
