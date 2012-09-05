@@ -42,4 +42,19 @@ Injector = function(dependencies)
 	
 }
 
+/**
+ * Injects dependencies into the provided object.
+ * 
+ * For convenience this method returns the object that
+ * was passed as argument. This allows chaining of method
+ * calls.
+ * 
+ * @param {Object} object The object that receives dependencies.
+ * @return {Object} The object that was passed.
+ */
+Injector.prototype.inject = function(object) 
+{
+	
+};
+
 exports.class = Injector;
