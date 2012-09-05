@@ -260,8 +260,12 @@ User.prototype.getEmail = function()
  * 
  * @param {Object} JSON object with user data.
  * @return {User.class}
+ * @throws Error If no JSON object is passed or a property is missing.
  */
 var fromJSON = function(jsonObject) {
+	if ((typeof jsonObject) !== 'object') {
+		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
+	}
 	var mapping = {
 	    // Expected JSON property -> private User attribute 
 		'loginType': '_loginType',

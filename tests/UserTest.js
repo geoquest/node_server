@@ -169,6 +169,11 @@ describe('User', function() {
 			};
 			assert.ok(User.fromJSON(json) instanceof User.class);
         });
+		it('throws exception if no object is provided', function() {
+			assert.throws(function() {
+				User.fromJSON('This is not valid');
+			});
+		});
     }); 
     
 });
