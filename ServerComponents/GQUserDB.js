@@ -1,4 +1,4 @@
-var dbconf = require('./dbconf');
+var dbconf = require('./conf/dbconf');
 var crypto = require('crypto');
 
 var db = require("mongojs").connect(dbconf.url, dbconf.collections);

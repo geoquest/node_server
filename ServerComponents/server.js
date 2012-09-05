@@ -1,6 +1,6 @@
 var express = require('express')
   , everyauth = require('everyauth')
-  , extAuthConf = require('./extAuthConf')
+  , extAuthConf = require('./conf/extAuthConf')
   , userDB = require('./GQUserDB');
 
 everyauth.debug = true;
@@ -93,23 +93,22 @@ var express = require("express");
 var app = express();
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 3000)
-  app.set('views', 'views')
+  app.set('port', process.env.PORT || 3000);
+  app.set('views', 'views');
   app.engine('html', require('ejs').renderFile);
-  app.set("view options", {layout: false})
-  app.use(express.favicon())
-  app.use(express.logger('dev'))
-  app.use(express.cookieParser('scrt'))
-  app.use(express.session())
-  app.use(everyauth.middleware())
-  app.use(express.bodyParser())
-  app.use(express.methodOverride())
-  app.use(express.static(__dirname))
+  app.set("view options", {layout: false});
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.cookieParser('scrt'));
+  app.use(express.session());
+  app.use(everyauth.middleware());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname));
   app.use(preEveryauthMiddlewareHack());
   app.use(everyauth.middleware());
   app.use(postEveryauthMiddlewareHack());
-})
-
+});
 
 
 //app.engine('.html', {
@@ -142,7 +141,7 @@ function preEveryauthMiddlewareHack() {
       res.locals.everyauth = ea;
 
       next();
-    }
+    };
 };
 
 function postEveryauthMiddlewareHack() {
@@ -154,6 +153,29 @@ function postEveryauthMiddlewareHack() {
   };
 };
 
+
+var express = require("express");
+var app = express();
+
+app.configure(function() {
+  app.set('port', process.env.PORT || 3000);
+  app.set('views', 'views');
+  app.engine('html', require('ejs').renderFile);
+  app.set("view options", {layout: false});
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.cookieParser('scrt'));
+  app.use(express.session());
+  app.use(everyauth.middleware());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname));
+  app.use(preEveryauthMiddlewareHack());
+  app.use(everyauth.middleware());
+  app.use(postEveryauthMiddlewareHack());
+});
+
+
 app.get('/', require('./routes/login').loginWithFbGp);
 app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
 app.get('/signup/geoquestUser', require('./routes/signup').signup);
@@ -164,7 +186,6 @@ app.post('/login', require('./routes/login').handleLoginPost);
 
 app.listen(3000);
 
-console.log('Go to http://local.host:3000');
-console.log(__dirname);
+console.log('Go to http://localhost:3000');
 
 module.exports = app;

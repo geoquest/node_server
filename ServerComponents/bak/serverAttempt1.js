@@ -1,4 +1,4 @@
-var db = require("./GQUserDB");
+var db = require("./conf/GQUserDB");
 
 
 
