@@ -26,7 +26,6 @@ app.configure(function() {
   app.use(express.bodyParser());
   // Exposes the contents in the given directory to the public.
   app.use(express.static(__dirname + '/public'));
-
 });
 
 app.get('/', require('./routes/login').loginWithFbGp);
