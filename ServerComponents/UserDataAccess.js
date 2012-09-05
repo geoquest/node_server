@@ -66,7 +66,8 @@ UserRepository.prototype.byGoogleIdentifier = function(identifier, callback)
  */
 UserRepository.prototype.byFacebookIdentifier = function(identifier, callback)
 {
-	
+	var query = {'loginType': 'Facebook', 'identifier': identifier};
+	this.connection.users.find(query, this._createResultHandler(callback));
 };
 
 /**
@@ -78,7 +79,8 @@ UserRepository.prototype.byFacebookIdentifier = function(identifier, callback)
  */
 UserRepository.prototype.byGeoQuestIdentifier = function(identifier, callback)
 {
-	
+	var query = {'loginType': 'GeoQuest', 'identifier': identifier};
+	this.connection.users.find(query, this._createResultHandler(callback));
 };
 
 /**
