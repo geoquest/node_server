@@ -18,6 +18,7 @@ app.configure(function() {
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
   app.use(express.cookieParser());
+  // Provides some basic session handling in memory.
   app.use(express.session());
   // Parses the body, supports form handling.
   // http://www.senchalabs.org/connect/bodyParser.html
