@@ -105,4 +105,75 @@ describe('User', function() {
         });
     }); 
     
+    describe('fromJSON', function() {
+		it('returns a User object', function() {
+			var json = {
+				"identifier": "42", 
+				"password": "this_should_be_an_encrypted_password",
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": "lulu@yahoo.com"
+			};
+			assert.ok(User.fromJSON(json) instanceof User.class);
+        });
+		it('throws exception if property is missing', function() {
+			var json = {
+				"identifier": "42", 
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": "lulu@yahoo.com"
+			};
+			assert.throws(function() {
+				User.fromJSON(json);
+			});
+        });
+		it('maps properties correctly', function() {
+			var json = {
+				"identifier": "42", 
+				"password": "this_should_be_an_encrypted_password",
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": "lulu@yahoo.com"
+			};
+			var user = User.fromJSON(json);
+			assert.ok(user instanceof User.class);
+			assert.equal(user.getIdentifier(), '42');
+			assert.equal(user.getPassword(), 'this_should_be_an_encrypted_password');
+			assert.equal(user.getFirstname(), 'Max');
+			assert.equal(user.getLastname(), 'Mustermann');
+			assert.equal(user.getLoginType(), 'Facebook');
+			assert.equal(user.getEmail(), 'lulu@yahoo.com');
+        });
+		it('works with empty password', function() {
+			var json = {
+				"identifier": "42", 
+				"password": null,
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": "lulu@yahoo.com"
+			};
+			assert.ok(User.fromJSON(json) instanceof User.class);
+        });
+		it('works with empty email', function() {
+			var json = {
+				"identifier": "42", 
+				"password": "this_should_be_an_encrypted_password",
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": null
+			};
+			assert.ok(User.fromJSON(json) instanceof User.class);
+        });
+		it('throws exception if no object is provided', function() {
+			assert.throws(function() {
+				User.fromJSON('This is not valid');
+			});
+		});
+    }); 
+    
 });

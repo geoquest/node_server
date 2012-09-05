@@ -255,4 +255,41 @@ User.prototype.getEmail = function()
 	return this._email;
 };
 
+/**
+ * Converts a JSON object with user data into a real User object.
+ * 
+ * @param {Object} JSON object with user data.
+ * @return {User.class}
+ * @throws Error If no JSON object is passed or a property is missing.
+ */
+var fromJSON = function(jsonObject) {
+	if ((typeof jsonObject) !== 'object') {
+		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
+	}
+	var mapping = {
+	    // Expected JSON property -> private User attribute 
+		'loginType': '_loginType',
+		'identifier': '_identifier',
+		'firstname': '_firstname',
+		'lastname': '_lastname',
+		'password': '_password',
+		'email': '_email'
+		
+	};
+	var user = new User();
+	for (var property in mapping) {
+		if (!jsonObject.hasOwnProperty(property)) {
+			// The JSON object does not contain
+			// the required property.
+			throw new Error('JSON object does not contain property ' + property);
+		}
+		// Find the private attribute that we have to map 
+		// this property to.
+		var attribute = mapping[property];
+		user[attribute] = jsonObject[property];
+	}
+	return user;
+};
+
 exports.class = User;
+exports.fromJSON = fromJSON;
