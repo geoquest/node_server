@@ -17,6 +17,7 @@ app.configure(function() {
   // Use the EJS engine for template rendering.
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
+  // Provides access to cookies as part of the request object.
   app.use(express.cookieParser());
   // Provides some basic session handling in memory.
   app.use(express.session());
