@@ -35,4 +35,20 @@ describe('DependencyInjector', function() {
 		injector = null;
 	});
 	
+	describe('constructor', function() {
+		it('creates DependencyInjector object', function() {
+			assert.ok(injector instanceof DependencyInjector.class);
+		});
+		it('throws exception if dependencies are not provided', function() {
+			assert.throws(function() {
+				new DependencyInjector.class();
+			});
+		});
+		it('throws exception if no object provided', function() {
+			assert.throws(function() {
+				new DependencyInjector.class('This is invalid');
+			});
+		});
+	});
+	
 });
