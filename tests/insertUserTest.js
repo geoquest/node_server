@@ -186,5 +186,33 @@ describe('Testing user insertions: GQUserDB', function(){
                 }
         );
     });
+    
+    it('Adding some EXTERNAL user that violates the "_**_" pattern (?**_). Should return false!', function(done){
+        var illegal2FBUser = "%FB_123";
+        var illegal2FBFName = "First Name";
+        var illegal2FBLName = "Last Name";
+        var illegal2FBLink = "http://www.facebook.com/123";
+    
+        //before we test the authentication, make sure we have a constant testing environment
+        //\question not sure if that follows the correct paradigm
+    
+        db.dropCollection();
+        db.createCollection();
+        
+        //now the test starts
+        //expect insertNewExternalUser == true;
+        db.insertNewExternalUser(
+                illegal2FBUser,
+                illegal2FBFName,
+                illegal2FBLName,
+                illegal2FBLink,
+                function(err, insertExternalCorrectUser){
+                    assert.equal(null,err);
+                    assert.equal(false, insertExternalCorrectUser);
+                    done();
+                }
+        );
+    });
+    
   });
 });
