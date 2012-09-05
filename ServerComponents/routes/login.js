@@ -1,31 +1,28 @@
 
 var userDB = require('./../GQUserDB');
 
-module.exports.loginWithFbGp = loginWithFbGp;
+module.exports.login = login;
 module.exports.loginWithGQDB = loginWithGQDB;
 module.exports.handleLoginPost = handleLoginPost;
 
 
 
-function loginWithFbGp(req, res) {
+function login(req, res) {
     
-    var supplies = new Array("name");
-    if(!req.user){
-        res.render('index.ejs', { title: 'Log In' , msg: 'login using your GeoQuest account or through FB/Google'});
-    }
-    else{
-        console.log(req.user);
+    //var supplies = new Array("name");
+
+        res.render('login.ejs', { title: 'Log In' , msg: 'login using your GeoQuest account or through FB/Google'});
         
-        if(req.user.facebook && req.user.google){
-            res.render('index.ejs', { title: 'Log In' , msg: 'logged in.'});
-        }
-        if(req.user.facebook){
-            res.render('index.ejs', { title: 'Log In' , msg: 'logged in through facebook'});
-        }
-        if(req.user.google){
-            res.render('index.ejs', { title: 'Log In' , msg: 'logged in through google'});
-        }
-    }
+        
+//        if(req.user.facebook && req.user.google){
+//            res.render('login.ejs', { title: 'Log In' , msg: 'logged in.'});
+//        }
+//        if(req.user.facebook){
+//            res.render('login.ejs', { title: 'Log In' , msg: 'logged in through facebook'});
+//        }
+//        if(req.user.google){
+//            res.render('login.ejs', { title: 'Log In' , msg: 'logged in through google'});
+//        }
     
 }
 
@@ -33,7 +30,7 @@ function loginWithFbGp(req, res) {
 function loginWithGQDB(req, res) {
     
     var supplies = new Array("name");
-    res.render('index.ejs', { title: 'Login' , msg: 'logged in as GeoQuest user'});
+    res.render('login.ejs', { title: 'Login' , msg: 'logged in as GeoQuest user'});
     
 }
 
@@ -47,10 +44,16 @@ function handleLoginPost (req, res){
                 console.log(result);
                 if(result){
                     console.log("You're logged in.");
-                    res.render('index.ejs', { title: 'Log in Succeed.', msg: 'Hi, ' +  firstName + '!'});
+                    //Store session
+                    //ToDo: DB API to get UserID, should store UserID in session
+                    //Bug: there's no firstName returned
+                    req.session.user = "SomeUserID";
+                    
+                    res.redirect('/home');
+                    //res.render('login.ejs', { title: 'Log in Succeed.', msg: 'Hi, ' +  firstName + '!'});
                 } else{
                     console.log("Login failed.");
-                    res.render('index.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});                    
+                    res.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});                    
                 }
             }
     );

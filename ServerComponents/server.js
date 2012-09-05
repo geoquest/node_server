@@ -175,11 +175,37 @@ app.configure(function() {
 });
 
 
-app.get('/', require('./routes/login').loginWithFbGp);
-app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
-app.get('/signup/geoquestUser', require('./routes/signup').signup);
+
+//Shubham added
+app.get('/', function(req,res){
+	
+	if(req.session.user){
+		console.log("session present - redirect to home.ejs");
+		res.redirect('/home');
+	} else {
+		console.log("session not present - redirect to login");
+		res.redirect('/login');
+	}
+	
+});
+
+//shubham End
+
+
+
+
+app.get('/home', require('./routes/home').home);
+app.get('/login', require('./routes/login').login);
+//app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
+
+app.get('/home/logout', require('./routes/logout').logout);
+
+
+
 app.post('/signup', require('./routes/signup').handleSignupPost);
+app.get('/signup/geoquestUser', require('./routes/signup').signup);
 app.post('/login', require('./routes/login').handleLoginPost);
+
 
 //everyauth.helpExpress(app); //deprecated. Now not needed
 
