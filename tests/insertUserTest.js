@@ -140,9 +140,7 @@ describe('Testing user insertions: GQUserDB', function(){
     //\question not sure if that follows the correct paradigm
 
     db.dropCollection();
-    console.log("###############################################");
     db.createCollection();
-    console.log("?????????????????????????????????????????????????");
     //now the test starts
     //expect insertNewExternalUser == true;
     db.insertNewExternalUser(
@@ -151,7 +149,6 @@ describe('Testing user insertions: GQUserDB', function(){
             tentativeLName,
             tentativeLink,
             function(err, insertExternalCorrectUser){
-                console.log("********************************************");
                 assert.equal(null,err);
                 assert.equal(true, insertExternalCorrectUser);
                 done();
