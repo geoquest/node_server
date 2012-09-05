@@ -51,4 +51,25 @@ describe('DependencyInjector', function() {
 		});
 	});
 	
+	describe('inject', function() {
+		it('throws exception if no object is provided', function() {
+			
+		});
+		it('does nothing if no dependency can be injected', function() {
+			
+		});
+		it('returns provided object', function() {
+			
+		});
+		it('injects dependency if function is available', function() {
+			
+		});
+		it('creates dependency for each injection', function() {
+			
+		});
+		it('throws exception if hook property is available, but not a function', function() {
+			
+		});
+	});
+	
 });
