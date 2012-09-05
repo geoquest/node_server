@@ -105,4 +105,16 @@ describe('User', function() {
         });
     }); 
     
+    describe('fromJSON', function() {
+		it('returns a User object', function() {
+			
+        });
+		it('throws exception if property is missing', function() {
+			
+        });
+		it('maps properties correctly', function() {
+			
+        });
+    }); 
+    
 });
