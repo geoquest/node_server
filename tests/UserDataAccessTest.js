@@ -113,8 +113,8 @@ describe('UserDataAccess', function() {
     });
     
     describe('byGoogleIdentifier', function() {
-        it('returns a user if found', function() {
-        	// TODO: simulate user
+        it('returns a user if found', function(done) {
+        	connectionMock.users.find = createFind(createResult(1));
         	repository.byGoogleIdentifier('identifier', function(result) {
         		assert.ok(result instanceof User.class);
         		done();
@@ -126,37 +126,68 @@ describe('UserDataAccess', function() {
         		done();
         	});
         });
-        it('throws exception if an internal mongodb error occurred', function() {
+        it('throws exception if an internal mongodb error occurred', function(done) {
+        	connectionMock.users.find = createFind('Database not available.');
             assert.throws(function() {
-            	
+            	repository.byGoogleIdentifier('identifier', function(result) {
+            		// This callback should not be called, instead an exception
+            		// should be thrown by the access layer in case of error.
+            		done();
+            	});
             });
         });
     });
     
     describe('byFacebookIdentifier', function() {
-        it('returns a user if found', function() {
-            
+        it('returns a user if found', function(done) {
+        	connectionMock.users.find = createFind(createResult(1));
+        	repository.byFacebookIdentifier('identifier', function(result) {
+        		assert.ok(result instanceof User.class);
+        		done();
+        	});
         });
-        it('returns null if user was not found', function() {
-        	
+        it('returns null if user was not found', function(done) {
+        	repository.byFacebookIdentifier('identifier', function(result) {
+        		assert.strictEqual(result, null);
+        		done();
+        	});
         });
-        it('throws exception if an internal mongodb error occurred', function() {
+        it('throws exception if an internal mongodb error occurred', function(done) {
+        	connectionMock.users.find = createFind('Database not available.');
             assert.throws(function() {
-            	
+            	repository.byFacebookIdentifier('identifier', function(result) {
+            		// This callback should not be called, instead an exception
+            		// should be thrown by the access layer in case of error.
+            		done();
+            	});
             });
         });
     });
     
     describe('byGeoQuestIdentifier', function() {
-        it('returns a user if found', function() {
-            
+        it('returns a user if found', function(done) {
+        	connectionMock.users.find = createFind(createResult(1));
+        	repository.byGeoQuestIdentifier('identifier', function(result) {
+        		assert.ok(result instanceof User.class);
+        		done();
+        	});
         });
-        it('returns null if user was not found', function() {
-    		
+        it('returns null if user was not found', function(done) {
+        	repository.byGeoQuestIdentifier('identifier', function(result) {
+        		assert.strictEqual(result, null);
+        		done();
+        	});
         });
-        it('throws exception if an internal mongodb error occurred', function() {
+        it('throws exception if an internal mongodb error occurred', function(done) {
             assert.throws(function() {
-            	
+            	connectionMock.users.find = createFind('Database not available.');
+                assert.throws(function() {
+                	repository.byGeoQuestIdentifier('identifier', function(result) {
+                		// This callback should not be called, instead an exception
+                		// should be thrown by the access layer in case of error.
+                		done();
+                	});
+                });
             });
         });
     });
