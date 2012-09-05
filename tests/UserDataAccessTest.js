@@ -44,6 +44,7 @@ describe('UserDataAccess', function() {
 		result.count = function() {
 	    	return numberOfUsers;
 	    };
+	    return result;
 	};
 	
 	/**
