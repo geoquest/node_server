@@ -127,15 +127,16 @@ describe('UserDataAccess', function() {
         		done();
         	});
         });
-        it('throws exception if an internal mongodb error occurred', function(done) {
+        it('calls error handler if an internal mongodb error occurred', function(done) {
         	connectionMock.users.find = createFind('Database not available.');
-            assert.throws(function() {
-            	repository.byGoogleIdentifier('identifier', function(result) {
-            		// This callback should not be called, instead an exception
-            		// should be thrown by the access layer in case of error.
-            		done();
-            	});
-            });
+        	repository.addErrorHandler(function(error) {
+        		done();
+        	});
+        	repository.byGoogleIdentifier('identifier', function(result) {
+        		// This callback should not be called, instead the access 
+        		// layer should call the error handler callback.
+        		assert.fail('Result callback should not be called.');
+        	});
         });
     });
     
@@ -153,15 +154,16 @@ describe('UserDataAccess', function() {
         		done();
         	});
         });
-        it('throws exception if an internal mongodb error occurred', function(done) {
+        it('calls error handler if an internal mongodb error occurred', function(done) {
         	connectionMock.users.find = createFind('Database not available.');
-            assert.throws(function() {
-            	repository.byFacebookIdentifier('identifier', function(result) {
-            		// This callback should not be called, instead an exception
-            		// should be thrown by the access layer in case of error.
-            		done();
-            	});
-            });
+        	repository.addErrorHandler(function(error) {
+        		done();
+        	});
+        	repository.byFacebookIdentifier('identifier', function(result) {
+        		// This callback should not be called, instead the access 
+        		// layer should call the error handler callback.
+        		assert.fail('Result callback should not be called.');
+        	});
         });
     });
     
@@ -179,17 +181,16 @@ describe('UserDataAccess', function() {
         		done();
         	});
         });
-        it('throws exception if an internal mongodb error occurred', function(done) {
-            assert.throws(function() {
-            	connectionMock.users.find = createFind('Database not available.');
-                assert.throws(function() {
-                	repository.byGeoQuestIdentifier('identifier', function(result) {
-                		// This callback should not be called, instead an exception
-                		// should be thrown by the access layer in case of error.
-                		done();
-                	});
-                });
-            });
+        it('calls error handler if an internal mongodb error occurred', function(done) {
+        	connectionMock.users.find = createFind('Database not available.');
+        	repository.addErrorHandler(function(error) {
+        		done();
+        	});
+        	repository.byGeoQuestIdentifier('identifier', function(result) {
+        		// This callback should not be called, instead the access 
+        		// layer should call the error handler callback.
+        		assert.fail('Result callback should not be called.');
+        	});
         });
     });
     
