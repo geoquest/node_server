@@ -51,7 +51,6 @@ function authGQUser(user, pass, callback){
                         if ( loginGQUser.length > 0 ){
                             result = true;
                             fName = loginGQUser[0]["firstName"];
-                            //console.log(fName);
                             console.log("User Authenticated!");
                         } else {
                         	result = false;
@@ -113,7 +112,7 @@ function insertNewExternalUser(user, fName, lName, link, callback){
     	userAlreadyInDB(user, function(err, alreadyInDBresult){
     		
     		if(!alreadyInDBresult){
-		        db.REGISTERED.insert(
+    		    db.REGISTERED.insert(
 		                {
 		                    firstName:fName,
 		                    lastName:lName,
@@ -122,15 +121,17 @@ function insertNewExternalUser(user, fName, lName, link, callback){
 		                    password:""
 		                },
 		                function(err, extUserRegister){
+		                    console.log("Debug:" + extUserRegister);
 		                    if ( err || !extUserRegister ){
-		                        //console.log("Error accesing database");
+		                        console.log("Error accessing database");
 		                    } else { 
-		                        //console.log("EXTERNAL User is now saved in the DB.");
-		                        return true;
+		                        console.log("EXTERNAL User is now saved in the DB.");
+		                        result = true;
 		                    }
 		                    callback(err, result);
 		                }
 		        );
+		        
 	        } else {
 	        	//ExtUser already in DB
 	        	callback(err, result);
