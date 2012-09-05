@@ -7,6 +7,23 @@
  * var User = require("User");
  * var newUser = new User.class();
  * </code>
+ * 
+ * The user contains several convenience methods. 
+ * For example it is possible to set a password via
+ * setPassword():
+ * <code>
+ * user.setPassword('new secret password');
+ * </code>
+ * The user class automatically cares about hashing and salting
+ * the password.
+ * 
+ * To check if a password is correct, the hasPassword() function
+ * is used:
+ * <code>
+ * user.hasPassword('raw password');
+ * </code>
+ * The method returns true if the password is correct and false otherwise.
+ * Like setPassword() it handles the hashing and salting.
  */
 
 var check = require('validator').check;
