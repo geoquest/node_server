@@ -3,7 +3,7 @@ var db = require("../ServerComponents/GQUserDB");
 
 describe('Testing user insertions: GQUserDB', function(){
   describe('#insertGQUser()', function(){
-    it('Adding a new user to the DB. Should return true!', function(done){
+    it('Adding a new GQ user to the DB. Should return true!', function(done){
         var tentativeUser = "UserName00";
         var tentativePass = "whatever password";
         var tentativeFName = "First Name";
@@ -39,7 +39,7 @@ describe('Testing user insertions: GQUserDB', function(){
         );
     });
     
-    it('Adding an existing user to the DB. Should return false!', function(done){
+    it('Adding an existing GQ user to the DB. Should return false!', function(done){
         var tentativeUser = "UserName00";
         var tentativePass = "whatever password";
         var tentativeFName = "First Name";
@@ -68,7 +68,7 @@ describe('Testing user insertions: GQUserDB', function(){
         );
     });
     
-    it('Adding some user name that starts with "_". Should return false!', function(done){
+    it('Adding some GQ user name that starts with "_". Should return false!', function(done){
         var tentativeUser = "_UserName00";
         var tentativePass = "whatever password";
         var tentativeFName = "First Name";
@@ -119,7 +119,7 @@ describe('Testing user insertions: GQUserDB', function(){
                     tentativeFName,
                     tentativeLName,
                     tentativeEmail,
-                    function(err, insertUnderscoreUser){
+                    function(err, testDBConnection){
                         assert.equal(null, err);
                         done();
                     }
@@ -127,5 +127,36 @@ describe('Testing user insertions: GQUserDB', function(){
         });
     });
 
+  });
+  
+  describe('#insertNewExternalUser()', function(){
+    it('Adding some EXTERNAL user that respects the "_**_" pattern. Should return true!', function(){
+    var tentativeUser = "_FB_123";
+    var tentativeFName = "First Name";
+    var tentativeLName = "Last Name";
+    var tentativeLink = "http://www.facebook.com/123";
+
+    //before we test the authentication, make sure we have a constant testing environment
+    //\question not sure if that follows the correct paradigm
+
+    db.dropCollection();
+    console.log("###############################################");
+    db.createCollection();
+    console.log("?????????????????????????????????????????????????");
+    //now the test starts
+    //expect insertNewExternalUser == true;
+//    db.insertNewExternalUser(
+//            tentativeUser,
+//            tentativeFName,
+//            tentativeLName,
+//            tentativeLink,
+//            function(err, insertExternalCorrectUser){
+//                console.log("********************************************");
+//                assert.equal(null,err);
+//                assert.equal(true, insertExternalCorrectUser);
+//                done();
+//            }
+//    );
+    });
   });
 });

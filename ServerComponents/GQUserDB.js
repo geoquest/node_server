@@ -140,7 +140,7 @@ function insertNewExternalUser(user, fName, lName, link, callback){
 
     } else {
         console.log("Bad or illegal register user attempt!!!!!!!!!!!!!");
-        callback(err,result);
+        callback(null,result);
     }
 }
 module.exports.insertNewExternalUser = insertNewExternalUser;
