@@ -12,11 +12,13 @@ var app = express();
 
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
+  // Set the path to the view templates.
   app.set('views', __dirname + '/views');
+  // Use the EJS engine for template rendering.
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
   app.use(express.favicon());
-  app.use(express.cookieParser('scrt'));
+  app.use(express.cookieParser());
   app.use(express.session());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
