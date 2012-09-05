@@ -26,6 +26,13 @@ UserRepository = function(connection)
 	 * @var {Object}
 	 */
 	this.connection = connection;
+	
+	/**
+	 * Function callbacks that are invoked whenever an internal error occurs.
+	 * 
+	 * @var {Array} An array of error handler callbacks.
+	 */
+	this.errorHandlers = [];
 };
 
 /**
@@ -89,7 +96,7 @@ UserRepository.prototype.byGeoQuestIdentifier = function(identifier, callback)
  */
 UserRepository.prototype.addErrorHandler = function(callback)
 {
-	
+	this.errorHandlers.push(callback);
 };
 
 /**
@@ -109,11 +116,25 @@ UserRepository.prototype._createResultHandler = function(callback) {
 	var self = this;
 	return function(error, result) {
 		if (error) {
-			throw new Error(error);
+			self._notifyAboutError(error);
+			return;
 		}
 		// Convert result to model.
 		callback(self._jsonToUser(result));
 	};
+};
+
+/**
+ * Notifies all registered error callback about an error that occurred recently.
+ * 
+ * @param {String} error
+ */
+UserRepository.prototype._notifyAboutError = function(error) 
+{
+	for (var i = 0; i < this.errorHandlers.length; i++) {
+		// Pass the error to each handler.
+		this.errorHandlers[i](error);
+	}
 };
 
 /**
