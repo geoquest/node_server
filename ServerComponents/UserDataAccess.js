@@ -75,6 +75,24 @@ UserRepository.prototype.byGeoQuestIdentifier = function(identifier, callback)
 };
 
 /**
+ * Registers an additional error handler that is called whenever an
+ * internal MongoDB error occurs.
+ * 
+ * Example:
+ * <code>
+ * repository.addErrorHandler(function(error) {
+ *     // Handle error here.
+ * });
+ * </code>
+ * 
+ * @param {function} callback
+ */
+UserRepository.prototype.addErrorHandler = function(callback)
+{
+	
+};
+
+/**
  * Creates a callback that handles a MongoDB result.
  * 
  * Throws an exception if an error occurs. In case of
