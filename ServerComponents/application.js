@@ -23,6 +23,7 @@ app.configure(function() {
   // Parses the body, supports form handling.
   // http://www.senchalabs.org/connect/bodyParser.html
   app.use(express.bodyParser());
+  // Exposes the contents in the given directory to the public.
   app.use(express.static(__dirname + '/public'));
 
 });
