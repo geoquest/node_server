@@ -1,4 +1,4 @@
-var assert = require("assert")
+var assert = require("assert");
 var db = require("../ServerComponents/GQUserDB");
 
 describe('User Login Authentication: ', function(){
@@ -22,10 +22,11 @@ describe('User Login Authentication: ', function(){
     	        tentativeUser, 
     	        tentativePass, 
     	        function(err, authSuccessful, plm){
+                    assert.equal(null,err);
     	            assert.equal(true, authSuccessful);
-                    done();    	
+                    done();
     	        }
-    	 )
+    	 );
     });
 
     it('Should return false when feed in wrong password', function(done){
