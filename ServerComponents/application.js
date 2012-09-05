@@ -16,7 +16,6 @@ app.configure(function() {
   app.engine('html', require('ejs').renderFile);
   app.set("view options", {layout: false});
   app.use(express.favicon());
-  app.use(express.logger('dev'));
   app.use(express.cookieParser('scrt'));
   app.use(express.session());
   app.use(express.bodyParser());
