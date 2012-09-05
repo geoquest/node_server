@@ -1,6 +1,13 @@
 var assert = require("assert");
 var db = require("../ServerComponents/GQUserDB");
 
+function initDB(callback){
+
+db.dropCollection(
+      db.createCollection(callback)
+      );
+}
+
 describe('User Login Authentication: ', function(){
 	
   describe('Login as GQUser (authGQUser(user, pass, callback()))', function(){

@@ -1,6 +1,13 @@
 var assert = require("assert");
 var db = require("../ServerComponents/GQUserDB");
 
+//function initDB(callback){
+//    
+//    db.dropCollection(
+//            db.createCollection(callback)
+//            );
+//}
+
 describe('Testing user insertions: GQUserDB', function(){
   describe('#insertGQUser()', function(){
     it('Adding a new GQ user to the DB. Should return true!', function(done){
@@ -13,6 +20,7 @@ describe('Testing user insertions: GQUserDB', function(){
         //before we test the authentication, we insert a user manually
         //\question not sure if that follows the correct paradigm
 
+ //       initDB(function(){});
         db.dropCollection();
         db.createCollection();
         db.addTestingUserEntry(tentativeFName, tentativeLName, tentativeEmail, tentativeUser, tentativePass);

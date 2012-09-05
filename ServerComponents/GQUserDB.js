@@ -206,8 +206,7 @@ function dropCollection(){
 	db.REGISTERED.drop(function(err){
 		if(err){
 			console.log("Drop collection \"REGISTERED\" error ");
-		}
-		else{
+		} else {
 			console.log("Drop collection \"REGISTERED\" succeeds ");
 		}
 	});
@@ -221,8 +220,7 @@ function createCollection(){
 	db.createCollection("REGISTERED", function(err){
 		if(err){
 			console.log("Create collection \"REGISTERED\" error ");
-		}
-		else{
+		} else {
 			console.log("Create collection \"REGISTERED\" succeeds ");
 		}
 	});
