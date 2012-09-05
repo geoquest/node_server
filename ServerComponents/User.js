@@ -255,4 +255,15 @@ User.prototype.getEmail = function()
 	return this._email;
 };
 
+/**
+ * Converts a JSON object with user data into a real User object.
+ * 
+ * @param {Object} JSON object with user data.
+ * @return {User.class}
+ */
+var fromJSON = function(jsonObject) {
+	
+};
+
 exports.class = User;
+exports.fromJSON = fromJSON;
