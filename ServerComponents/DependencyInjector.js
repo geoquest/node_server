@@ -39,8 +39,11 @@
 
 Injector = function(dependencies) 
 {
-	
-}
+	if ((typeof dependencies) !== 'object') {
+		throw new Error('Object with dependencies expected, but received: ' + (typeof dependencies));
+	}
+	this._dependencies = dependencies;
+};
 
 /**
  * Injects dependencies into the provided object.
@@ -54,7 +57,23 @@ Injector = function(dependencies)
  */
 Injector.prototype.inject = function(object) 
 {
-	
+	if ((typeof object) !== 'object') {
+		throw new Error('Expected object to inject into, but received ' + (typeof object[hook]));
+	}
+	for (var hook in this._dependencies) {
+		if (!object.hasOwnProperty(hook)) {
+			// This dependency is not needed, therefore proceed.
+			continue;
+		}
+		if ((typeof object[hook]) !== 'function') {
+			throw new Error('Cannot inject via hook. Expected function, but property is of type ' + typeof object[hook]);
+		}
+		// Create the dependency...
+		var dependency = this._dependencies[hook]();
+		// ... and inject it.
+		object[hook](dependency);
+	}
+	return object;
 };
 
 exports.class = Injector;
