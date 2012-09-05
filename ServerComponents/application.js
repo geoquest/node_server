@@ -19,6 +19,8 @@ app.configure(function() {
   app.set("view options", {layout: false});
   app.use(express.cookieParser());
   app.use(express.session());
+  // Parses the body, supports form handling.
+  // http://www.senchalabs.org/connect/bodyParser.html
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/public'));
 
