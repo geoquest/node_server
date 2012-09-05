@@ -145,18 +145,18 @@ describe('Testing user insertions: GQUserDB', function(){
     console.log("?????????????????????????????????????????????????");
     //now the test starts
     //expect insertNewExternalUser == true;
-//    db.insertNewExternalUser(
-//            tentativeUser,
-//            tentativeFName,
-//            tentativeLName,
-//            tentativeLink,
-//            function(err, insertExternalCorrectUser){
-//                console.log("********************************************");
-//                assert.equal(null,err);
-//                assert.equal(true, insertExternalCorrectUser);
-//                done();
-//            }
-//    );
+    db.insertNewExternalUser(
+            tentativeUser,
+            tentativeFName,
+            tentativeLName,
+            tentativeLink,
+            function(err, insertExternalCorrectUser){
+                console.log("********************************************");
+                assert.equal(null,err);
+                assert.equal(true, insertExternalCorrectUser);
+                done();
+            }
+    );
     });
   });
 });
