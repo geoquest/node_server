@@ -33,6 +33,7 @@ describe('Testing user insertions: GQUserDB', function(){
                 newLName,
                 newEmail,
                 function(err, insertNewUserToDB){
+                    assert.equal(null, err);
                     assert.equal(true, insertNewUserToDB);
                     done();
                 }
@@ -62,6 +63,7 @@ describe('Testing user insertions: GQUserDB', function(){
                 tentativeLName,
                 tentativeEmail,
                 function(err, insertTentativeUserToDB){
+                    assert.equal(null, err);
                     assert.equal(false, insertTentativeUserToDB);
                     done();
                 }
@@ -90,6 +92,7 @@ describe('Testing user insertions: GQUserDB', function(){
                 tentativeLName,
                 tentativeEmail,
                 function(err, insertUnderscoreUser){
+                    assert.equal(null, err);
                     assert.equal(false, insertUnderscoreUser);
                     done();
                 }
@@ -130,30 +133,58 @@ describe('Testing user insertions: GQUserDB', function(){
   });
   
   describe('#insertNewExternalUser()', function(){
-    it('Adding some EXTERNAL user that respects the "_**_" pattern. Should return true!', function(){
-    var tentativeUser = "_FB_123";
-    var tentativeFName = "First Name";
-    var tentativeLName = "Last Name";
-    var tentativeLink = "http://www.facebook.com/123";
-
-    //before we test the authentication, make sure we have a constant testing environment
-    //\question not sure if that follows the correct paradigm
-
-    db.dropCollection();
-    db.createCollection();
-    //now the test starts
-    //expect insertNewExternalUser == true;
-    db.insertNewExternalUser(
-            tentativeUser,
-            tentativeFName,
-            tentativeLName,
-            tentativeLink,
-            function(err, insertExternalCorrectUser){
-                assert.equal(null,err);
-                assert.equal(true, insertExternalCorrectUser);
-                done();
-            }
-    );
+    it('Adding some EXTERNAL user that respects the "_**_" pattern. Should return true!', function(done){
+        var tentativeFBUser = "_FB_123";
+        var tentativeFBFName = "First Name";
+        var tentativeFBLName = "Last Name";
+        var tentativeFBLink = "http://www.facebook.com/123";
+    
+        //before we test the authentication, make sure we have a constant testing environment
+        //\question not sure if that follows the correct paradigm
+    
+        db.dropCollection();
+        db.createCollection();
+        
+        //now the test starts
+        //expect insertNewExternalUser == true;
+        db.insertNewExternalUser(
+                tentativeFBUser,
+                tentativeFBFName,
+                tentativeFBLName,
+                tentativeFBLink,
+                function(err, insertExternalCorrectUser){
+                    assert.equal(null,err);
+                    assert.equal(true, insertExternalCorrectUser);
+                    done();
+                }
+        );
+    });
+    
+    it('Adding some EXTERNAL user that violates the "_**_" pattern (_**?). Should return false!', function(done){
+        var illegal1FBUser = "_FB$123";
+        var illegal1FBFName = "First Name";
+        var illegal1FBLName = "Last Name";
+        var illegal1FBLink = "http://www.facebook.com/123";
+    
+        //before we test the authentication, make sure we have a constant testing environment
+        //\question not sure if that follows the correct paradigm
+    
+        db.dropCollection();
+        db.createCollection();
+        
+        //now the test starts
+        //expect insertNewExternalUser == true;
+        db.insertNewExternalUser(
+                illegal1FBUser,
+                illegal1FBFName,
+                illegal1FBLName,
+                illegal1FBLink,
+                function(err, insertExternalCorrectUser){
+                    assert.equal(null,err);
+                    assert.equal(false, insertExternalCorrectUser);
+                    done();
+                }
+        );
     });
   });
 });
