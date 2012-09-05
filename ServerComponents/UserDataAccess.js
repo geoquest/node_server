@@ -41,7 +41,6 @@ UserRepository.prototype.byGoogleIdentifier = function(identifier, callback)
 	
 };
 
-
 /**
  * Searches for a user with the given Facebook identifier.
  * 

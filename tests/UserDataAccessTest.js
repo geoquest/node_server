@@ -47,22 +47,42 @@ describe('UserDataAccess', function() {
 	};
 	
 	/**
+	 * Creates a simulated find method.
+	 * 
+	 * If a string is provided then an error will be
+	 * simulated. Otherwise the given result will be 
+	 * returned.
+	 * 
+	 * @param {Object}|{String} Result or error message.
+	 * @return {function}
+	 */
+	var createFind = function(result) {
+		/**
+		 * Simulates the find() function of MongoDB.
+		 * 
+		 * @param {Object} query JSON object that specifies the query criteria.
+		 * @param {function} callback Callback that receives an error and the result.
+		 */
+		var find = function(query, callback) {
+			if ((typeof result) === 'string') {
+				// Simulate an error.
+				callback(result, createResult(0));
+			} else {
+				// Simulate a returned collection.
+				callback(null, result);
+			}
+		};
+		return find;
+	};
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
 		connectionMock = {
 			users: {
-				/**
-				 * Simulates the find() function of MongoDB.
-				 * 
-				 * @param {Object} query JSON object that specifies the query criteria.
-				 * @param {function} callback Callback that receives an error and the result.
-				 */
-				find: function(query, callback) {
-					// Simulate an empty result per default.
-					var result = createResult(0);
-					callback(null, result);
-				}
+				// Simulates an empty result set per default.
+				find: createFind(createResult(0))
 			}
 		};
 		repository =  new Repository.class(connectionMock);
