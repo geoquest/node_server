@@ -110,7 +110,6 @@ app.configure(function() {
   app.use(postEveryauthMiddlewareHack());
 });
 
-
 //app.engine('.html', {
 //	  compile: function(str, options){
 //	    return function(locals) {
