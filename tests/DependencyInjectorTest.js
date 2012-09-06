@@ -126,7 +126,15 @@ describe('DependencyInjector', function() {
 			assert.equal(object.dependency.globalCounter, 1);
 		});
 		it('uses injection hooks that are defined in the prototype', function() {
-			
+			var Blueprint = function() {
+				this.name = null;
+			};
+			Blueprint.prototype.setName = function(name) {
+				this.name = name;
+			};
+			var object = new Blueprint();
+			injector.inject(object);
+			assert.equal(object.name, 'GeoQuest');
 		});
 	});
 	
