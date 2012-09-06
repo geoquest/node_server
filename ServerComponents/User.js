@@ -107,6 +107,11 @@ User = function()
 	this._validLoginTypes = ["Facebook", "Google", "GeoQuest"];	
 };
 
+User.prototype.getValidLoginTypes = function()
+{
+    return this._validLoginTypes;
+};
+
 /**
  * Sets the login type.
  * 

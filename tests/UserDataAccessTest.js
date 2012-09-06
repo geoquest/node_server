@@ -77,13 +77,35 @@ describe('UserDataAccess', function() {
 	};
 	
 	/**
+	 * Creates a simulated insert method.
+	 * 
+	 * When a string is provided instead of a JSON object an error will be simulated.
+	 * Otherwise it will pretend the JSON Object was successfully added to the DB.
+	 */
+	var createInsert = function(jsonObj) {
+	    /**
+	     * Simulates the insert() function in MongoDB.
+	     */
+	    var insert = function(query, callback) {
+	        if ((typeof jsonObj) === 'string') {
+	            //simulate err
+	            callback(jsonObj);
+	        } else {
+	            //simulate a successful insert
+	            callback(null);
+	        }
+	    };
+        return insert;
+	};
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
 		connectionMock = {
 			users: {
 				// Simulates an empty result set per default.
-				find: createFind(createResult(0))
+				find: createFind(createResult(0)),
 			}
 		};
 		repository =  new Repository.class(connectionMock);
@@ -191,6 +213,111 @@ describe('UserDataAccess', function() {
         		// layer should call the error handler callback.
         		assert.fail('Result callback should not be called.');
         	});
+        });
+    });
+    
+    describe('insertUser', function() {
+        it('works if the GQ user we try to insert is not already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.ok((typeof userAsJson) === 'object');
+                done();
+            };
+            var tempUser =  new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("Gigel");
+            tempUser.setPassword("whatever");
+            repository.insertUser(tempUser);
+        });
+        
+        it('works if the FB user we try to insert is not already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.ok((typeof userAsJson) === 'object');
+                done();
+            };
+            var tempUser =  new User.class();
+            tempUser.setLoginType("Facebook");
+            tempUser.setIdentifier("Gigel");
+            repository.insertUser(tempUser);
+        });
+        
+        it('works if the G+ user we try to insert is not already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.ok((typeof userAsJson) === 'object');
+                done();
+            };
+            var tempUser =  new User.class();
+            tempUser.setLoginType("Google");
+            tempUser.setIdentifier("Gigel");
+            repository.insertUser(tempUser);
+        });
+        
+        it('fails because the GQ user is already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.fail('Insert should not be called.');
+            };
+            repository.addErrorHandler(function(error) {
+                done();
+            });
+            connectionMock.users.find = createFind(createResult(1));
+            var tempUser =  new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("1");
+            tempUser.setPassword("whatever");
+            repository.insertUser(tempUser);
+        });
+        
+        it('fails because the FB user is already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.fail('Insert should not be called.');
+            };
+            repository.addErrorHandler(function(error) {
+                done();
+            });
+            connectionMock.users.find = createFind(createResult(1));
+            var tempUser =  new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("1");
+            repository.insertUser(tempUser);
+        });
+        
+        it('fails because the G+ user is already in the DB', function(done) {
+            connectionMock.users.insert = function(userAsJson) {
+                assert.fail('Insert should not be called.');
+            };
+            repository.addErrorHandler(function(error) {
+                done();
+            });
+            connectionMock.users.find = createFind(createResult(1));
+            var tempUser =  new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("1");
+            repository.insertUser(tempUser);
+        });
+        
+        it('fails to insert in the DB for unknown DB access error', function(done) {
+            connectionMock.users.insert = createInsert('Error inserting to DB. You may not have rights.');
+            repository.addErrorHandler(function(error) {
+                done();
+            });
+            var tempUser = new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("Gigel");
+            tempUser.setPassword("whatever");
+            repository.insertUser(tempUser);
+        });
+        it('does not notify error handlers if insert succeeds', function(done) {
+            connectionMock.users.insert = function(jsonObject, errorCallback) {
+                errorCallback(null);
+                done();
+            };
+            repository.addErrorHandler(function(error) {
+                assert.fail('Error handlers should not be notified on success.');
+            });
+            var tempUser = new User.class();
+            tempUser.setLoginType("GeoQuest");
+            tempUser.setIdentifier("Gigel");
+            tempUser.setPassword("whatever");
+            repository.insertUser(tempUser);
         });
     });
     
