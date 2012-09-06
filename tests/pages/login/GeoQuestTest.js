@@ -39,7 +39,14 @@ describe('GeoQuestLogin page', function() {
 		request = {
 			'method': 'GET',
 			'params': {},
-			'session': {}
+			'session': {},
+			// Simulate param() function.
+			'param': function(name) {
+				if (name in this.params) {
+					return this.params[name];
+				}
+				return undefined;
+			}
 		};
 		response = {
 			// The object remembers the last rendered template
