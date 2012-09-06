@@ -29,6 +29,16 @@ app.configure(function() {
   app.use(express.static(__dirname + '/public'));
 });
 
+var dependencies = {
+	'setDatabaseConnection': function() {
+		var dbconf = require('./conf/dbconf');
+		return require("mongojs").connect(dbconf.url, dbconf.collections);
+	}
+};
+var DependencyInjector = require('./DependencyInjector');
+var injector = new DependencyInjector.class(dependencies);
+
+
 var pages = require(__dirname + '/conf/pages');
 for (var route in pages) {
 	var pageInfo = pages[route];
@@ -43,8 +53,8 @@ for (var route in pages) {
 	var handler = function(pageInfo) {
 		return function(request, response) {
 			var module = require(__dirname + '/pages/' + pageInfo.module);
-			console.log(module);
 			var page = new module.class();
+			injector.inject(page);
 			page.handleRequest(request, response);
 		};
 	}(pageInfo);
