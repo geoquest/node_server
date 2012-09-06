@@ -19,7 +19,7 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
 	if (request.method === 'GET') {
 		var params = { title: 'Log In' , msg: 'login using your GeoQuest account'};
-		response.render('login', params);
+		response.render('login.ejs', params);
 	}
 	if (request.method === 'POST') {
 		var username = request.param('username');
