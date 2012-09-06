@@ -61,7 +61,7 @@ Injector.prototype.inject = function(object)
 		throw new Error('Expected object to inject into, but received ' + (typeof object[hook]));
 	}
 	for (var hook in this._dependencies) {
-		if (!object.hasOwnProperty(hook)) {
+		if ((typeof object[hook]) === 'undefined') {
 			// This dependency is not needed, therefore proceed.
 			continue;
 		}
