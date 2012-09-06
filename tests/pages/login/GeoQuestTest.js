@@ -12,10 +12,21 @@ describe('GeoQuestLogin page', function() {
 	var page = null;
 	
 	/**
+	 * A simulated User repository.
+	 * 
+	 * @var {Object}
+	 */
+	var userRepository = null;
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
+		userRepository = {
+			
+		};
 		page = new GeoQuestLogin.class();
+		page.setUserRepository(userRepository);
 	});
 	
 	/**
@@ -23,6 +34,7 @@ describe('GeoQuestLogin page', function() {
 	 */
 	afterEach(function() {
 		page = null;
+		userRepository = null;
 	});
 	
 	describe('constructor', function() {
