@@ -192,8 +192,6 @@ app.get('/', function(req,res){
 //shubham End
 
 
-
-
 app.get('/home', require('./routes/home').home);
 app.get('/login', require('./routes/login').login);
 //app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
@@ -204,10 +202,13 @@ app.get('/home/logout', require('./routes/logout').logout);
 
 app.post('/signup', require('./routes/signup').handleSignupPost);
 app.get('/signup/geoquestUser', require('./routes/signup').signup);
-app.post('/login', require('./routes/login').handleLoginPost);
+app.post('/l', require('./routes/login').handleLoginPost);
 
 
-//everyauth.helpExpress(app); //deprecated. Now not needed
+app.get('/upload', require('./routes/upload').uploadGameForm);
+app.post('/upload', require('./routes/upload').uploadGame);
+
+//everyauth.helpExpress(app); //deprecated. oginNow not needed
 
 app.listen(3000);
 
