@@ -20,7 +20,7 @@ app.configure(function() {
   // Provides access to cookies as part of the request object.
   app.use(express.cookieParser());
   // Provides some basic session handling in memory.
-  app.use(express.session());
+  app.use(express.session({'secret': 'gdsdggf;aad{a#'}));
   // Parses the body, supports form handling.
   // http://www.senchalabs.org/connect/bodyParser.html
   app.use(express.bodyParser());
