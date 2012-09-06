@@ -1,6 +1,6 @@
 var assert = require("assert");
-
-var GeoQuestLogin = require("../../../ServerComponents/pages/login/GeoQuest.js");
+var User = require("../../../ServerComponents/User");
+var GeoQuestLogin = require("../../../ServerComponents/pages/login/GeoQuest");
 
 describe('GeoQuestLogin page', function() {
 	
@@ -23,7 +23,10 @@ describe('GeoQuestLogin page', function() {
 	 */
 	beforeEach(function() {
 		userRepository = {
-			
+			byGeoQuestIdentifier: function(identifier, callback) {
+				// Per default a miss is simulated: User is not in the database
+				callback(null);
+			}
 		};
 		page = new GeoQuestLogin.class();
 		page.setUserRepository(userRepository);
@@ -48,6 +51,9 @@ describe('GeoQuestLogin page', function() {
 			
 		});
 		it('does not search for user if GET request is handled', function() {
+			
+		});
+		it('passes provided username as GeoQuest identifier', function() {
 			
 		});
 		it('rejects credentials if user is not in the database', function() {
