@@ -174,6 +174,91 @@ describe('User', function() {
 				User.fromJSON('This is not valid');
 			});
 		});
-    }); 
+    });
+    
+    describe('toJSON', function() {
+        it('maps properties correctly (check if conversion is performed correctly)', function() {
+            user.setLoginType("GeoQuest");
+            user.setIdentifier("asdf");
+            user.setFirstname("IHate");
+            user.setLastname("LULU!");
+            user.setPassword("whatever");
+            user.setEmail("and@lsoBu.bu");
+            var newJSONObj = user.toJSON();
+            assert.equal("GeoQuest",newJSONObj["loginType"]);
+            assert.equal("asdf",newJSONObj["identifier"]);
+            assert.equal("IHate",newJSONObj["firstname"]);
+            assert.equal("LULU!",newJSONObj["lastname"]);
+            assert.equal("and@lsoBu.bu",newJSONObj["email"]);
+        });
+
+        it('returns a JSON object (compare with inconsistent data) (should be "!=")', function() {
+            user.setLoginType("GeoQuest");
+            user.setIdentifier("asdf");
+            user.setFirstname("IHate");
+            user.setLastname("LULU!");
+            user.setPassword("whatever");
+            user.setEmail("and@lsoBu.bu");
+            var newJSONObj = user.toJSON();
+            assert.notEqual("GeoQuestpliuhnj",newJSONObj["loginType"]);
+        });
+        
+        it('throw error if invalid login type is provided', function(){
+            assert.throws(function() {
+                user.setLoginType("Twitter");
+                user.setIdentifier("asdf");
+                user.setFirstname("IHate");
+                user.setLastname("LULU!");
+                user.setPassword("whatever");
+                user.setEmail("and@lsoBu.bu");
+                user.toJSON();
+            });
+        });
+        
+        it('throw error if no login type is provided', function(){
+            assert.throws(function() {
+                user.setIdentifier("asdf");
+                user.setFirstname("IHate");
+                user.setLastname("LULU!");
+                user.setPassword("whatever");
+                user.setEmail("and@lsoBu.bu");
+                user.toJSON();
+            });
+        });
+        
+        it('throw error if no identifier is provided', function(){
+            assert.throws(function() {
+                user.setLoginType("GeoQuest");
+                user.setFirstname("IHate");
+                user.setLastname("LULU!");
+                user.setPassword("whatever");
+                user.setEmail("and@lsoBu.bu");
+                user.toJSON();
+            });
+        });
+
+        it('throw error if password is not provided for GQ User', function(){
+            assert.throws(function() {
+                user.setLoginType("GeoQuest");
+                user.setIdentifier("asdf");
+                user.setFirstname("IHate");
+                user.setLastname("LULU!");
+                user.setEmail("and@lsoBu.bu");
+                user.toJSON();
+            });
+        });
+        
+        it('works if password is not provided for other than GQ User', function(){
+            assert.doesNotThrow(function() {
+                user.setLoginType("Facebook");
+                user.setIdentifier("asdf");
+                user.setFirstname("IHate");
+                user.setLastname("LULU!");
+                user.setEmail("and@lsoBu.bu");
+                user.toJSON();
+            });
+        });
+        
+    });
     
 });

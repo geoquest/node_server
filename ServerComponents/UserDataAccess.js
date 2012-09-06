@@ -83,6 +83,42 @@ UserRepository.prototype.byGeoQuestIdentifier = function(identifier, callback)
 	this.connection.users.find(query, this._createResultHandler(callback));
 };
 
+
+
+
+/**
+ * 
+ * @param user - user Object
+ * @throws Error in case the user is already in the Database
+ */
+UserRepository.prototype.insertUser = function(user){
+    var self = this;
+    var insertCallback = function(queryResult){
+        if (queryResult == null){
+            var json = user.toJSON();
+            self.connection.users.insert(json, function(err){
+                if (err) {
+                    self._notifyAboutError(err);
+                }
+            });
+        } else {
+            self._notifyAboutError('User is already in the DB.');
+        }
+    };
+    
+    switch(user.getLoginType()){
+        case user.getValidLoginTypes()[0]: 
+            this.byFacebookIdentifier(user.getIdentifier(), insertCallback);
+            break;
+        case user.getValidLoginTypes()[1]:
+            this.byGoogleIdentifier(user.getIdentifier(), insertCallback);
+            break;
+        case user.getValidLoginTypes()[2]: 
+            this.byGeoQuestIdentifier(user.getIdentifier(), insertCallback);
+            break;
+    }
+};
+
 /**
  * Registers an additional error handler that is called whenever an
  * internal MongoDB error occurs.
@@ -154,5 +190,6 @@ UserRepository.prototype._jsonToUser = function(result) {
 	}
 	return new User.fromJSON(result[0]);
 };
+
 
 exports.class = UserRepository;

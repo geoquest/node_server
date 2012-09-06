@@ -29,6 +29,20 @@
 var check = require('validator').check;
 var crypto = require('crypto');
 
+/**
+ * The mapping between the attributes of this object and the attributes of the JSON Representation.
+ */
+var mapping = {
+        // Expected JSON property -> private User attributes 
+        'loginType': '_loginType',
+        'identifier': '_identifier',
+        'firstname': '_firstname',
+        'lastname': '_lastname',
+        'password': '_password',
+        'email': '_email'
+        
+    };
+
 User = function() 
 {
 	/**
@@ -91,6 +105,11 @@ User = function()
 	 * @var {String[]}
 	 */
 	this._validLoginTypes = ["Facebook", "Google", "GeoQuest"];	
+};
+
+User.prototype.getValidLoginTypes = function()
+{
+    return this._validLoginTypes;
 };
 
 /**
@@ -273,6 +292,28 @@ User.prototype.getEmail = function()
 };
 
 /**
+ * Creates a JSON Object describing this User Object.
+ * @returns a JSON Object
+ * @throws Error if: required fields are wrong or not properly set
+ */
+User.prototype.toJSON = function(){
+    if (this._validLoginTypes.indexOf(this._loginType) === -1){
+        throw new Error('Invalid login type');
+    }
+    if (null == this._identifier){
+        throw new Error('identifier must not be null');
+    }
+    if ((this._loginType === this._validLoginTypes[2]) && (this._password == null)){
+        throw new Error('GeoQuest users MUST have a password');
+    }
+    var jsonObj = {};
+    for (var property in mapping){
+        jsonObj[property] = this[mapping[property]];
+    }
+    return jsonObj;
+};
+
+/**
  * Converts a JSON object with user data into a real User object.
  * 
  * @param {Object} JSON object with user data.
@@ -283,16 +324,6 @@ var fromJSON = function(jsonObject) {
 	if ((typeof jsonObject) !== 'object') {
 		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
 	}
-	var mapping = {
-	    // Expected JSON property -> private User attribute 
-		'loginType': '_loginType',
-		'identifier': '_identifier',
-		'firstname': '_firstname',
-		'lastname': '_lastname',
-		'password': '_password',
-		'email': '_email'
-		
-	};
 	var user = new User();
 	for (var property in mapping) {
 		if (!jsonObject.hasOwnProperty(property)) {
