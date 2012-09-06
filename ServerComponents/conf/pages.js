@@ -4,26 +4,26 @@
  * The route is used as property name. The value is an object that specifies
  * the page module that handles the incoming requests.
  * 
- * The page property defines the path to the module that handles the
+ * The "module" property defines the path to the module that handles the
  * requests, relative to the pages directory:
  * <code>
  * {
  *     '/': {
- *         'page': 'start/home'
+ *         'module': 'start/Home'
  *     }
  * }
  * </code>
  */
 var pages = {
 	'/': {
-		'page': 'Home'
+		'module': 'Home'
 	},
 	'/signup': {
-		'page': 'SignUp'
+		'module': 'SignUp'
 	},
 	'/login': {
-		'page': 'login/GeoQuest'
+		'module': 'login/GeoQuest'
 	}
 };
 
-exports = pages;
+module.exports = pages;

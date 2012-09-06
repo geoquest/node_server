@@ -29,11 +29,27 @@ app.configure(function() {
   app.use(express.static(__dirname + '/public'));
 });
 
-app.get('/', require('./routes/login').loginWithFbGp);
-app.get('/login/geoquestUser', require('./routes/login').loginWithGQDB);
-app.get('/signup/geoquestUser', require('./routes/signup').signup);
-app.post('/signup', require('./routes/signup').handleSignupPost);
-app.post('/login', require('./routes/login').handleLoginPost);
+var pages = require(__dirname + '/conf/pages');
+for (var route in pages) {
+	var pageInfo = pages[route];
+	// Use a closure to create the handler function.
+	// The closure guarantees, that pageInfo contains 
+	// the correct value when the handler function is 
+	// called.
+	// Without the closure pageInfo would always contain
+	// the value of the last iteration.
+	// See http://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
+	// for a simple example of the problem and a simple solution.
+	var handler = function(pageInfo) {
+		return function(request, response) {
+			var module = require(__dirname + '/pages/' + pageInfo.module);
+			console.log(module);
+			var page = new module.class();
+			page.handleRequest(request, response);
+		};
+	}(pageInfo);
+	app.all(route, handler);
+}
 
 app.listen(3000);
 
