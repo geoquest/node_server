@@ -148,7 +148,7 @@ UserRepository.prototype._notifyAboutError = function(error)
  * @return {User.class}|null
  */
 UserRepository.prototype._jsonToUser = function(result) {
-	if (result.count() === 0) {
+	if (result.length === 0) {
 		// No user was found.
 		return null;
 	}
