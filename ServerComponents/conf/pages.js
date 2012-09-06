@@ -16,7 +16,7 @@
  */
 var pages = {
 	'/': {
-		'page': 'home'
+		'page': 'Home'
 	},
 	'/signup': {
 		'page': 'SignUp'
