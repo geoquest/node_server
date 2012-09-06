@@ -34,6 +34,10 @@ var dependencies = {
 	'setDatabaseConnection': function() {
 		var dbconf = require('./conf/dbconf');
 		return require("mongojs").connect(dbconf.url, dbconf.collections);
+	},
+	'setUserRepository': function() {
+		var UserRepository = require('./UserDataAccess');
+		return new UserRepository.class(this.setDatabaseConnection());
 	}
 };
 var DependencyInjector = require('./DependencyInjector');

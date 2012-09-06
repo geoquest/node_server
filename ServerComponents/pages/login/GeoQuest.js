@@ -2,17 +2,17 @@
 var UserRepository = require('../../UserDataAccess');
 
 GeoQuestLogin = function() {
-	this.connection = null;
+	this._userRepository = null;
 };
 
 /**
- * Receives the MongoDB connection and stores it for later usage.
+ * Receives the User Repository and stores it for later usage.
  * 
- * @param {Object}
+ * @param {UserDataAccess.class}
  */
-GeoQuestLogin.prototype.setDatabaseConnection = function(connection)
+GeoQuestLogin.prototype.setUserRepository = function(repository)
 {
-	this.connection = connection;
+	this._userRepository = repository;
 };
 
 GeoQuestLogin.prototype.handleRequest = function(request, response)
@@ -25,8 +25,7 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
 		var username = request.param('username');
         var rawPassword = request.param('password');
         
-        var repository = new UserRepository.class(this.connection);
-        repository.byGeoQuestIdentifier(username, function(userOrNull) {
+        this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
         		response.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});
         		return;
