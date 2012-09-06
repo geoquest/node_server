@@ -43,4 +43,22 @@ describe('GeoQuestLogin page', function() {
 		});
 	});
 	
+	describe('handleRequest', function() {
+		it('renders login form if GET request is handled', function() {
+			
+		});
+		it('does not search for user if GET request is handled', function() {
+			
+		});
+		it('rejects credentials if user is not in the database', function() {
+			
+		});
+		it('rejects credentials if password is not valid', function() {
+			
+		});
+		it('adds user to session if credentials are valid', function() {
+			
+		});
+	});
+	
 });
