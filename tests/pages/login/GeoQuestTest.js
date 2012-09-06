@@ -121,7 +121,7 @@ describe('GeoQuestLogin page', function() {
 			page.handleRequest(request, response);
 			assert.ok(!('user' in request.session));
 		});
-		it('rejects credentials if password is not valid', function() {
+		it('rejects credentials if password is not valid', function(done) {
 			request.method = 'POST';
 			request.params.username = 'max.mustermann';
 			request.params.password = 'secret';
@@ -139,7 +139,7 @@ describe('GeoQuestLogin page', function() {
 			page.handleRequest(request, response);
 			assert.ok(!('user' in request.session));
 		});
-		it('adds user to session if credentials are valid', function() {
+		it('adds user to session if credentials are valid', function(done) {
 			request.method = 'POST';
 			request.params.username = 'max.mustermann';
 			request.params.password = 'secret';
