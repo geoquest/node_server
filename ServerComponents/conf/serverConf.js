@@ -6,7 +6,7 @@ var serverConfiguration = {
     // The port the server listens on.
 	'port': 3000,
 	// Defines the template engine that is used.
-	'view engine': 'ejs',
+	'viewEngine': 'ejs',
 	// The directory that contains the view templates.
 	'views': __dirname + '/../views',
 	// Directory that contains public contents.

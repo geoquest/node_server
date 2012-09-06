@@ -11,12 +11,14 @@ var crypto = require('crypto');
 var express = require("express");
 var app = express();
 
+var serverConf = require('./conf/serverConf');
+
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   // Set the path to the view templates.
-  app.set('views', __dirname + '/views');
+  app.set('views', serverConf.views);
   // Use the EJS engine for template rendering.
-  app.set('view engine', 'ejs');
+  app.set('view engine', serverConf.viewEngine);
   // Provides access to cookies as part of the request object.
   app.use(express.cookieParser());
   // Provides some basic session handling in memory.
@@ -25,7 +27,7 @@ app.configure(function() {
   // http://www.senchalabs.org/connect/bodyParser.html
   app.use(express.bodyParser());
   // Exposes the contents in the given directory to the public.
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(serverConf.public));
 });
 
 var dependencies = {
@@ -60,6 +62,6 @@ for (var route in pages) {
 	app.all(route, handler);
 }
 
-app.listen(3000);
+app.listen(serverConf.port);
 
 module.exports = app;
