@@ -14,7 +14,7 @@ var app = express();
 var serverConf = require('./conf/serverConf');
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', serverConf.port);
   // Set the path to the view templates.
   app.set('views', serverConf.views);
   // Use the EJS engine for template rendering.
@@ -62,6 +62,6 @@ for (var route in pages) {
 	app.all(route, handler);
 }
 
-app.listen(serverConf.port);
+app.listen(app.get('port'));
 
 module.exports = app;
