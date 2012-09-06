@@ -39,11 +39,10 @@ describe('UserDataAccess', function() {
 				"email": "lulu@yahoo.com"
 			};
 		}
-		// Simulate the count() operation that is available
+		// Simulate the length property that is available
 		// on result collection.
-		result.count = function() {
-	    	return numberOfUsers;
-	    };
+		result.length = numberOfUsers;
+
 	    return result;
 	};
 	
