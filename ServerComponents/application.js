@@ -7,6 +7,7 @@
  * </code>
  */
 
+var crypto = require('crypto');
 var express = require("express");
 var app = express();
 
@@ -20,7 +21,7 @@ app.configure(function() {
   // Provides access to cookies as part of the request object.
   app.use(express.cookieParser());
   // Provides some basic session handling in memory.
-  app.use(express.session({'secret': 'gdsdggf;aad{a#'}));
+  app.use(express.session({'secret': crypto.randomBytes(64)}));
   // Parses the body, supports form handling.
   // http://www.senchalabs.org/connect/bodyParser.html
   app.use(express.bodyParser());
