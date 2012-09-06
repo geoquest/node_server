@@ -16,7 +16,7 @@ app.configure(function() {
   // Set the path to the view templates.
   app.set('views', __dirname + '/views');
   // Use the EJS engine for template rendering.
-  app.engine('html', require('ejs').renderFile);
+  app.set('view engine', 'ejs');
   app.set("view options", {layout: false});
   // Provides access to cookies as part of the request object.
   app.use(express.cookieParser());
