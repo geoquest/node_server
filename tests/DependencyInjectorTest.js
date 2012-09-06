@@ -125,6 +125,9 @@ describe('DependencyInjector', function() {
 			// Now the injected object should reflect that change:
 			assert.equal(object.dependency.globalCounter, 1);
 		});
+		it('uses injection hooks that are defined in the prototype', function() {
+			
+		});
 	});
 	
 });
