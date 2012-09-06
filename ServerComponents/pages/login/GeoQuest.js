@@ -32,9 +32,9 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
         	}
         	var user = userOrNull;
         	if (user.hasPassword(rawPassword)) {
-        		// Credentials are correct.
+        		// Credentials are correct, therefore store the user in the session.
+        		request.session.user = user;
         		response.render('login.ejs', { title: 'Log in Succeed.', msg: 'Hi, ' +  user.getFirstname() + '!'});
-        		// TODO: store in session, perhaps display another page
         	} else {
         		// Wrong password provided.
         		response.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});
