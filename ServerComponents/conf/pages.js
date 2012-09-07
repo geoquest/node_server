@@ -23,6 +23,9 @@ var pages = {
 	},
 	'/login': {
 		'module': 'login/GeoQuest'
+	},
+	'/upload': {
+		'module': 'Upload'
 	}
 };
 
