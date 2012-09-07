@@ -37,10 +37,18 @@ describe('SignUp page', function() {
 		};
 		
 		userRepository = {
+			user : null,
 			byGeoQuestIdentifier: function(identifier, callback) {
 				// Per default a miss is simulated: User is not in the database
 				callback(null);
+			},
+			addErrorHandler : function(handler){
+				//by default no error
+			},
+			insertUser : function(user){
+				this.user = user;
 			}
+		
 		};
 		
 		page = new SignUp.class();
@@ -90,8 +98,8 @@ describe('SignUp page', function() {
 			request.params.username = 'max.mustermann';
 			request.params.password = 'secret';
 			request.params.confirmPassword = 'secret';
-			request.params.firstName = 'fName',
-			request.params.lastName = 'lName',
+			request.params.fName = 'fName',
+			request.params.lName = 'lName',
 			request.params.email = 'agile@lab.com';
 			
 			userRepository.byGeoQuestIdentifier = function(identifier, callback) {
@@ -111,7 +119,40 @@ describe('SignUp page', function() {
 			
 		});
 		
+		it('should render SignUp Succeed. if insertion succeed', function(){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.fName = 'fName',
+			request.params.lName = 'lName',
+			request.params.email = 'agile@lab.com';
+						
+			page.handleRequest(request, response);
+			assert.equal('signupResult.ejs', response.template);
+			assert.deepEqual({ title: 'SignUp Succeed.', result: 'Hi, ' +  request.params.fName + '!'}, response.templateVars);
+			
+		});
 		
+		it('should render err when theres error from userRepository', function(done){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.fName = 'fName',
+			request.params.lName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			//simulate err
+			userRepository.addErrorHandler = function(errorHandler){
+				errorHandler('error msg');
+				assert.equal('signupResult.ejs', response.template);
+				assert.deepEqual({ title: 'SignUp Failed.', result: 'Please retry.'}, response.templateVars);
+				done();
+			}
+			
+			page.handleRequest(request, response);			
+		});
 		
 	});
 	
