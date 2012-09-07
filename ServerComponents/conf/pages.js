@@ -23,6 +23,11 @@ var pages = {
 	},
 	'/login': {
 		'module': 'login/GeoQuest'
+	},
+	// Register a catch-all route that handles requests that point
+	// to not existing pages.
+	'*': {
+		'module': 'error/not-found'
 	}
 };
 
