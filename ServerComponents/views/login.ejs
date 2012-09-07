@@ -6,20 +6,14 @@
 	if (window.location.hash == '#_=_')
 		window.location.hash = '';
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
 <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 
 </head>
 <body>
 
 	<div data-role="page" id="page1">
-		<div data-role="content" style="padding: 15px">
-			<h1><%= title %></h1>
-			<h3><%= msg %></h3>
+		<div data-role="content">
+			<h1>GeoQuest Login</h1>
 			<form action="/login" method="POST">
 				<div data-role="fieldcontain">
 					<fieldset data-role="controlgroup">
@@ -40,7 +34,7 @@
 		</div>
 
 		<hr />
-		<div data-role="content" style="padding: 15px">
+		<div data-role="content">
 			<h3>
 				Or Login via &nbsp <a href='/auth/google' rel='external'> <img
 					alt="Google Login" src="/images/GoogleLogo.png" />
