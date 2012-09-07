@@ -24,9 +24,14 @@ var pages = {
 	'/login': {
 		'module': 'login/GeoQuest'
 	},
+
 	'/login/facebook': {
 	    'module': 'login/Facebook'
 	},
+
+	// Register a catch-all route that handles requests that point
+	// to not existing pages.
+
 	'*': {
 		'module': 'error/NotFound'
 	}

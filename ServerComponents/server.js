@@ -63,31 +63,33 @@ var usersByFbId = {};
 var usersByGoogleId = {};
 var usersByGoogleHybridId = {};
 
-everyauth.everymodule
-  .findUserById( function (id, callback) {
-    callback(null, usersById[id]);
-  });
+////everyauth.everymodule
+////  .findUserById( function (id, callback) {
+////      console.log("facebook/handleRequest everymodule callback reached");
+////
+////    callback(null, usersById[id]);
+////  });
+////
+////everyauth.facebook
+////    .appId(extAuthConf.fb.appId)
+////    .appSecret(extAuthConf.fb.appSecret)
+////    .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
+////      return usersByFbId[fbUserMetadata.id] ||
+////        (usersByFbId[fbUserMetadata.id] = addUser('facebook', fbUserMetadata));
+////    })
+////    .redirectPath('/');
+//
 
-everyauth
-  .facebook
-    .appId(extAuthConf.fb.appId)
-    .appSecret(extAuthConf.fb.appSecret)
-    .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-      return usersByFbId[fbUserMetadata.id] ||
-        (usersByFbId[fbUserMetadata.id] = addUser('facebook', fbUserMetadata));
-    })
-    .redirectPath('/');
-
-everyauth.google
-  .appId(extAuthConf.google.clientId)
-  .appSecret(extAuthConf.google.clientSecret)
-  .scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-  .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-    googleUser.refreshToken = extra.refresh_token;
-    googleUser.expiresIn = extra.expires_in;
-    return usersByGoogleId[googleUser.id] || (usersByGoogleId[googleUser.id] = addUser('google', googleUser));
-  })
-  .redirectPath('/');
+//everyauth.google
+//    .appId(extAuthConf.google.clientId)
+//    .appSecret(extAuthConf.google.clientSecret)
+//    .scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
+//    .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
+//    googleUser.refreshToken = extra.refresh_token;
+//    googleUser.expiresIn = extra.expires_in;
+//    return usersByGoogleId[googleUser.id] || (usersByGoogleId[googleUser.id] = addUser('google', googleUser));
+//  })
+//  .redirectPath('/');
 
 var express = require("express");
 var app = express();
