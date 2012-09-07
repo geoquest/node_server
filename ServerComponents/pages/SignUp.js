@@ -21,7 +21,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	var self = this;
 	
 	if (request.method === 'GET') {
-		response.render('signup.ejs');
+		response.render('signup.ejs', {msg: "Please fill out the following fields."});
 	}
 	if (request.method === 'POST') {
 				
@@ -51,23 +51,30 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 					self._userRepository.addErrorHandler(function(error) {
 						console.log("SignUp failed.");
 						console.log(error);
-		                response.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'Please retry.'});
+		                response.render('signup.ejs', {msg: "Signup failed. Please retry."});
 		            });
 					
 					self._userRepository.insertUser(newGQUser);
 		            console.log("SignUp for a new GQUser done");
-		            response.render('signupResult.ejs', { title: 'SignUp Succeed.', result: 'Hi, ' +  newGQUser.getFirstname() + '!'});            
+		            
+	        		request.session.user = newGQUser;
+	        		response.cookie('user', newGQUser.getIdentifier(), {maxAge : 900000});
+	        		response.cookie('pass', newGQUser.getPassword(), {maxAge : 900000});
+		            
+	        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + username + '!'};
+	        		response.render('home.ejs', params);
+		          
 	    		}
 	    		else {
 	    			//user already in DB
                     console.log("SignUp failed.");
-                    response.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'This Username already existed.'});
+                    response.render('signup.ejs', {msg: "Username already exists. Please pick another username."});
 	    			
 	    		}
 	    	});            
 	    }
 	    else{
-	    	response.render('signupResult.ejs', { title: 'Password not matched.', result: 'Please retry.'});
+	    	response.render('signup.ejs', {msg: "Password not matched. Please retry."});
 	    }        
 	}
 };
