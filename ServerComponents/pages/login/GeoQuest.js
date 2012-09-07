@@ -25,6 +25,7 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
 		var username = request.param('username');
         var rawPassword = request.param('password');
         
+        
         this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
         		response.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});
