@@ -145,9 +145,10 @@ describe('SignUp page', function() {
 			
 			//simulate err
 			userRepository.addErrorHandler = function(errorHandler){
-				errorHandler('error msg');
+				var errmsg = 'error msg';
+				errorHandler(errmsg);
 				assert.equal('signupResult.ejs', response.template);
-				assert.deepEqual({ title: 'SignUp Failed.', result: 'Please retry.'}, response.templateVars);
+				assert.deepEqual({ title: 'SignUp Failed.', result: errmsg + 'Please retry.'}, response.templateVars);
 				done();
 			}
 			

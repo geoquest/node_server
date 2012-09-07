@@ -49,18 +49,18 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 					newGQUser.setEmail(email);
 					
 					self._userRepository.addErrorHandler(function(error) {
-						console.log("SignUp failed.");
-						console.log(error);
-		                response.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'Please retry.'});
+						//console.log("SignUp failed.");
+						//console.log(error);
+		                response.render('signupResult.ejs', { title: 'SignUp Failed.', result: error + 'Please retry.'});
 		            });
 					
 					self._userRepository.insertUser(newGQUser);
-		            console.log("SignUp for a new GQUser done");
+		            //console.log("SignUp for a new GQUser done");
 		            response.render('signupResult.ejs', { title: 'SignUp Succeed.', result: 'Hi, ' +  newGQUser.getFirstname() + '!'});            
 	    		}
 	    		else {
 	    			//user already in DB
-                    console.log("SignUp failed.");
+                    //console.log("SignUp failed.");
                     response.render('signupResult.ejs', { title: 'SignUp Failed.', result: 'This Username already existed.'});
 	    			
 	    		}
