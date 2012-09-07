@@ -2,7 +2,7 @@
 //var UserRepository = require('../../UserDataAccess');
 var User = require("../User");
 
-GeoQuestLogout = function() {
+GeoQuestSignUp = function() {
 	this._userRepository = null;
 };
 
@@ -11,12 +11,12 @@ GeoQuestLogout = function() {
  * 
  * @param {UserDataAccess.class}
  */
-GeoQuestLogout.prototype.setUserRepository = function(repository)
+GeoQuestSignUp.prototype.setUserRepository = function(repository)
 {
 	this._userRepository = repository;
 };
 
-GeoQuestLogout.prototype.handleRequest = function(request, response)
+GeoQuestSignUp.prototype.handleRequest = function(request, response)
 {
 	var self = this;
 	
@@ -72,4 +72,4 @@ GeoQuestLogout.prototype.handleRequest = function(request, response)
 	}
 };
 
-exports.class = GeoQuestLogout;
+exports.class = GeoQuestSignUp;
