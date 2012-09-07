@@ -1,0 +1,46 @@
+var assert = require("assert");
+
+var GeoQuestLogin = require("../../../ServerComponents/pages/login/GeoQuest.js");
+
+describe('GeoQuestLogin page', function() {
+	
+	/**
+	 * System under test.
+	 * 
+	 * @var {GeoQuestLogin.class}
+	 */
+	var page = null;
+	
+	/**
+	 * A simulated User repository.
+	 * 
+	 * @var {Object}
+	 */
+	var userRepository = null;
+	
+	/**
+	 * Is executed before each test runs and sets up the environment.
+	 */
+	beforeEach(function() {
+		userRepository = {
+			
+		};
+		page = new GeoQuestLogin.class();
+		page.setUserRepository(userRepository);
+	});
+	
+	/**
+	 * Removes instances that were created for testing after each test.
+	 */
+	afterEach(function() {
+		page = null;
+		userRepository = null;
+	});
+	
+	describe('constructor', function() {
+		it('should create a page instance', function() {
+			assert.ok(page instanceof GeoQuestLogin.class);
+		});
+	});
+	
+});

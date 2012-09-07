@@ -15,7 +15,7 @@ describe('User', function() {
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
-		user =  new User.class();
+		user = new User.class();
 	});
 	
 	/**
