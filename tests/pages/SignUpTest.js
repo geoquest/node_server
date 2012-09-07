@@ -28,8 +28,11 @@ describe('SignUp page', function() {
 			// The object remembers the last rendered template
 			// for later checks.
 			template: null,
-			render: function(template) {
+			//simulate variables in template
+			templateVars: null, 
+			render: function(template, templateVars) {
 				this.template = template;
+				this.templateVars = templateVars;
 			}
 		};
 		
@@ -54,11 +57,47 @@ describe('SignUp page', function() {
 		request = null;
 	});
 
+	describe('constructor', function() {
+		it('should create a page instance', function() {
+			assert.ok(page instanceof SignUp.class);
+		});
+	});
+	
 	describe('handleRequest', function() {
 		
 		it('render SignUp form for GET request', function(){
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);			
+		});
+		
+		it('should render "Password not matched" if confirmPassword not matched', function(){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'notMatched';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			page.handleRequest(request, response);
+			assert.equal('signupResult.ejs', response.template);
+			assert.deepEqual({ title: 'Password not matched.', result: 'Please retry.'}, response.templateVars);
+			
+		});
+		
+		it('should render "Password not matched" if confirmPassword not matched', function(){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'notMatched';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			page.handleRequest(request, response);
+			assert.equal('signupResult.ejs', response.template);
+			assert.deepEqual({ title: 'Password not matched.', result: 'Please retry.'}, response.templateVars);
+			
 		});
 		
 	});
