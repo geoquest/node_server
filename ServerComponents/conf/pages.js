@@ -23,6 +23,12 @@ var pages = {
 	},
 	'/login': {
 		'module': 'login/GeoQuest'
+	},
+	'/login/facebook': {
+	    'module': 'login/Facebook'
+	},
+	'*': {
+		'module': 'error/NotFound'
 	}
 };
 
