@@ -6,8 +6,7 @@ Home = function() {
 
 Home.prototype.handleRequest = function(request, response)
 {
-	response.write('hello!');
-	response.end();
+	response.render('login.ejs');
 };
 
 exports.class = Home;
