@@ -155,6 +155,28 @@ describe('SignUp page', function() {
 			page.handleRequest(request, response);			
 		});
 		
+		it('should insert user if SignUp Succeed.', function(){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.fName = 'fName',
+			request.params.lName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			var newGQUser = new User.class();
+			newGQUser.setLoginType("GeoQuest");
+			newGQUser.setIdentifier(request.params.username);
+			newGQUser.setPassword(request.params.password);
+			newGQUser.setFirstname(request.params.fName);
+			newGQUser.setLastname(request.params.lName);
+			newGQUser.setEmail(request.params.email);
+			
+			page.handleRequest(request, response);
+			assert.deepEqual(newGQUser, userRepository.user);
+			
+		});
+		
 	});
 	
 	
