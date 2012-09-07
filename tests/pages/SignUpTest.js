@@ -85,20 +85,33 @@ describe('SignUp page', function() {
 			
 		});
 		
-		it('should render "Password not matched" if confirmPassword not matched', function(){
+		it('should render "User already in DB" if username already in DB', function(done){
 			request.method = 'POST';
 			request.params.username = 'max.mustermann';
 			request.params.password = 'secret';
-			request.params.confirmPassword = 'notMatched';
+			request.params.confirmPassword = 'secret';
 			request.params.firstName = 'fName',
 			request.params.lastName = 'lName',
 			request.params.email = 'agile@lab.com';
 			
+			userRepository.byGeoQuestIdentifier = function(identifier, callback) {
+				assert.equal(identifier, 'max.mustermann');
+				// Simulate that the user was found.
+				var user = new User.class();
+				user.setLoginType('GeoQuest');
+				user.setIdentifier('max.mustermann');
+				user.setPassword('secret');
+				callback(user);
+				done();
+			};
+			
 			page.handleRequest(request, response);
 			assert.equal('signupResult.ejs', response.template);
-			assert.deepEqual({ title: 'Password not matched.', result: 'Please retry.'}, response.templateVars);
+			assert.deepEqual({ title: 'SignUp Failed.', result: 'This Username already existed.'}, response.templateVars);
 			
 		});
+		
+		
 		
 	});
 	
