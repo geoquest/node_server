@@ -57,8 +57,11 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 			            
 		        		request.session.user = newGQUser;
 	
-		        		var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
-		        		response.render('signupResult.ejs', params);
+		        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + username + '!'};
+		        		response.render('home.ejs', params);
+		        		
+		        		//var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
+		        		//response.render('signupResult.ejs', params);
 					} catch (error) {
 		                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error + "Please retry."});						
 					}

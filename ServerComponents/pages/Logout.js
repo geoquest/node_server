@@ -10,8 +10,6 @@ Logout = function() {
 Logout.prototype.handleRequest = function(request, response)
 {
 	console.log('Inside log out function');
-	response.clearCookie('user');
-	response.clearCookie('pass');
 	request.session.destroy(function(e){
 		console.log('User is logged out successfully');
 	});
