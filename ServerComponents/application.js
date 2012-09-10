@@ -36,14 +36,17 @@ everyauth
 	    return fbUserMetadata;
 	}).redirectPath('/login/facebook');
 
-//everyauth.google
-//	.appId(extAuthConf.google.clientId)
-//	.appSecret(extAuthConf.google.clientSecret)
-//	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-//	.findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-//		//implement login logic
-//	})
-//	.redirectPath('/login/google');
+everyauth.google
+	.appId(extAuthConf.google.clientId)
+	.appSecret(extAuthConf.google.clientSecret)
+	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
+	.findOrCreateUser( function (sess, accessToken, extra, googleUser) {
+		// Pass Google user data to the session, so that it
+		// can be processed by the login page module.
+	    session.googleUser = googleUser;
+	    return googleUser;
+	})
+	.redirectPath('/login/google');
 
 app.configure(function() {
 	app.set('port', serverConf.port);
