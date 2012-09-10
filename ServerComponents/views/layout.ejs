@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> <%= ((typeof title) !== 'undefined') ? title : "GeoQuest" %> </title>
+
+<!-- Dirty hack to avoid FB appending #_=_ when redirecting url -->
+<script type="text/javascript">
+	if (window.location.hash == '#_=_')
+		window.location.hash = '';
+</script>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+
+</head>
+
+<body>
+
+	<div id="header"></div>
+
+	<div id="content"><%- body %></div>
+
+	<div id="footer"></div>
+
+
+</body>
+</html>
