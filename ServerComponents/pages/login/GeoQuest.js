@@ -19,14 +19,9 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
 	if (request.method === 'GET') {
 		if(request.cookies.user == undefined || request.cookies.pass == undefined){
-			console.log('user data not present');
 			var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
 			response.render('login.ejs', params);
-		}else{
-			console.log('user data present');
-			console.log(request.cookies.user);
-			console.log(request.cookies.pass);
-			
+		} else {
 			//\todo: redirect to the landing page like 
 			//response.render('home.ejs', {title :'test' , msg: 'Welcome, ' +  user.getFirstname() + '!'});
 		}
