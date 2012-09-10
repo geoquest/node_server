@@ -49,13 +49,10 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 					newGQUser.setEmail(email);
 					
 					self._userRepository.addErrorHandler(function(error) {
-						console.log("SignUp failed.");
-						console.log(error);
 		                response.render('signup.ejs', {msg: "Signup failed. Please retry."});
 		            });
 					
 					self._userRepository.insertUser(newGQUser);
-		            console.log("SignUp for a new GQUser done");
 		            
 	        		request.session.user = newGQUser;
 	        		response.cookie('user', newGQUser.getIdentifier(), {maxAge : 900000});
@@ -67,9 +64,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	    		}
 	    		else {
 	    			//user already in DB
-                    console.log("SignUp failed.");
                     response.render('signup.ejs', {msg: "Username already exists. Please pick another username."});
-	    			
 	    		}
 	    	});            
 	    }
