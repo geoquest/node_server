@@ -69,5 +69,31 @@ Game.prototype.toJSON = function(){
     }
     return jsonObj;
 };
+/**
+ * Converts a JSON object with game data into a real Game object.
+ * 
+ * @param {Object} JSON object with game data.
+ * @return {Game.class}
+ * @throws Error If no JSON object is passed or a property is missing.
+ */
+var fromJSON = function(jsonObject) {
+	if ((typeof jsonObject) !== 'object') {
+		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
+	}
+	var game = new Game();
+	for (var property in mapping) {
+		if (!jsonObject.hasOwnProperty(property)) {
+			// The JSON object does not contain
+			// the required property.
+			throw new Error('JSON object does not contain property ' + property);
+		}
+		// Find the private attribute that we have to map 
+		// this property to.
+		var attribute = mapping[property];
+		game[attribute] = jsonObject[property];
+	}
+	return game;
+};
 
 exports.class = Game;
+exports.fromJSON = fromJSON;
