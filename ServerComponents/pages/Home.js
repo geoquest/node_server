@@ -7,6 +7,7 @@ Home = function() {
 
 Home.prototype.handleRequest = function(request, response)
 {
+	
 	if(!request.session.user){
 		var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
 		response.render('login.ejs', params);
