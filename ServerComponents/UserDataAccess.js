@@ -188,7 +188,7 @@ UserRepository.prototype._jsonToUser = function(result) {
 		// No user was found.
 		return null;
 	}
-	return new User.fromJSON(result[0]);
+	return User.fromJSON(result[0]);
 };
 
 
