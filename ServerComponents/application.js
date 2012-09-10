@@ -97,6 +97,12 @@ for (var route in pages) {
 	// for a simple example of the problem and a simple solution.
 	var handler = function(pageInfo) {
 		return function(request, response) {
+			if ((typeof request.session.user) === 'object') {
+				var User = require('./User');
+				if (!(request.session.user instanceof User.class)) {
+					request.session.user = User.fromJSON(request.session.user);
+			    }
+			}
 			var module = require(__dirname + '/pages/' + pageInfo.module);
 			var page = new module.class();
 			injector.inject(page);
