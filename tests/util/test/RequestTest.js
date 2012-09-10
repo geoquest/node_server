@@ -25,6 +25,12 @@ describe('Request', function() {
 		request = null;
 	});
 	
+	describe('constructor', function() {
+		it('creates request instance', function() {
+			assert.ok(request instanceof Request.class);
+		});
+	});
+	
 	describe('params', function() {
 		it('is object', function() {
 			assert.equal(typeof request.params, 'object');
