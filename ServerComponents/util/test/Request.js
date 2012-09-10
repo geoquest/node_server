@@ -1,3 +1,8 @@
+/**
+ * Object that is used to simulate HTTP request objects.
+ * 
+ * Provides properties and methods that are often used in pages.
+ */
 
 Request = function() 
 {
