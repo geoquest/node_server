@@ -44,6 +44,7 @@ FacebookLogin.prototype.handleRequest = function(request, response){
         });
     } else {
         // page url entered in browser
+    	response.redirect(302, '/auth/facebook');
     }
 };
 
