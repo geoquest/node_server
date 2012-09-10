@@ -50,7 +50,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 						newGQUser.setEmail(email);
 						
 						self._userRepository.addErrorHandler(function(error) {
-			                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error, "msg":"Please retry."});
+			                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error + "Please retry."});
 			            });
 						
 						self._userRepository.insertUser(newGQUser);
@@ -60,7 +60,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 		        		var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
 		        		response.render('signupResult.ejs', params);
 					} catch (error) {
-		                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error, "msg":"Please retry."});						
+		                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error + "Please retry."});						
 					}
 	    		}
 	    		else {
