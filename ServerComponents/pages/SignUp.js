@@ -40,25 +40,28 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 					lastName = request.param('lName'),
 					email = request.param('email');
 				
-					var newGQUser = new User.class();
-					newGQUser.setLoginType("GeoQuest");
-					newGQUser.setIdentifier(username);
-					newGQUser.setPassword(password);
-					newGQUser.setFirstname(firstName);
-					newGQUser.setLastname(lastName);
-					newGQUser.setEmail(email);
-					
-					self._userRepository.addErrorHandler(function(error) {
-		                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":"error msgPlease retry."});
-		            });
-					
-					self._userRepository.insertUser(newGQUser);
-		            
-	        		request.session.user = newGQUser;
-
-	        		var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
-	        		response.render('signupResult.ejs', params);
-		          
+					try {
+						var newGQUser = new User.class();
+						newGQUser.setLoginType("GeoQuest");
+						newGQUser.setIdentifier(username);
+						newGQUser.setPassword(password);
+						newGQUser.setFirstname(firstName);
+						newGQUser.setLastname(lastName);
+						newGQUser.setEmail(email);
+						
+						self._userRepository.addErrorHandler(function(error) {
+			                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error, "msg":"Please retry."});
+			            });
+						
+						self._userRepository.insertUser(newGQUser);
+			            
+		        		request.session.user = newGQUser;
+	
+		        		var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
+		        		response.render('signupResult.ejs', params);
+					} catch (error) {
+		                response.render('signupResult.ejs', {"title":"SignUp Failed.","result":error, "msg":"Please retry."});						
+					}
 	    		}
 	    		else {
 	    			//user already in DB
