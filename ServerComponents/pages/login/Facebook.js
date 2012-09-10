@@ -18,8 +18,8 @@ FacebookLogin.prototype.handleRequest = function(request, response){
 
     if (facebookUser) {
         // redirect from facebook
-        var user;
-        self._userRepository.byFacebookIdentifier(facebookUser['username'], function(userOrNull){
+        self._userRepository.byFacebookIdentifier(facebookUser['username'], function(userOrNull) {
+            var user;
             if(userOrNull === null){
                 user = new User();
                 user.setIdentifier(facebookUser['username']);
