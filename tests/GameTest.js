@@ -91,7 +91,14 @@ describe('Game', function() {
 			assert.deepEqual(["whatever"], newJSONObj["authors"]);
 			assert.deepEqual({foo:"bar", nested:{bar:"foo"}}, newJSONObj["content"]);
 		});
-	});      
+	});
+	
+	describe('toString', function() {
+		it('returns non-empty string', function() {
+			assert.equal(typeof object.toString(), 'string');
+			assert.ok(object.toString().length > 0);
+		});
+	});
 });
     
     

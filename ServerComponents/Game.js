@@ -62,12 +62,22 @@ Game.prototype.setContent = function(content) {
  * Creates a JSON Object describing this Game Object.
  * @returns a JSON Object
  */
-Game.prototype.toJSON = function(){
+Game.prototype.toJSON = function() {
     var jsonObj = {};
-    for (var property in mapping){
+    for (var property in mapping) {
         jsonObj[property] = this[mapping[property]];
     }
     return jsonObj;
+};
+
+/**
+ * Creates a human-readable description of the game.
+ * 
+ * @return {String}
+ */
+Game.prototype.toString = function() {
+	// TODO extract game description from JSON content
+	return 'Game description';
 };
 
 exports.class = Game;
