@@ -35,9 +35,6 @@ Upload.prototype.handleRequest = function(request, response) {
 		// TODO: set game author (get it from session)
 		var content = fs.readFileSync(request.files.game.path, 'utf8');
 		
-		
-		console.log(content);
-		
 		content = JSON.parse(content);
 		
 		game.setContent(content);
