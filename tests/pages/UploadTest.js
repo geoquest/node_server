@@ -1,11 +1,13 @@
 var assert = require('assert');
 var fs = require('fs');
 var Upload = require("../../ServerComponents/pages/Upload.js");
+var GameRepository = require("../../ServerComponents/GameRepository.js");
 
 describe('Upload Page', function() {
 	var page = null;
 	var request = null;
 	var response = null;
+	var gameRepo = null;
 	
 	beforeEach(function() {
 		page = new Upload.class();
@@ -19,6 +21,12 @@ describe('Upload Page', function() {
 					this.params = params;
 				}
 		};
+		
+		gameRepo = {
+			insert: function(game) {
+			}
+		};
+		page.setGameRepository(gameRepo);
 	});
 	
 	describe('constructor', function() {
@@ -26,6 +34,16 @@ describe('Upload Page', function() {
 			assert.ok(page instanceof Upload.class);
 		});
 	});
+	
+	describe('setGameRepository', function() {
+		it('should correctly set the Game Repository',	function() {
+			gameRepo = new GameRepository.class({});
+			page.setGameRepository(gameRepo);
+			assert.deepEqual(page._gameRepository, gameRepo);
+			
+		});
+	});
+	
 	
 	describe('upload view', function() {
 		it('should exist',	function() {
@@ -62,14 +80,31 @@ describe('Upload Page', function() {
 			    assert.equal(response.params.msg, 'Please upload your game in JSON format.');
 			});
 
-	   });		
+	    });		
 
 		describe('POST', function() {
+			var uploadedFileName = 'uploadedTestFile.json';
+
 			beforeEach(function() {
-				request.method = "POST";
+				// create file
+				fs.writeFileSync(uploadedFileName, '{"foo":"bär"}');
+				
+				request = {
+						method: "POST",
+						files: {
+							game: {
+								path: uploadedFileName
+							}
+						}
+					};
 			});
 			
-			it('should load the upload-response view',	function() {
+			afterEach(function() {
+				// delete file
+				fs.unlinkSync(uploadedFileName);
+			});
+			
+			it('should load the upload-response view if file is uploaded', function() {
 				page.handleRequest(request,response);
 				assert.equal(response.filename, 'upload-response');
 			});
@@ -80,10 +115,70 @@ describe('Upload Page', function() {
 			
 			});
 			
+			it('calls write file on server tmp',	function() {
+				page.handleRequest(request,response);
+				assert.equal(response.params.title, 'Game Upload Response');
+			
+			});
+			
+			it('should load the upload form if no file is uploaded', function() {
+				request = {
+						method: "POST"
+					};
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+			});
+			
+			it('should load the upload form if game input field not set', function() {
+				request = {
+						method: "POST",
+						files: {
+						}
+					};
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+			});
+
+			it('should load the upload form if game input is empty', function() {
+				request = {
+						method: "POST",
+						files: {
+							game: {
+							}
+						}
+					};
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+			});
+
 //			it('should have the correct message',	function() {
 //				page.handleRequest(request,response);
 //			    assert.equal(response.params.msg, 'Please upload your game in JSON format.');
 //			});
+			
+			
+			it('should access uploaded file from request and save to GameRepository', function(done) {
+				request = {
+						method: "POST",
+						files: {
+							game: {
+								path: uploadedFileName
+							}
+						}
+					};
+				gameRepo = {
+						insert: function(game){
+							assert.deepEqual(game.getContent(),{foo: "bär"});
+							done();
+						}
+				};
+				page.setGameRepository(gameRepo);
+				
+				page.handleRequest(request,response);
+
+			});
+			
+
 		});
 		
 	});

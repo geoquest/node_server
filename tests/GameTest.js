@@ -85,11 +85,11 @@ describe('Game', function() {
 	describe('toJSON', function() {
 		it('maps properties correctly (check if conversion is performed correctly)', function() {
 			object.addAuthor("whatever");
-			object.setContent({foo:"bar"});
+			object.setContent({foo:"bar", nested:{bar:"foo"}});
 			
 			var newJSONObj = object.toJSON();
 			assert.deepEqual(["whatever"], newJSONObj["authors"]);
-			assert.deepEqual({foo:"bar"}, newJSONObj["content"]);
+			assert.deepEqual({foo:"bar", nested:{bar:"foo"}}, newJSONObj["content"]);
 		});
 	});   
 
