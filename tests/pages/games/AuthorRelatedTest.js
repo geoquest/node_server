@@ -3,6 +3,8 @@ var assert = require("assert");
 var AuthorRelated = require("../../../ServerComponents/pages/games/AuthorRelated.js");
 var Request = require("../../../ServerComponents/util/test/Request");
 var Response = require("../../../ServerComponents/util/test/Response");
+var User = require("../../../ServerComponents/User");
+var Game = require("../../../ServerComponents/Game");
 
 describe('AuthorRelated games page', function() {
 	
@@ -35,13 +37,31 @@ describe('AuthorRelated games page', function() {
 	var gameRepository = null;
 	
 	/**
+	 * Creates a user for testing.
+	 * 
+	 * @return {User.class}
+	 */
+	var createUser = function() {
+		var user = new User.class();
+		user.setLoginType('GeoQuest');
+		user.setIdentifier('max.mustermann');
+		user.setPassword('secret');
+		return user;
+	};
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
 		request = new Request.class();
+		// Simulate a logged-in user per default.
+		request.session.user = createUser();
 		response = new Response.class();
 		gameRepository = {
-				
+			findAllByUser: function(user, callback) {
+				// Simulate empty list of games
+				callback([]);
+			}
 		};
 		page = new AuthorRelated.class();
 		page.setGameRepository(gameRepository);
@@ -59,22 +79,36 @@ describe('AuthorRelated games page', function() {
 	
 	describe('constructor', function() {
 		it('creates page object', function() {
-			
+			assert.ok(page instanceof AuthorRelated.class);
 		});
 	});
 	
 	describe('handleRequest', function() {
-		it('redirects to home if user is not logged', function() {
-			
+		it('redirects to home if user is not logged in', function() {
+			delete request.session.user;
+			page.handleRequest(request, response);
+			assert.equal(response.redirectUrl, '/');
 		});
-		it('passes logged in user to game repository', function() {
-			
+		it('passes logged in user to game repository', function(done) {
+			gameRepository.findAllByUser = function(user, callback) {
+				assert.equal(user.getIdentifier(), request.session.user.getIdentifier());
+				callback([]);
+				done();
+			};
+			page.handleRequest(request, response);
 		});
 		it('renders games template', function() {
-			
+			page.handleRequest(request, response);
+			assert.equal(response.template, 'games/list.ejs');
 		});
 		it('passes received games to template', function() {
-			
+			var games = [new Game.class(), new Game.class()];
+			gameRepository.findAllByUser = function(user, callback) {
+				// Simulate list of games.
+				callback(games);
+			};
+			page.handleRequest(request, response);
+			assert.deepEqual(response.templatesVars['games'], games);
 		});
 	});
 	
