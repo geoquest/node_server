@@ -19,8 +19,6 @@ var app = express();
 
 //configure everyauth
 everyauth.everymodule.findUserById( function(id, callback) {
-    console.log(id);
-    console.log("facebook/handleRequest everymodule callback reached");
     callback(null, null);
 });
 
@@ -29,7 +27,6 @@ everyauth
 	.appId(extAuthConf.fb.appId)
 	.appSecret(extAuthConf.fb.appSecret)
 	.findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-	    console.log('fb callback');
 	    session.facebookUser = fbUserMetadata;
 	    return fbUserMetadata;
 	}).redirectPath('/login/facebook');
