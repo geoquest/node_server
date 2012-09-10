@@ -108,7 +108,7 @@ describe('AuthorRelated games page', function() {
 				callback(games);
 			};
 			page.handleRequest(request, response);
-			assert.deepEqual(response.templatesVars['games'], games);
+			assert.deepEqual(response.templateVars['games'], games);
 		});
 	});
 	
