@@ -18,23 +18,30 @@ var extAuthConf = require('./conf/extAuthConf');
 var app = express();
 
 //configure everyauth
+everyauth.everymodule.findUserById( function(id, callback) {
+    console.log(id);
+    console.log("facebook/handleRequest everymodule callback reached");
+    callback(null, null);
+});
+
 everyauth
 	.facebook
 	.appId(extAuthConf.fb.appId)
 	.appSecret(extAuthConf.fb.appSecret)
 	.findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-		//implement login logic
-	})
-	.redirectPath('/');
+	    console.log('fb callback');
+	    session.facebookUser = fbUserMetadata;
+	    return fbUserMetadata;
+	}).redirectPath('/login/facebook');
 
-everyauth.google
-	.appId(extAuthConf.google.clientId)
-	.appSecret(extAuthConf.google.clientSecret)
-	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-	.findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-		//implement login logic
-	})
-	.redirectPath('/');
+//everyauth.google
+//	.appId(extAuthConf.google.clientId)
+//	.appSecret(extAuthConf.google.clientSecret)
+//	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
+//	.findOrCreateUser( function (sess, accessToken, extra, googleUser) {
+//		//implement login logic
+//	})
+//	.redirectPath('/login/google');
 
 app.configure(function() {
 	app.set('port', serverConf.port);
