@@ -19,7 +19,6 @@ FacebookLogin.prototype.setUserRepository = function(repository){
 };
 
 FacebookLogin.prototype.handleRequest = function(request, response){
-    //console.log(request.user);
     var self = this;
     var facebookUser = request.session.facebookUser;
     delete request.session.facebookUser;
