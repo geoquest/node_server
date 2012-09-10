@@ -18,26 +18,28 @@ GeoQuestLogin.prototype.setUserRepository = function(repository)
 GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
 	if (request.method === 'GET') {
-		var params = { title: 'Log In' , msg: 'login using your GeoQuest account'};
-		response.render('login', params);
+		var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
+		response.render('login.ejs', params);
 	}
+	
 	if (request.method === 'POST') {
 		var username = request.param('username');
         var rawPassword = request.param('password');
         
         this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
-        		response.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});
+        		response.render('login.ejs', { title: 'GeoQuest Author Management', msg: 'User not found. Please sign up.'});
         		return;
         	}
         	var user = userOrNull;
         	if (user.hasPassword(rawPassword)) {
-        		// Credentials are correct.
-        		response.render('login.ejs', { title: 'Log in Succeed.', msg: 'Hi, ' +  user.getFirstname() + '!'});
-        		// TODO: store in session, perhaps display another page
+        		// Credentials are correct, therefore store the user in the session.
+        		request.session.user = user;
+        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + username + '!'};
+        		response.render('home.ejs', params);
         	} else {
         		// Wrong password provided.
-        		response.render('login.ejs', { title: 'Log in Failed.', msg: 'Please retry.'});
+        		response.render('login.ejs', { title: 'GeoQuest Author Management.', msg: 'Log in Failed. Please retry.'});
         	}
         });
 	}
