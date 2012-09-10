@@ -21,16 +21,13 @@ FacebookLogin.prototype.setUserRepository = function(repository){
 FacebookLogin.prototype.handleRequest = function(request, response){
     //console.log(request.user);
     var self = this;
-    console.log("facebook/handleRequest reached");
     var facebookUser = request.session.facebookUser;
     delete request.session.facebookUser;
-    //console.log(request.session);
+
     if (facebookUser) {
         // redirect from facebook
         var user;
         self._userRepository.byFacebookIdentifier(facebookUser['username'], function(userOrNull){
-            
-            console.log("facebook/handleRequest facebook callback reached");
             if(userOrNull === null){
                 user = new User();
                 user.setIdentifier(facebookUser['username']);
@@ -43,19 +40,11 @@ FacebookLogin.prototype.handleRequest = function(request, response){
             }
             request.session.user = user;
             console.log(user.toJSON());
-            response.write("login succeeded" + user.getFirstname());
-            
+            response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  user.getFirstname() + '!')} );
         });
-        
-        
     } else {
-        console.log("EEEEEEEEEEEEEEELLLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSEEEEEEEEEEEEEEEEEEE");
         // page url entered in browser
-        
     }
-    response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  '!')} );
 };
-
-
 
 exports.class = FacebookLogin;
