@@ -22,35 +22,32 @@ Upload.prototype.handleRequest = function(request, response) {
 	}
 	
 	if (request.method === 'POST') {
-		
-		console.log(JSON.stringify(request.files));
-		
-		
+
+		// Check if a file has been provided
 		if (!request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
 			this.renderUploadForm(response, 'Error! Please choose a file to upload.');
 			return;
 		}
 		
-		var params = { title: 'Game Upload Response'};
-	
-		var game = new Game.class();
-		
-		// TODO: set game author (get it from session)
+		// Read file contents and try to parse it as JSON
 		var content = fs.readFileSync(request.files.game.path, 'utf8');
-		
-		
-		console.log(content);
 		try{
-		content = JSON.parse(content);
+			content = JSON.parse(content);
 		} catch(err){
 			this.renderUploadForm(response, 'Error! Not a legal JSON file.');
 			return;
 		}
+
+		// Upload successful
+		var params = { title: 'Game Upload Response', msg: 'Your game has been uploaded successfully.'};
+
+		var game = new Game.class();
 		game.setContent(content);
-		
+		// TODO: set game author (get it from session)
+
 		this._gameRepository.insert(game);
 
-		response.render('upload-response', params);		
+		response.render('upload-response', params);
 	}
 };
 
