@@ -30,10 +30,11 @@ var pages = {
 	'/login/facebook': {
 	    'module': 'login/Facebook'
 	},
-
+	'/login/google': {
+	    'module': 'login/Google'
+	},
 	// Register a catch-all route that handles requests that point
 	// to not existing pages.
-
 	'*': {
 		'module': 'error/NotFound'
 	}
