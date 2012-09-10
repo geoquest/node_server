@@ -30,7 +30,7 @@ var pages = {
 	'/games/findAll': {
 		'module': 'games/Find'
 	},
-	'/logout/abc': {
+	'/signout': {
 		'module': 'Logout'
 	},
 	'/login/facebook': {
