@@ -1,3 +1,3 @@
 #!/bin/sh
 npm run-script coverage
-w3m -dump build/coverage.html
+perl scripts/coverage2text.pl build/coverage.html
