@@ -1,10 +1,3 @@
-
-var UserRepository = require('../../UserDataAccess'); 
-var everyauth = require('everyauth');
-var extAuthConf = require('../../conf/extAuthConf');
-
-everyauth.debug = true;
-
 FacebookLogin = function() {
     this._userRepository = null;
 };
