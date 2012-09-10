@@ -99,6 +99,8 @@ GameRepository.prototype.findAll = function(callback) {
 /**
  * 
  * Returns all uploaded games that belong to a user
+ * 
+ * @returns Callback returns a list of {Games}
  */
 GameRepository.prototype.findAllByUser = function(user, callback) {
 	var query = {authors: user.getId()};
