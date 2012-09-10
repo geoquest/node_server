@@ -171,6 +171,7 @@ describe('GameRepository', function() {
     			done();
     		});
     	});
+    	
     	it('should return empty list when 0 games contained in db', function(done){
         	connectionMock.games.find = createFind(createResult(0));
     		repository.findAll(function(result){
@@ -178,6 +179,8 @@ describe('GameRepository', function() {
     			done();
     		});
     	});
+    	
+    	
     });
 
     

@@ -80,7 +80,7 @@ GameRepository.prototype._createResultHandler = function(callback) {
 			self._notifyAboutError(error);
 			return;
 		}
-		callback(result);
+		callback(self._jsonToGame(result));
 	};
 };
 
@@ -92,6 +92,27 @@ GameRepository.prototype._createResultHandler = function(callback) {
 GameRepository.prototype.findAll = function(callback) {
 	var query = {};
 	this._connection.games.find(query, this._createResultHandler(callback));
+};
+
+/**
+ * Receives a MongoDB result set and converts it into a game object.
+ * 
+ * Converts the result set to null if it is empty.
+ * 
+ * @param {Object} result A JSON object that contains the result set.
+ * @return {Game.class}|null
+ */
+GameRepository.prototype._jsonToGame = function(result) {
+	if (result.length === 0) {
+		// No user was found.
+		return new Array();
+	}
+	var passResult = new Array();
+	var i;
+	for (i = 0; i<result.length; i++){
+		passResult[i] = new Game.fromJSON(result[i]);
+	}
+	return passResult;
 };
 
 exports.class = GameRepository;
