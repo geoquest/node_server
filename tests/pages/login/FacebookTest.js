@@ -103,6 +103,21 @@ describe('FacebookLogin page', function() {
 			page.handleRequest(request, response);
 			assert.ok(request.session.facebookUser === undefined);
 		});
+		it('inserts user if it does not exist yet', function() {
+			
+		});
+		it('does not insert user if it already exists', function() {
+			
+		});
+		it('adds user to session on successful login', function() {
+			
+		});
+		it('renders (any) template on successful login', function() {
+			
+		});
+		it('redirects to Facebook login if page if url was entered manually', function() {
+			
+		});
 	});
 	
 });
