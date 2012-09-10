@@ -72,7 +72,7 @@ describe('FacebookLogin page', function() {
 				this.template = template;
 			},
 			redirect: function(status, url) {
-				redirectUrl = url;
+				this.redirectUrl = url;
 			}
 		};
 		userRepository = {
