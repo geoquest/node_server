@@ -43,7 +43,6 @@ var pages = {
 	// to not existing pages.
 	'*': {
 		'module': 'error/NotFound'
->>>>>>> origin/master
 	}
 };
 
