@@ -11,7 +11,6 @@ var express = require("express");
 var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
 //login dependencies
-var GeoQuest = require('./pages/login/GeoQuest');
 var everyauth = require('everyauth');
 var extAuthConf = require('./conf/extAuthConf');
 
