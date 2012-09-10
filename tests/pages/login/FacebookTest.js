@@ -33,6 +33,19 @@ describe('FacebookLogin page', function() {
 	var response = null;
 	
 	/**
+	 * Returns an object with (minimal) user data as it is returned by Facebook.
+	 * 
+	 * @return {Object}
+	 */
+	var createFacebookUserData = function() {
+		return {
+			'username': 'facebook.id',
+			'first_name': 'Max',
+			'last_name': 'Mustermann'
+		};
+	};
+	
+	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
@@ -77,4 +90,19 @@ describe('FacebookLogin page', function() {
 		response = null;
 		request = null;
 	});
+	
+	describe('constructor', function() {
+		it('should create a page instance', function() {
+			assert.ok(page instanceof FacebookLogin.class);
+		});
+	});
+	
+	describe('handleRequest', function() {
+		it('removes Facebook user data from session', function() {
+			request.session.facebookUser = createFacebookUserData();
+			page.handleRequest(request, response);
+			assert.ok(request.session.facebookUser === undefined);
+		});
+	});
+	
 });
