@@ -6,6 +6,7 @@
 
 Request = function() 
 {
+	this.method = "GET";
 	this.params = {};
 	this.session = {};
 };

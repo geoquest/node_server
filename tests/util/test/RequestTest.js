@@ -31,6 +31,12 @@ describe('Request', function() {
 		});
 	});
 	
+	describe('method', function() {
+		it('is GET per default', function() {
+			assert.equal(request.method, 'GET');
+		});
+	});
+	
 	describe('params', function() {
 		it('is object', function() {
 			assert.equal(typeof request.params, 'object');
