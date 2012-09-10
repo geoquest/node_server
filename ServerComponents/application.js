@@ -7,7 +7,7 @@
  * </code>
  */
 var crypto = require('crypto');
-var express = require("express");
+var express = require("express"), expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
 //login dependencies
 var GeoQuest = require('./pages/login/GeoQuest');
@@ -64,6 +64,8 @@ app.configure(function() {
 	app.use(express.static(serverConf.public));
 	// Provides everyauth functionalities
 	app.use(everyauth.middleware());
+	
+	app.use(expressLayouts);
 });
 
 var dependencies = {
