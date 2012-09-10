@@ -5,21 +5,26 @@
 # Pascal Bihler 2012
 #
 package SourceStripper;
-require HTML::Filter;
-@ISA=qw(HTML::Filter);
+require HTML::Parser;
+@ISA=qw(HTML::Parser);
+sub declaration { $_[0]->output("<!$_[1]>")     }
+sub process     { $_[0]->output($_[2])          }
+sub comment     { $_[0]->output("<!--$_[1]-->") }
+sub text        { $_[0]->output($_[1])          }
+
 sub start
   {
      my $self = shift;
      my ($tag, $attr, $attrseq, $origtext) = @_;
      $self->{source_seen}++ if $tag eq "table";
      $self->{hide} = $self->{hide} || ( $tag eq "table") && ($attr->{'id'} eq 'source');
-     $self->SUPER::start(@_);
+     $self->output($origtext);
   }
   sub end
   {
      my $self = shift;
      my ($tag, $origtext) = @_;
-     $self->SUPER::end(@_);
+     $self->output($origtext);
      $self->{source_seen}-- if $tag eq "table";
      $self->{hide} = $self->{hide} && $self->{source_seen};
   }
@@ -27,7 +32,7 @@ sub start
   {
       my $self = shift;
       unless ($self->{hide}) {
-          $self->SUPER::output(@_);
+         print @_;
       }
   }
 
