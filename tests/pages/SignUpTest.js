@@ -155,6 +155,21 @@ describe('SignUp page', function() {
 			page.handleRequest(request, response);			
 		});
 		
+		it('should catch and render err when email is invalid', function(){
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.fName = 'fName',
+			request.params.lName = 'lName',
+			request.params.email = 'agile@lab';
+			
+			var error =  new Error("Invalid email");
+			page.handleRequest(request, response);
+			assert.equal('signupResult.ejs', response.template);
+			assert.deepEqual({"title":"SignUp Failed.","result":error + "Please retry."}, response.templateVars);
+		});
+		
 		it('should insert user if SignUp Succeed.', function(){
 			request.method = 'POST';
 			request.params.username = 'max.mustermann';
