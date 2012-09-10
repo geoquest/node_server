@@ -30,6 +30,9 @@ var pages = {
 	'/games/findAll': {
 		'module': 'games/Find'
 	},
+	'/games/uploaded': {
+		'module': 'games/AuthorRelated'
+	},
 	'/logout/abc': {
 		'module': 'Logout'
 	},
