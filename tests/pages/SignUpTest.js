@@ -88,8 +88,8 @@ describe('SignUp page', function() {
 			request.params.email = 'agile@lab.com';
 			
 			page.handleRequest(request, response);
-			assert.equal('signupResult.ejs', response.template);
-			assert.deepEqual({ title: 'Password not matched.', result: 'Please retry.'}, response.templateVars);
+			assert.equal('signup.ejs', response.template);
+			assert.deepEqual({ msg: 'Password not matched. Please retry.'}, response.templateVars);
 			
 		});
 		
@@ -114,8 +114,8 @@ describe('SignUp page', function() {
 			};
 			
 			page.handleRequest(request, response);
-			assert.equal('signupResult.ejs', response.template);
-			assert.deepEqual({ title: 'SignUp Failed.', result: 'This Username already existed.'}, response.templateVars);
+			assert.equal('signup.ejs', response.template);
+			assert.deepEqual({ msg: 'SignUp Failed. This Username already existed.'}, response.templateVars);
 			
 		});
 		
@@ -129,8 +129,8 @@ describe('SignUp page', function() {
 			request.params.email = 'agile@lab.com';
 						
 			page.handleRequest(request, response);
-			assert.equal('signupResult.ejs', response.template);
-			assert.deepEqual({ title: 'SignUp Succeed.', result: 'Hi, ' +  request.params.fName + '!'}, response.templateVars);
+			assert.equal('home.ejs', response.template);
+			assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.username + '!'}, response.templateVars);
 			
 		});
 		
@@ -147,8 +147,8 @@ describe('SignUp page', function() {
 			userRepository.addErrorHandler = function(errorHandler){
 				var errmsg = 'error msg';
 				errorHandler(errmsg);
-				assert.equal('signupResult.ejs', response.template);
-				assert.deepEqual({ title: 'SignUp Failed.', result: errmsg + 'Please retry.'}, response.templateVars);
+				assert.equal('signup.ejs', response.template);
+				assert.deepEqual({ msg: 'SignUp Failed. Please retry.'}, response.templateVars);
 				done();
 			}
 			
