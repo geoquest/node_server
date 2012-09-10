@@ -62,7 +62,10 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	// Exposes the contents in the given directory to the public.
 	app.use(express.static(serverConf.public));
-	// Provides everyauth functionalities
+	// Register everyauth middleware.
+	// Everyauth defines several routes and callbacks that are used
+	// for authentication against external services (for example
+	// Facebook or Google+).
 	app.use(everyauth.middleware());
 	
 	app.use(expressLayouts);
