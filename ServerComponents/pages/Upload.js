@@ -23,8 +23,11 @@ Upload.prototype.handleRequest = function(request, response) {
 	
 	if (request.method === 'POST') {
 		
-		if (!request.files || !request.files.game || !request.files.game.path) {
-			this.renderUploadForm(response, 'Please chose a file to upload.');
+		console.log(JSON.stringify(request.files));
+		
+		
+		if (!request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
+			this.renderUploadForm(response, 'Error! Please choose a file to upload.');
 			return;
 		}
 		
@@ -37,9 +40,12 @@ Upload.prototype.handleRequest = function(request, response) {
 		
 		
 		console.log(content);
-		
+		try{
 		content = JSON.parse(content);
-		
+		} catch(err){
+			this.renderUploadForm(response, 'Error! Not a legal JSON file.');
+			return;
+		}
 		game.setContent(content);
 		
 		this._gameRepository.insert(game);

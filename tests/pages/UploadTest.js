@@ -28,7 +28,7 @@ describe('Upload Page', function() {
 		};
 		page.setGameRepository(gameRepo);
 	});
-	
+
 	describe('constructor', function() {
 		it('should create a page instance', function() {
 			assert.ok(page instanceof Upload.class);
@@ -93,10 +93,12 @@ describe('Upload Page', function() {
 						method: "POST",
 						files: {
 							game: {
-								path: uploadedFileName
+								path: uploadedFileName,
+								name: uploadedFileName
 							}
 						}
 					};
+				
 			});
 			
 			afterEach(function() {
@@ -121,7 +123,7 @@ describe('Upload Page', function() {
 			
 			});
 			
-			it('should load the upload form if no file is uploaded', function() {
+			it('should load the upload form if no files property exists ', function() {
 				request = {
 						method: "POST"
 					};
@@ -129,6 +131,7 @@ describe('Upload Page', function() {
 				assert.equal(response.filename, 'upload');
 			});
 			
+		
 			it('should load the upload form if game input field not set', function() {
 				request = {
 						method: "POST",
@@ -150,7 +153,23 @@ describe('Upload Page', function() {
 				page.handleRequest(request,response);
 				assert.equal(response.filename, 'upload');
 			});
+			
+			it('should load the upload form if no file is uploaded', function() {
+				request.files.game.name = "";
+				
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+			});
 
+			
+			it('should load the upload form if file is not a legal JSON file', function() {
+				
+				fs.writeFileSync(uploadedFileName, 'Hello Pookie!');
+				
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+				assert.equal(response.params.msg, 'Error! Not a legal JSON file.');
+			});
 //			it('should have the correct message',	function() {
 //				page.handleRequest(request,response);
 //			    assert.equal(response.params.msg, 'Please upload your game in JSON format.');
@@ -158,14 +177,7 @@ describe('Upload Page', function() {
 			
 			
 			it('should access uploaded file from request and save to GameRepository', function(done) {
-				request = {
-						method: "POST",
-						files: {
-							game: {
-								path: uploadedFileName
-							}
-						}
-					};
+
 				gameRepo = {
 						insert: function(game){
 							assert.deepEqual(game.getContent(),{foo: "bär"});
