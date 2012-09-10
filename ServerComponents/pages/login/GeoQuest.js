@@ -23,11 +23,8 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
 	}
 	
 	if (request.method === 'POST') {
-		console.log('handling login post request');
-		
 		var username = request.param('username');
         var rawPassword = request.param('password');
-        
         
         this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
