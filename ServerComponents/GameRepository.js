@@ -94,4 +94,14 @@ GameRepository.prototype.findAll = function(callback) {
 	this._connection.games.find(query, this._createResultHandler(callback));
 };
 
+
+/**
+ * 
+ * Returns all uploaded games that belong to a user
+ */
+GameRepository.prototype.findAllByUser = function(user, callback) {
+	var query = {authors: user.getId()};
+	this._connection.games.find(query, this._createResultHandler(callback));
+};
+
 exports.class = GameRepository;
