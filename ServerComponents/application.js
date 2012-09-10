@@ -74,6 +74,10 @@ var dependencies = {
 	'setUserRepository': function() {
 		var UserRepository = require('./UserDataAccess');
 		return new UserRepository.class(this.setDatabaseConnection());
+	},
+	'setGameRepository': function() {
+		var GameRepository = require('./GameRepository');
+		return new GameRepository.class(this.setDatabaseConnection());
 	}
 };
 var DependencyInjector = require('./DependencyInjector');

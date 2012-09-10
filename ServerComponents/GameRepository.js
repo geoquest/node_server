@@ -27,6 +27,8 @@ GameRepository = function(connection) {
 	this._errorHandlers = [];
 };
 
+
+
 /**
  * Notifies all registered error callback about an error that occurred recently.
  * 
@@ -58,77 +60,38 @@ GameRepository.prototype.insert = function(game) {
 		}
 	});
 };
-//
-///**
-// * Registers an additional error handler that is called whenever an internal
-// * MongoDB error occurs.
-// * 
-// * Example: <code>
-// * repository.addErrorHandler(function(error) {
-// *     // Handle error here.
-// * });
-// * </code>
-// * 
-// * @param {function}
-// *            callback
-// */
-//UserRepository.prototype.addErrorHandler = function(callback) {
-//	this.errorHandlers.push(callback);
-//};
-//
-///**
-// * Creates a callback that handles a MongoDB result.
-// * 
-// * Throws an exception if an error occurs. In case of a successful result it
-// * will convert the result set into a User object (or null if not found) and
-// * pass it to the provided callback.
-// * 
-// * @param {function}
-// * @return {function}
-// * @throws Error
-// *             If an internal error occurred.
-// */
-//UserRepository.prototype._createResultHandler = function(callback) {
-//	// Store the current context as the scope changes in the callback.
-//	var self = this;
-//	return function(error, result) {
-//		if (error) {
-//			self._notifyAboutError(error);
-//			return;
-//		}
-//		// Convert result to model.
-//		callback(self._jsonToUser(result));
-//	};
-//};
-//
-///**
-// * Notifies all registered error callback about an error that occurred recently.
-// * 
-// * @param {String}
-// *            error
-// */
-//UserRepository.prototype._notifyAboutError = function(error) {
-//	for ( var i = 0; i < this.errorHandlers.length; i++) {
-//		// Pass the error to each handler.
-//		this.errorHandlers[i](error);
-//	}
-//};
-//
-///**
-// * Receives a MongoDB result set and converts it into a User object.
-// * 
-// * Converts the result set to null if it is empty.
-// * 
-// * @param {Object}
-// *            result A JSON object that contains the result set.
-// * @return {User.class}|null
-// */
-//UserRepository.prototype._jsonToUser = function(result) {
-//	if (result.length === 0) {
-//		// No user was found.
-//		return null;
-//	}
-//	return new User.fromJSON(result[0]);
-//};
+
+/**
+ * Creates a callback that handles a MongoDB result.
+ * 
+ * Throws an exception if an error occurs. In case of
+ * a successful result it will 
+ * pass the result to the provided callback.
+ * 
+ * @param {function}
+ * @return {function}
+ * @throws Error If an internal error occurred.
+ */
+GameRepository.prototype._createResultHandler = function(callback) {
+	// Store the current context as the scope changes in the callback.
+	var self = this;
+	return function(error, result) {
+		if (error) {
+			self._notifyAboutError(error);
+			return;
+		}
+		callback(result);
+	};
+};
+
+
+/**
+ * 
+ * Returns all uploaded games available in the database
+ */
+GameRepository.prototype.findAll = function(callback) {
+	var query = {};
+	this._connection.games.find(query, this._createResultHandler(callback));
+};
 
 exports.class = GameRepository;
