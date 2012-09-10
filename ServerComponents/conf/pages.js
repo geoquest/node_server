@@ -26,6 +26,9 @@ var pages = {
 	},
 	'/upload': {
 		'module': 'Upload'
+	},
+	'/games/findAll': {
+		'module': 'games/Find'
 	}
 };
 

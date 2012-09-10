@@ -161,7 +161,24 @@ describe('GameRepository', function() {
         		repository.insert(1);
             });
     	});
-    });  
+    }); 
+    
+    describe('findGames', function(){
+    	it('successfully finds all Game objects', function(done){
+        	connectionMock.games.find = createFind(createResult(10));
+    		repository.findAll(function(result){
+    			assert.equal(result.length, 10);
+    			done();
+    		});
+    	});
+    	it('should return empty list when 0 games contained in db', function(done){
+        	connectionMock.games.find = createFind(createResult(0));
+    		repository.findAll(function(result){
+    			assert.equal(result.length, 0);
+    			done();
+    		});
+    	});
+    });
 
     
 });  
