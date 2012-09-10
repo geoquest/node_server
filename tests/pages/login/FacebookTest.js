@@ -115,6 +115,13 @@ describe('FacebookLogin page', function() {
 			};
 			page.handleRequest(request, response);
 		});
+		it('inserts user with LoginType Facebook', function(done) {
+			userRepository.insertUser = function(user) {
+				assert.equal(user.getLoginType(), 'Facebook');
+				done();
+			};
+			page.handleRequest(request, response);
+		});
 		it('does not insert user if it already exists', function() {
 			userRepository.byFacebookIdentifier = function(identifier, callback) {
 				// Simulate user in database.
