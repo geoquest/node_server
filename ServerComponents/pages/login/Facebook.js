@@ -39,7 +39,6 @@ FacebookLogin.prototype.handleRequest = function(request, response){
                user = userOrNull;
             }
             request.session.user = user;
-            console.log(user.toJSON());
             response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  user.getFirstname() + '!')} );
         });
     } else {
