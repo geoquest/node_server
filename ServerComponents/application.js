@@ -7,7 +7,8 @@
  * </code>
  */
 var crypto = require('crypto');
-var express = require("express"), expressLayouts = require('express-ejs-layouts');
+var express = require("express");
+var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
 //login dependencies
 var GeoQuest = require('./pages/login/GeoQuest');
