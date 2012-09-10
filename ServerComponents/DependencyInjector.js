@@ -66,7 +66,7 @@ Injector.prototype.inject = function(object)
 			continue;
 		}
 		if ((typeof object[hook]) !== 'function') {
-			throw new Error('Cannot inject via hook. Expected function, but property is of type ' + typeof object[hook]);
+			throw new Error('Cannot inject via hook. Expected function, but property is of type ' + (typeof object[hook]));
 		}
 		// Create the dependency...
 		var dependency = this._dependencies[hook]();
