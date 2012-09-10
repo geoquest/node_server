@@ -31,7 +31,10 @@ FacebookLogin.prototype.handleRequest = function(request, response){
                user = userOrNull;
             }
             request.session.user = user;
-            response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  user.getFirstname() + '!')} );
+            var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + facebookUser['username'] + '!'};
+    		response.render('home.ejs', params);
+    		
+            //response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  user.getFirstname() + '!')} );
         });
     } else {
         // page url entered in browser
