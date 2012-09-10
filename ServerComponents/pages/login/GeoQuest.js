@@ -18,17 +18,11 @@ GeoQuestLogin.prototype.setUserRepository = function(repository)
 GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
 	if (request.method === 'GET') {
-		if(request.cookies.user == undefined || request.cookies.pass == undefined){
-			var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
-			response.render('login.ejs', params);
-		} else {
-			//\todo: redirect to the landing page like 
-			//response.render('home.ejs', {title :'test' , msg: 'Welcome, ' +  user.getFirstname() + '!'});
-		}
-		
+		var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
+		response.render('login.ejs', params);
 	}
+	
 	if (request.method === 'POST') {
-		
 		console.log('handling login post request');
 		
 		var username = request.param('username');
