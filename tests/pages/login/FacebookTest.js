@@ -52,7 +52,9 @@ describe('FacebookLogin page', function() {
 		request = {
 			'method': 'GET',
 			'params': {},
-			'session': {},
+			'session': {
+				'facebookUser': createFacebookUserData()
+			},
 			// Simulate param() function.
 			'param': function(name) {
 				if (name in this.params) {
@@ -65,8 +67,12 @@ describe('FacebookLogin page', function() {
 			// The object remembers the last rendered template
 			// for later checks.
 			template: null,
+			redirectUrl: null,
 			render: function(template) {
 				this.template = template;
+			},
+			redirect: function(status, url) {
+				redirectUrl = url;
 			}
 		};
 		userRepository = {
@@ -103,20 +109,40 @@ describe('FacebookLogin page', function() {
 			page.handleRequest(request, response);
 			assert.ok(request.session.facebookUser === undefined);
 		});
-		it('inserts user if it does not exist yet', function() {
-			
+		it('inserts user if it does not exist yet', function(done) {
+			userRepository.insertUser = function() {
+				done();
+			};
+			page.handleRequest(request, response);
 		});
 		it('does not insert user if it already exists', function() {
-			
+			userRepository.byFacebookIdentifier = function(identifier, callback) {
+				// Simulate user in database.
+				var user = new User.class();
+				user.setLoginType('Facebook');
+				user.setIdentifier('unique');
+				user.setFirstname('Max');
+				user.setLastname('Mustermann');
+				callback(user);
+			};
+			userRepository.insertUser = function() {
+				assert.fail('User should not be stored if it already exists.');
+			};
+			page.handleRequest(request, response);
 		});
 		it('adds user to session on successful login', function() {
-			
+			page.handleRequest(request, response);
+			assert.ok(request.session.user instanceof User.class);
 		});
 		it('renders (any) template on successful login', function() {
-			
+			page.handleRequest(request, response);
+			assert.notEqual(response.template, null);
 		});
 		it('redirects to Facebook login if page if url was entered manually', function() {
-			
+			// Remove facebookUser data from session.
+			delete request.session.facebookUser;
+			page.handleRequest(request, response);
+			assert.equal(response.redirectUrl, '/auth/facebook');
 		});
 	});
 	
