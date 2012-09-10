@@ -2,7 +2,7 @@
 //var UserRepository = require('../../UserDataAccess');
 var User = require("../User");
 
-GeoQuestLogout = function() {
+GeoQuestSignUp = function() {
 	this._userRepository = null;
 };
 
@@ -11,42 +11,72 @@ GeoQuestLogout = function() {
  * 
  * @param {UserDataAccess.class}
  */
-GeoQuestLogout.prototype.setUserRepository = function(repository)
+GeoQuestSignUp.prototype.setUserRepository = function(repository)
 {
 	this._userRepository = repository;
 };
 
-GeoQuestLogout.prototype.handleRequest = function(request, response)
+GeoQuestSignUp.prototype.handleRequest = function(request, response)
 {
+	var self = this;
+	
 	if (request.method === 'GET') {
-		response.render('signup.ejs');
+		response.render('signup.ejs', {msg: "Please fill out the following fields."});
 	}
 	if (request.method === 'POST') {
 				
 	    if(request.param('password') == request.param('confirmPassword')){
 
-			var username = request.param('username'),
-				password = request.param('password'),
-				firstName = request.param('fName'),
-				lastName = request.param('lName'),
-				email = request.param('email');
-			
-			var newGQUser = new User.class();
-			newGQUser.setLoginType("GeoQuest");
-			newGQUser.setIdentifier(username);
-			newGQUser.setPassword(password);
-			newGQUser.setFirstname(firstName);
-			newGQUser.setLastname(lastName);
-			newGQUser.setEmail(email);
-			this._userRepository.insertUser(newGQUser);
-            console.log("SignUp for a new GQUser done");
-            response.render('signupResult.ejs', { title: 'SignUp Succeed.', result: 'Hi, ' +  newGQUser.getFirstname() + '!'});
-            
+	    	//password matched
+	    	var username = request.param('username');
+	    	
+	    	self._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
+
+	    		if (userOrNull === null) {	    			
+	    			//user not in DB
+	    			
+					var password = request.param('password'),
+					firstName = request.param('fName'),
+					lastName = request.param('lName'),
+					email = request.param('email');
+				
+					var newGQUser = new User.class();
+					newGQUser.setLoginType("GeoQuest");
+					newGQUser.setIdentifier(username);
+					newGQUser.setPassword(password);
+					newGQUser.setFirstname(firstName);
+					newGQUser.setLastname(lastName);
+					newGQUser.setEmail(email);
+					
+					self._userRepository.addErrorHandler(function(error) {
+						console.log("SignUp failed.");
+						console.log(error);
+		                response.render('signup.ejs', {msg: "Signup failed. Please retry."});
+		            });
+					
+					self._userRepository.insertUser(newGQUser);
+		            console.log("SignUp for a new GQUser done");
+		            
+	        		request.session.user = newGQUser;
+	        		response.cookie('user', newGQUser.getIdentifier(), {maxAge : 900000});
+	        		response.cookie('pass', newGQUser.getPassword(), {maxAge : 900000});
+		            
+	        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + username + '!'};
+	        		response.render('home.ejs', params);
+		          
+	    		}
+	    		else {
+	    			//user already in DB
+                    console.log("SignUp failed.");
+                    response.render('signup.ejs', {msg: "Username already exists. Please pick another username."});
+	    			
+	    		}
+	    	});            
 	    }
 	    else{
-	    	response.render('signupResult.ejs', { title: 'Password not matched.', result: 'Please retry.'});
+	    	response.render('signup.ejs', {msg: "Password not matched. Please retry."});
 	    }        
 	}
 };
 
-exports.class = GeoQuestLogout;
+exports.class = GeoQuestSignUp;

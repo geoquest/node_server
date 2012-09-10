@@ -24,7 +24,9 @@ var pages = {
 	'/login': {
 		'module': 'login/GeoQuest'
 	},
-
+	'/logout/abc': {
+		'module': 'Logout'
+	},
 	'/login/facebook': {
 	    'module': 'login/Facebook'
 	},
