@@ -55,9 +55,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 					self._userRepository.insertUser(newGQUser);
 		            
 	        		request.session.user = newGQUser;
-	        		response.cookie('user', newGQUser.getIdentifier(), {maxAge : 900000});
-	        		response.cookie('pass', newGQUser.getPassword(), {maxAge : 900000});
-		            
+
 	        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + username + '!'};
 	        		response.render('home.ejs', params);
 		          
