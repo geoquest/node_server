@@ -8,8 +8,9 @@ Find = function() {
 Find.prototype.handleRequest = function(request, response)
 {
 	this._gameRepository.findAll(function(result){
-		var responseText = JSON.stringify(result);
-		response.setHeader("Content-Type", "application/json");
+		console.log(result);
+		var responseText = "jsonCallback({\"games\":  " + JSON.stringify(result) +"})";
+		response.setHeader("Content-Type", "application/json;charset=UTF-8");
 		response.write(responseText);
 		response.end();
 	});
