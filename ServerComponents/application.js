@@ -18,7 +18,7 @@ var userAdapter = require('./middleware/UserAdapter');
 var app = express();
 
 //configure everyauth
-everyauth.everymodule.findUserById( function(id, callback) {
+everyauth.everymodule.findUserById(function(id, callback) {
 	// Invoke callback to ensures that the routing proceeds.
 	// Do not provide user information yet, this is handled 
 	// by the login pages.
@@ -29,7 +29,7 @@ everyauth
 	.facebook
 	.appId(extAuthConf.fb.appId)
 	.appSecret(extAuthConf.fb.appSecret)
-	.findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
+	.findOrCreateUser(function (session, accessToken, accessTokenExtra, fbUserMetadata) {
 		// Pass Facebook user data to the session, so that it
 		// can be processed by the login page module.
 	    session.facebookUser = fbUserMetadata;
@@ -40,7 +40,7 @@ everyauth.google
 	.appId(extAuthConf.google.clientId)
 	.appSecret(extAuthConf.google.clientSecret)
 	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-	.findOrCreateUser( function (session, accessToken, extra, googleUser) {
+	.findOrCreateUser(function (session, accessToken, extra, googleUser) {
 		// Pass Google user data to the session, so that it
 		// can be processed by the login page module.
 	    session.googleUser = googleUser;
