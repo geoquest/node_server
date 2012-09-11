@@ -100,8 +100,8 @@ describe('games/Find page', function() {
 					end : function(text){} 
 			};
 			page.handleRequest(req,res);
-			assert.equal(res.responseText, JSON.stringify(gameRepository.result));
-			assert.equal(res.header, "Content-Type/application/json");
+			assert.equal(res.responseText, "jsonCallback({\"games\":  " + JSON.stringify(gameRepository.result) +"})");
+			assert.equal(res.header, "Content-Type/application/json;charset=UTF-8");
 		});
 	});
 	

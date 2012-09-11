@@ -65,6 +65,9 @@ Game.prototype.setContent = function(content) {
  */
 Game.prototype.toString = function() {
 	// TODO extract game description from JSON content
+	if (!this['_content'] || !this['_content']['title']){
+		return 'No Description Available';
+	}
 	return this['_content']['title'];
 };
 
