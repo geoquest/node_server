@@ -39,7 +39,7 @@ PageDispatcher.prototype.createHandlerFor = function(pageConfig) {
 	return function(request, response, next) {
 		var module = require(self.pageModulesPath + '/' + pageConfig.module);
 		var page = new module.class();
-		if (pageConfig.restrictedTo && pageConfig.restrictedTo !== self._getRole(request)) {
+		if (!self._isAllowed(self._getRole(request), pageConfig)) {
 			// The current user is not allowed to access the page.
 			next();
 			return page;
@@ -48,6 +48,21 @@ PageDispatcher.prototype.createHandlerFor = function(pageConfig) {
 		page.handleRequest(request, response);
 		return page;
 	};
+};
+
+/**
+ * Checks if the given role is allowed to access the specified page.
+ * 
+ * @param {String} role
+ * @param {Object} pageConfig
+ * @return {boolean}
+ */
+PageDispatcher.prototype._isAllowed = function(role, pageConfig) {
+	if (pageConfig.restrictedTo === undefined) {
+		// There are no restrictions defined.
+		return true;
+	}
+	return pageConfig.restrictedTo === role;
 };
 
 /**
