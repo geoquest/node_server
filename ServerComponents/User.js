@@ -33,15 +33,14 @@ var crypto = require('crypto');
  * The mapping between the attributes of this object and the attributes of the JSON Representation.
  */
 var mapping = {
-        // Expected JSON property -> private User attributes 
-        'loginType': '_loginType',
-        'identifier': '_identifier',
-        'firstname': '_firstname',
-        'lastname': '_lastname',
-        'password': '_password',
-        'email': '_email'
-        
-    };
+    // Expected JSON property -> private User attributes 
+    'loginType': '_loginType',
+    'identifier': '_identifier',
+    'firstname': '_firstname',
+    'lastname': '_lastname',
+    'password': '_password',
+    'email': '_email'
+};
 
 User = function() 
 {
