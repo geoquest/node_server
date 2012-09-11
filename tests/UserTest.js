@@ -265,7 +265,28 @@ describe('User', function() {
                 user.toJSON();
             });
         });
-        
+    });
+    
+    describe('toString', function() {
+    	it('returns string', function() {
+    		user.setLoginType('GeoQuest');
+    		user.setIdentifier('max.mustermann');
+    		user.setFirstname('Max');
+    		user.setLastname('Mustermann');
+    		assert.equal(typeof user.toString(), 'string');
+    	});
+    	it('returns firstname if available', function() {
+    		user.setLoginType('GeoQuest');
+    		user.setIdentifier('max.mustermann');
+    		user.setFirstname('Max');
+    		user.setLastname('Mustermann');
+    		assert.equal(user.toString(), 'Max');
+    	});
+    	it('returns username if firstname is not available', function() {
+    		user.setLoginType('GeoQuest');
+    		user.setIdentifier('max.mustermann');
+    		assert.equal(typeof user.toString(), 'max.mustermann');
+    	});
     });
     
 });
