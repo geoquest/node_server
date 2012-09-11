@@ -13,6 +13,20 @@
  *     }
  * }
  * </code>
+ * 
+ * To ensure that a page can only be viewed by users or guests, the "restrictedTo"
+ * property is used:
+ * <code>
+ * {
+ *     '/login': {
+ *         'module': 'Login',
+ *         'restrictedTo': 'guest'
+ *     }
+ * }
+ * </code>
+ * In the example above the login page is only available for guests.
+ * If "restrictedTo" is omitted then the page is available for both, 
+ * logged in users and guests.
  */
 var pages = {
 	'/': {
