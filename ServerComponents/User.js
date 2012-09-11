@@ -308,7 +308,6 @@ User.prototype.getId = function(){
 	return this._id;
 };
 
-
 /**
  * Creates a JSON Object describing this User Object.
  * @returns a JSON Object
