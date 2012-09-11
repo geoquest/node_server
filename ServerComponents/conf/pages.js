@@ -33,6 +33,9 @@ var pages = {
 	'/games/uploaded': {
 		'module': 'games/AuthorRelated'
 	},
+	'/games/listPublic': {
+		'module': 'games/ShowAllPublicGames'
+	},
 	'/signout': {
 		'module': 'Logout'
 	},

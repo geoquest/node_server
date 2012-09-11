@@ -65,7 +65,7 @@ Game.prototype.setContent = function(content) {
  */
 Game.prototype.toString = function() {
 	// TODO extract game description from JSON content
-	return 'Game description';
+	return this['_content']['title'];
 };
 
 /**
