@@ -1,6 +1,9 @@
 
 /**
- * @param {String}
+ * Creates a new dispatcher.
+ * 
+ * @param {String} pageModulesPath Path to page modules.
+ * @param {Object} injector Dependency injector that is used.
  */
 PageDispatcher = function(pageModulesPath, injector) {
 	
