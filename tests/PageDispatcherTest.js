@@ -113,7 +113,7 @@ describe('PageDispatcher', function() {
 		});
 		it('loads required module', function() {
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 		});
 		it('passes module to dependency injector', function(done) {
@@ -123,18 +123,18 @@ describe('PageDispatcher', function() {
 				return object;
 			};
 			var handler = dispatcher.createHandlerFor(config);
-			handler(request, response);
+			handler(request, response, function() {});
 		});
 		it('passes request and response to handleRequest()', function() {
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.request, request);
 			assert.strictEqual(page.response, response);
 		});
 		it('calls handleRequest() if no restrictions are configured', function() {
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, true);
 		});
@@ -142,7 +142,7 @@ describe('PageDispatcher', function() {
 			config.restrictedTo = 'user';
 			request.session.user = createUser();
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, true);
 		});
@@ -150,7 +150,7 @@ describe('PageDispatcher', function() {
 			config.restrictedTo = 'guest';
 			request.session.user = undefined;
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, true);
 		});
@@ -158,7 +158,7 @@ describe('PageDispatcher', function() {
 			config.restrictedTo = 'user';
 			request.session.user = undefined;
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, false);
 		});
@@ -166,7 +166,7 @@ describe('PageDispatcher', function() {
 			config.restrictedTo = 'guest';
 			request.session.user = createUser();
 			var handler = dispatcher.createHandlerFor(config);
-			var page = handler(request, response);
+			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, false);
 		});
