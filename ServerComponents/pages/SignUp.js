@@ -30,7 +30,11 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 
 	    	//password matched
 	    	var username = request.param('username');
-	    	
+
+			self._userRepository.addErrorHandler(function(error) {
+                response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});
+            });
+			
 	    	self._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
 
 	    		if (userOrNull === null) {	    			
@@ -50,9 +54,6 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 						newGQUser.setLastname(lastName);
 						newGQUser.setEmail(email);
 						
-						self._userRepository.addErrorHandler(function(error) {
-			                response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});
-			            });
 						
 						self._userRepository.insertUser(newGQUser);
 			            
