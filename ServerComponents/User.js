@@ -335,7 +335,10 @@ User.prototype.toJSON = function() {
  * @return {String}
  */
 User.prototype.toString = function() {
-	
+	if (this._firstname !== null) {
+		return this._firstname;
+	}
+	return this._identifier;
 };
 
 /**
