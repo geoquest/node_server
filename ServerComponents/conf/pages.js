@@ -22,10 +22,6 @@ var pages = {
 		'module': 'SignUp',
 		'restrictedTo': 'guest'
 	},
-	'/login': {
-		'module': 'login/GeoQuest',
-		'restrictedTo': 'guest'
-	},
 	'/games/upload': {
 		'module': 'games/Upload',
 		'restrictedTo': 'user'
@@ -37,9 +33,9 @@ var pages = {
 		'module': 'games/AuthorRelated',
 		'restrictedTo': 'user'
 	},
-	'/signout': {
-		'module': 'Logout',
-		'restrictedTo': 'user'
+	'/login': {
+		'module': 'login/GeoQuest',
+		'restrictedTo': 'guest'
 	},
 	'/login/facebook': {
 	    'module': 'login/Facebook',
@@ -48,6 +44,10 @@ var pages = {
 	'/login/google': {
 	    'module': 'login/Google',
 	    'restrictedTo': 'guest'
+	},
+	'/signout': {
+		'module': 'Logout',
+		'restrictedTo': 'user'
 	},
 	// Register a catch-all route that handles requests that point
 	// to not existing pages.
