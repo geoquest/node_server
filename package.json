@@ -15,6 +15,7 @@
       "mongojs": "*",
       "ejs": "*",
       "validator": "*",
-      "express-ejs-layouts": "*"
+      "express-ejs-layouts": "*",
+      "socket.io": "*"
   }
 }

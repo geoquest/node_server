@@ -89,6 +89,10 @@ var DependencyInjector = require('./DependencyInjector');
 var injector = new DependencyInjector.class(dependencies);
 
 
+//Import IOSocket Example:
+require('../examples/IOSocketExample').run(app);
+
+
 var pages = require(__dirname + '/conf/pages');
 for (var route in pages) {
 	var pageInfo = pages[route];
@@ -117,5 +121,10 @@ for (var route in pages) {
 	app.all(route, handler);
 }
 
+
+
+
+
 //start server
 app.listen(app.get('port'));
+

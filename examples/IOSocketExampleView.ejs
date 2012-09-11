@@ -1,0 +1,26 @@
+<script src="/socket.io.min.js"></script>
+<script>
+	// Create a socket-connection to the server, using the port given by the controller
+	var socket = io.connect('http://localhost:<%= port %>}');
+	
+	// Make the socket listen for messages coming from the server...
+	socket.on('chat', function(data) {
+		// ... and write the messages to the chat window
+		var chat = document.getElementById('chat-window');
+		chat.innerHTML = data.msg;
+	});
+	
+	// Function to send a Message over the previously established socket
+	function emitMsg(msgToEmit) {
+		socket.emit('chat', {msg:msgToEmit});
+	}
+</script>
+
+
+<h1><%= title %></h1>
+
+<div class="hero-unit" id="chat-window"></div>
+
+<input type="text" onkeyup="emitMsg(this.value)" />
+
+
