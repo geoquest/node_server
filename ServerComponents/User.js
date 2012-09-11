@@ -312,21 +312,30 @@ User.prototype.getId = function(){
  * @returns a JSON Object
  * @throws Error if: required fields are wrong or not properly set
  */
-User.prototype.toJSON = function(){
-    if (this._validLoginTypes.indexOf(this._loginType) === -1){
+User.prototype.toJSON = function() {
+    if (this._validLoginTypes.indexOf(this._loginType) === -1) {
         throw new Error('Invalid login type');
     }
-    if (null == this._identifier){
+    if (null == this._identifier) {
         throw new Error('identifier must not be null');
     }
-    if ((this._loginType === this._validLoginTypes[2]) && (this._password == null)){
+    if ((this._loginType === this._validLoginTypes[2]) && (this._password == null)) {
         throw new Error('GeoQuest users MUST have a password');
     }
     var jsonObj = {};
-    for (var property in mapping){
+    for (var property in mapping) {
         jsonObj[property] = this[mapping[property]];
     }
     return jsonObj;
+};
+
+/**
+ * Returns a string representation of the user.
+ * 
+ * @return {String}
+ */
+User.prototype.toString = function() {
+	
 };
 
 /**
