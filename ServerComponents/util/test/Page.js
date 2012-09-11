@@ -17,7 +17,8 @@ Page = function() {
  * @param {Object} response
  */
 Page.prototype.handleRequest = function(request, response) {
-	
+	this.request = request;
+	this.response = response;
 };
 
 module.exports.class = Page;
