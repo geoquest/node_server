@@ -285,7 +285,7 @@ describe('User', function() {
     	it('returns username if firstname is not available', function() {
     		user.setLoginType('GeoQuest');
     		user.setIdentifier('max.mustermann');
-    		assert.equal(typeof user.toString(), 'max.mustermann');
+    		assert.equal(user.toString(), 'max.mustermann');
     	});
     });
     
