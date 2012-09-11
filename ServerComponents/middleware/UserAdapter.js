@@ -3,6 +3,6 @@ var userFromJson = function(request, response, next) {
 	
 };
 
-modules.export.fromJsonAdapter = function() {
+module.exports.fromJsonAdapter = function() {
 	return userFromJson;
 };
