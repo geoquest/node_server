@@ -35,6 +35,9 @@ describe('TestPage', function() {
 		it('initializes response attribute with null', function() {
 			assert.strictEqual(page.response, null);
 		});
+		it('initializes called attribute with false', function() {
+			assert.strictEqual(page.called, false);
+		});
 	});
 	
 	describe('handleRequest', function() {
@@ -47,6 +50,10 @@ describe('TestPage', function() {
 			var response = {};
 			page.handleRequest({}, response);
 			assert.strictEqual(page.response, response);
+		});
+		it('sets called to true', function() {
+			page.handleRequest({}, {});
+			assert.strictEqual(page.called, true);
 		});
 	});
 

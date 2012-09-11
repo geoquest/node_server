@@ -8,6 +8,7 @@
 Page = function() {
 	this.request = null;
 	this.response = null;
+	this.called = false;
 };
 
 /**
@@ -17,6 +18,7 @@ Page = function() {
  * @param {Object} response
  */
 Page.prototype.handleRequest = function(request, response) {
+	this.called = true;
 	this.request = request;
 	this.response = response;
 };
