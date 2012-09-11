@@ -7,14 +7,16 @@
       "start-server": "node ServerComponents/application.js"
   }
   , "description": "Geoquest server user management application."
-  , "devDependencies": {
-      "mocha": "*",
-      "rimraf": "*",
-      "express": "*",
+  , "dependencies": {
+  	 "express": "*",
       "everyauth": "*",
       "mongojs": "*",
       "ejs": "*",
       "validator": "*",
       "express-ejs-layouts": "*"
+  }
+  , "devDependencies": {
+      "mocha": "*",
+      "rimraf": "*"
   }
 }
