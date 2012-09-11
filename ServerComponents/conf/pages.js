@@ -19,28 +19,35 @@ var pages = {
 		'module': 'Home'
 	},
 	'/signup': {
-		'module': 'SignUp'
+		'module': 'SignUp',
+		'restrictedTo': 'guest'
 	},
 	'/login': {
-		'module': 'login/GeoQuest'
+		'module': 'login/GeoQuest',
+		'restrictedTo': 'guest'
 	},
 	'/games/upload': {
-		'module': 'games/Upload'
+		'module': 'games/Upload',
+		'restrictedTo': 'user'
 	},
 	'/games/findAll': {
 		'module': 'games/Find'
 	},
 	'/games/uploaded': {
-		'module': 'games/AuthorRelated'
+		'module': 'games/AuthorRelated',
+		'restrictedTo': 'user'
 	},
 	'/signout': {
-		'module': 'Logout'
+		'module': 'Logout',
+		'restrictedTo': 'user'
 	},
 	'/login/facebook': {
-	    'module': 'login/Facebook'
+	    'module': 'login/Facebook',
+	    'restrictedTo': 'guest'
 	},
 	'/login/google': {
-	    'module': 'login/Google'
+	    'module': 'login/Google',
+	    'restrictedTo': 'guest'
 	},
 	// Register a catch-all route that handles requests that point
 	// to not existing pages.
