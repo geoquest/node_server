@@ -162,6 +162,15 @@ describe('PageDispatcher', function() {
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, false);
 		});
+		it('calls next() callback if page is restricted to user and no user is logged in', function(done) {
+			config.restrictedTo = 'user';
+			request.session.user = undefined;
+			var next = function() {
+				done();
+			};
+			var handler = dispatcher.createHandlerFor(config);
+			handler(request, response, next);
+		});
 		it('proceeds without calling handleRequest() if page is restricted to guest and user is logged in', function() {
 			config.restrictedTo = 'guest';
 			request.session.user = createUser();
@@ -169,6 +178,15 @@ describe('PageDispatcher', function() {
 			var page = handler(request, response, function() {});
 			assert.ok(page instanceof Page.class);
 			assert.strictEqual(page.called, false);
+		});
+		it('calls next() callback if page is restricted to guest and user is logged in', function(done) {
+			config.restrictedTo = 'guest';
+			request.session.user = createUser();
+			var next = function() {
+				done();
+			};
+			var handler = dispatcher.createHandlerFor(config);
+			handler(request, response, next);
 		});
 	});
 
