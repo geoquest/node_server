@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title><%= ((typeof title) !== 'undefined') ? title : "GeoQuest"
+	%></title>
+
+<!-- Dirty hack to avoid FB appending #_=_ when redirecting url -->
+<script type="text/javascript">
+	if (window.location.hash == '#_=_')
+		window.location.hash = '';
+</script>
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" /> -->
+
+<link rel="stylesheet"
+	href="/bootstrap/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+	<div id="header">
+
+		<div class="container navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/">GeoQuest</a>
+
+					<ul class="nav">
+						<li><a href="/games/uploaded">Uploaded games</a></li>
+						<li><a href="/games/upload">Upload game</a></li>
+						<li><a href="/signout">Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+	<div id="content" class="container"><%- body %></div>
+
+	<div id="footer"></div>
+
+
+</body>
+</html>

@@ -94,6 +94,19 @@ GameRepository.prototype.findAll = function(callback) {
 	this._connection.games.find(query, this._createResultHandler(callback));
 };
 
+
+
+/**
+ * 
+ * Returns all uploaded games that belong to a user
+ * 
+ * @returns Callback returns a list of {Games}
+ */
+GameRepository.prototype.findAllByUser = function(user, callback) {
+	var query = {authors: user.getId()};
+	this._connection.games.find(query, this._createResultHandler(callback));
+};
+
 /**
  * Receives a MongoDB result set and converts it into a game object.
  * 
@@ -113,6 +126,7 @@ GameRepository.prototype._jsonToGame = function(result) {
 		passResult[i] = new Game.fromJSON(result[i]);
 	}
 	return passResult;
+
 };
 
 exports.class = GameRepository;

@@ -105,6 +105,13 @@ describe('User', function() {
         });
     }); 
     
+    describe('getId', function() {
+		it('returns correct value', function() {
+    		user.setId('123');
+    		assert.equal(user.getId(), '123');
+        });
+    });
+    
     describe('fromJSON', function() {
 		it('returns a User object', function() {
 			var json = {

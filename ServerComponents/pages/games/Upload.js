@@ -1,4 +1,4 @@
-var Game = require("../Game.js");
+var Game = require("../../Game.js");
 var fs = require('fs');
 
 Upload = function() {

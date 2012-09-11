@@ -100,6 +100,13 @@ User = function()
 	this._email = null;
 	
 	/**
+	 * Unique user ID as observed in the DB [managed by the DB].
+	 * 
+	 * @var {String}|null
+	 */
+	this._id = null;
+	
+	/**
 	 * List of valid Login Types
 	 * 
 	 * @var {String[]}
@@ -290,6 +297,17 @@ User.prototype.getEmail = function()
 {
 	return this._email;
 };
+
+
+User.prototype.setId = function(id){
+	this._id = id;
+};
+
+
+User.prototype.getId = function(){
+	return this._id;
+};
+
 
 /**
  * Creates a JSON Object describing this User Object.

@@ -2,6 +2,7 @@ var assert = require("assert");
 
 var Game = require("../ServerComponents/Game.js");
 var GameRepository = require("../ServerComponents/GameRepository.js");
+var User = require("../ServerComponents/User.js");
 
 
 /**
@@ -183,5 +184,19 @@ describe('GameRepository', function() {
     	
     });
 
+    describe('findAllByUser', function(){
+    	it('should create a query object containing the user id', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+        	connectionMock.games.find = function(query, callback) {
+        		assert.deepEqual(query, {authors:"12"});
+        		done();
+    		};
+
+    		repository.findAllByUser(user);
+    	});
+ 
+    });
     
 });  

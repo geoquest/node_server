@@ -1,6 +1,6 @@
 var assert = require('assert');
 var fs = require('fs');
-var Upload = require("../../ServerComponents/pages/Upload.js");
+var Upload = require("../../ServerComponents/pages/games/Upload.js");
 var GameRepository = require("../../ServerComponents/GameRepository.js");
 
 describe('Upload Page', function() {

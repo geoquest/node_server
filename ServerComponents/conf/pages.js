@@ -24,11 +24,14 @@ var pages = {
 	'/login': {
 		'module': 'login/GeoQuest'
 	},
-	'/upload': {
-		'module': 'Upload'
+	'/games/upload': {
+		'module': 'games/Upload'
 	},
 	'/games/findAll': {
 		'module': 'games/Find'
+	},
+	'/games/uploaded': {
+		'module': 'games/AuthorRelated'
 	},
 	'/signout': {
 		'module': 'Logout'

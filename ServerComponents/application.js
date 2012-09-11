@@ -8,9 +8,9 @@
  */
 var crypto = require('crypto');
 var express = require("express");
+var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
 //login dependencies
-var GeoQuest = require('./pages/login/GeoQuest');
 var everyauth = require('everyauth');
 var extAuthConf = require('./conf/extAuthConf');
 
@@ -62,8 +62,13 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	// Exposes the contents in the given directory to the public.
 	app.use(express.static(serverConf.public));
-	// Provides everyauth functionalities
+	// Register everyauth middleware.
+	// Everyauth defines several routes and callbacks that are used
+	// for authentication against external services (for example
+	// Facebook or Google+).
 	app.use(everyauth.middleware());
+	
+	app.use(expressLayouts);
 });
 
 var dependencies = {
@@ -97,6 +102,12 @@ for (var route in pages) {
 	// for a simple example of the problem and a simple solution.
 	var handler = function(pageInfo) {
 		return function(request, response) {
+			if ((typeof request.session.user) === 'object') {
+				var User = require('./User');
+				if (!(request.session.user instanceof User.class)) {
+					request.session.user = User.fromJSON(request.session.user);
+			    }
+			}
 			var module = require(__dirname + '/pages/' + pageInfo.module);
 			var page = new module.class();
 			injector.inject(page);

@@ -1,25 +1,10 @@
-<html>
-<head>
 
-</head>
-<body>
-
-	<div data-role="page" id="page1">
-		<div data-role="content" style="padding: 15px">
-			<h1><%= title %></h1>
-			<h3><%= msg %></h3>
-			<form action="/upload" method="POST" enctype="multipart/form-data">
-				<div data-role="fieldcontain">
-					<fieldset data-role="controlgroup">
-						<label for="textinput1"> Game as JSON </label> <input name="game"
-							placeholder="" value="" type="file">
-					</fieldset>
-				</div>
-				<input data-inline="true" value="Upload" type="submit">
-			</form>
-		</div>
-	</div>
-
-</body>
-
-</html>
+<h1><%= title %></h1>
+<p class="alert"><%= msg %></p>
+<form action="/games/upload" method="POST" enctype="multipart/form-data">
+	<fieldset>
+		<label for="game">Game as JSON</label>
+		<input name="game" type="file">
+	</fieldset>
+	<input value="Upload" type="submit" class="btn">
+</form>
