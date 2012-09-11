@@ -50,5 +50,35 @@ describe('PageDispatcher', function() {
 
 		});
 	});
+	
+	describe('createHandlerFor', function() {
+		it('returns function', function() {
+			
+		});
+		it('loads required module', function() {
+			
+		});
+		it('passes module to dependency injector', function() {
+			
+		});
+		it('passes request and response to handleRequest()', function() {
+			
+		});
+		it('calls handleRequest() if no restrictions are configured', function() {
+			
+		});
+		it('calls handleRequest() if page is restricted to user and user is logged in', function() {
+			
+		});
+		it('calls handleRequest() if page is restricted to guest and no user is logged in', function() {
+			
+		});
+		it('proceeds without calling handleRequest() if page is restricted to user and no user is logged in', function() {
+			
+		});
+		it('proceeds without calling handleRequest() if page is restricted to guest and user is logged in', function() {
+			
+		});
+	});
 
 });
