@@ -24,7 +24,7 @@ PageDispatcher = function(pageModulesPath, injector) {
  * @param {Object} pageConfig
  * @return {function}
  */
-PageDispatcher.prototype.createHandlerFor(pageConfig) {
+PageDispatcher.prototype.createHandlerFor = function(pageConfig) {
 	
 };
 
