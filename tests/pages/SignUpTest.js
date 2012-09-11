@@ -179,5 +179,4 @@ describe('SignUp page', function() {
 		
 	});
 	
-	
 });
