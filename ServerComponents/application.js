@@ -10,42 +10,10 @@ var crypto = require('crypto');
 var express = require("express");
 var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
-//login dependencies
-var everyauth = require('everyauth');
-var extAuthConf = require('./conf/extAuthConf');
-
+var everyauth = require('./middleware/everyauth');
+var userAdapter = require('./middleware/UserAdapter');
 
 var app = express();
-
-//configure everyauth
-everyauth.everymodule.findUserById( function(id, callback) {
-	// Invoke callback to ensures that the routing proceeds.
-	// Do not provide user information yet, this is handled 
-	// by the login pages.
-    callback(null, null);
-});
-
-everyauth
-	.facebook
-	.appId(extAuthConf.fb.appId)
-	.appSecret(extAuthConf.fb.appSecret)
-	.findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-		// Pass Facebook user data to the session, so that it
-		// can be processed by the login page module.
-	    session.facebookUser = fbUserMetadata;
-	    return fbUserMetadata;
-	}).redirectPath('/login/facebook');
-
-everyauth.google
-	.appId(extAuthConf.google.clientId)
-	.appSecret(extAuthConf.google.clientSecret)
-	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
-	.findOrCreateUser( function (session, accessToken, extra, googleUser) {
-		// Pass Google user data to the session, so that it
-		// can be processed by the login page module.
-	    session.googleUser = googleUser;
-	    return googleUser;
-	}).redirectPath('/login/google');
 
 app.configure(function() {
 	app.set('port', serverConf.port);
@@ -67,7 +35,9 @@ app.configure(function() {
 	// for authentication against external services (for example
 	// Facebook or Google+).
 	app.use(everyauth.middleware());
-	
+	// Automatically converts JSON objects in the session back into
+	// User instances (if needed).
+	app.use(userAdapter.fromJsonAdapter());
 	app.use(expressLayouts);
 });
 
@@ -87,33 +57,13 @@ var dependencies = {
 };
 var DependencyInjector = require('./DependencyInjector');
 var injector = new DependencyInjector.class(dependencies);
-
+var PageDispatcher = require('./PageDispatcher');
+var dispatcher = new PageDispatcher.class(__dirname + '/pages', injector);
 
 var pages = require(__dirname + '/conf/pages');
 for (var route in pages) {
 	var pageInfo = pages[route];
-	// Use a closure to create the handler function.
-	// The closure guarantees, that pageInfo contains 
-	// the correct value when the handler function is 
-	// called.
-	// Without the closure pageInfo would always contain
-	// the value of the last iteration.
-	// See http://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
-	// for a simple example of the problem and a simple solution.
-	var handler = function(pageInfo) {
-		return function(request, response) {
-			if ((typeof request.session.user) === 'object') {
-				var User = require('./User');
-				if (!(request.session.user instanceof User.class)) {
-					request.session.user = User.fromJSON(request.session.user);
-			    }
-			}
-			var module = require(__dirname + '/pages/' + pageInfo.module);
-			var page = new module.class();
-			injector.inject(page);
-			page.handleRequest(request, response);
-		};
-	}(pageInfo);
+	var handler = dispatcher.createHandlerFor(pageInfo);
 	app.all(route, handler);
 }
 

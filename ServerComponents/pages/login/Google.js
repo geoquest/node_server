@@ -20,7 +20,7 @@ GoogleLogin.prototype.handleRequest = function(request, response){
         // redirect from facebook
         self._userRepository.byGoogleIdentifier(googleUser['name'], function(userOrNull) {
             var user;
-            if(userOrNull === null){
+            if(userOrNull === null) {
                 user = new User();
                 user.setIdentifier(googleUser['name']);
                 user.setFirstname(googleUser['given_name']);
@@ -31,10 +31,8 @@ GoogleLogin.prototype.handleRequest = function(request, response){
                user = userOrNull;
             }
             request.session.user = user;
-            var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + googleUser['name'] + '!'};
+            var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
     		response.render('home.ejs', params);
-    		
-            //response.render('login.ejs', { title: 'Log in Succeed.', msg: ('Hi, ' +  user.getFirstname() + '!')} );
         });
     } else {
         // page url entered in browser

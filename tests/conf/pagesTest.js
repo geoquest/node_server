@@ -16,5 +16,16 @@ describe('Page configuration', function() {
 			assert.ok((typeof pageConfig.module) === 'string', message);
 		}
 	});
+	it('contains valid restrictedTo configuration', function() {
+		for (var route in pages) {
+			var pageConfig = pages[route];
+			if (pageConfig.restrictedTo === undefined) {
+				// Restriction configuration is optional.
+				continue;
+			}
+			var message = 'Invalid "restrictedTo" ("' + pageConfig.restrictedTo + '") attribute for route "' + route + '".';
+			assert.ok(['guest', 'user'].indexOf(pageConfig.restrictedTo) !== -1, message);
+		}
+	});
 });
 	
