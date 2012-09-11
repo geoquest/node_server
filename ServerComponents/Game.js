@@ -1,7 +1,8 @@
 var mapping = {
         // Expected JSON property -> private Game attributes 
         'authors': '_authors',
-        'content': '_content'
+        'content': '_content',
+        '_id': '__id'
     };
 
 Game = function() {
@@ -22,6 +23,14 @@ Game = function() {
 	 * @var {JSON}
 	 */
 	this._content = null;
+	
+	/**
+	 * ID of the uploaded Game
+	 * has two underscores, since id is prefixed with underscore in db already
+	 * 
+	 * @var {String}
+	 */
+	this.__id = null;
 };
 
 
@@ -94,6 +103,7 @@ var fromJSON = function(jsonObject) {
 	if ((typeof jsonObject) !== 'object') {
 		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
 	}
+	console.log(jsonObject);
 	var game = new Game();
 	for (var property in mapping) {
 		if (!jsonObject.hasOwnProperty(property)) {

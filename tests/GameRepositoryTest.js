@@ -37,6 +37,7 @@ describe('GameRepository', function() {
 		// Simulate the requested number of game entries.
 		for (var i = 0; i < number; i++) {
 			result[i] = {
+				"_id": i,
 				"authors": [], 
 				"content": {}
 			};
