@@ -27,22 +27,26 @@ describe('TestPage', function() {
 	
 	describe('constructor', function() {
 		it('creates page instance', function() {
-			
+			assert.ok(page instanceof Page.class);
 		});
 		it('initializes request attribute with null', function() {
-			
+			assert.strictEqual(page.request, null);
 		});
 		it('initializes response attribute with null', function() {
-			
+			assert.strictEqual(page.response, null);
 		});
 	});
 	
 	describe('handleRequest', function() {
-		it('store provided request', function() {
-			
+		it('stores provided request', function() {
+			var request = {};
+			page.handleRequest(request, {});
+			assert.strictEqual(page.request, request);
 		});
-		it('store provided response', function() {
-			
+		it('stores provided response', function() {
+			var response = {};
+			page.handleRequest({}, response);
+			assert.strictEqual(page.response, response);
 		});
 	});
 
