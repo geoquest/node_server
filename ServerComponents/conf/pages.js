@@ -18,10 +18,6 @@ var pages = {
 	'/': {
 		'module': 'Home'
 	},
-	'/signup': {
-		'module': 'SignUp',
-		'restrictedTo': 'guest'
-	},
 	'/games/upload': {
 		'module': 'games/Upload',
 		'restrictedTo': 'user'
@@ -47,6 +43,10 @@ var pages = {
 	'/login/google': {
 	    'module': 'login/Google',
 	    'restrictedTo': 'guest'
+	},
+	'/signup': {
+		'module': 'SignUp',
+		'restrictedTo': 'guest'
 	},
 	'/signout': {
 		'module': 'Logout',
