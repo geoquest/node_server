@@ -150,7 +150,7 @@ describe('SignUp page', function() {
 				assert.equal('signup.ejs', response.template);
 				assert.deepEqual({ msg: 'SignUp Failed. Please retry.'}, response.templateVars);
 				done();
-			}
+			};
 			
 			page.handleRequest(request, response);			
 		});
