@@ -54,6 +54,18 @@ Game.prototype.addAuthor = function(author) {
 	}
 };
 
+Game.prototype.setId = function(id) {
+	if(id !== null) {
+		this.__id = id;
+	} else {
+		throw new Error("No game id passed. Please give your id.");
+	}
+};
+
+Game.prototype.getId = function() {
+	return this.__id;
+};
+
 
 Game.prototype.getContent = function() {
 	return this._content;
@@ -103,7 +115,6 @@ var fromJSON = function(jsonObject) {
 	if ((typeof jsonObject) !== 'object') {
 		throw new Error('JSON object expected. Received: ' + (typeof jsonObject));
 	}
-	console.log(jsonObject);
 	var game = new Game();
 	for (var property in mapping) {
 		if (!jsonObject.hasOwnProperty(property)) {

@@ -108,6 +108,22 @@ GameRepository.prototype.findAllByUser = function(user, callback) {
 };
 
 /**
+ * 
+ * Returns a games according to the specified id
+ * 
+ * @returns Callback returns a {Game}
+ */
+GameRepository.prototype.findGameById = function(id, callback) {
+	
+	//getting the ObjectId constructor
+	var ObjectId = this._connection.ObjectId;
+	
+	var query = { _id: ObjectId(id) };
+	
+	this._connection.games.find(query, this._createResultHandler(callback));
+};
+
+/**
  * Receives a MongoDB result set and converts it into a game object.
  * 
  * Converts the result set to null if it is empty.

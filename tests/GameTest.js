@@ -82,6 +82,21 @@ describe('Game', function() {
     	
     });
     
+    describe('setId/getId', function() {
+    	it('should set the Id', function() {
+    		object.setId("123xdqree4aaxc");
+            assert.deepEqual(object.getId(), "123xdqree4aaxc");
+        });
+    	
+    	it('should accept not null as id', function() {
+    		assert.throws(function(){
+    			object.setId(null);
+    		});
+        });
+    	
+    });
+    
+    
 	describe('toJSON', function() {
 		it('maps properties correctly (check if conversion is performed correctly)', function() {
 			object.addAuthor("whatever");

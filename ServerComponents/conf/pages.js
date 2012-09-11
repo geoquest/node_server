@@ -43,6 +43,9 @@ var pages = {
 		'module': 'games/AuthorRelated',
 		'restrictedTo': 'user'
 	},
+	'/games/download': {
+		'module': 'games/Download'
+	},
 	'/games/listPublic': {
 		'module': 'games/ShowAllPublicGames'
 	},

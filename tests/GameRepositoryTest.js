@@ -25,6 +25,7 @@ describe('GameRepository', function() {
 	 */
 	var connectionMock = null;
 	
+	
 	/**
 	 * Simulates a MongoDB result set that contains the
 	 * requested number of games.
@@ -71,6 +72,10 @@ describe('GameRepository', function() {
 	};
 
 	
+	var createObjectId = function(id){
+		return {id:id}; 
+	};
+	
 	
 	/**
 	 * TODO: move to utility class
@@ -105,7 +110,8 @@ describe('GameRepository', function() {
 			games: {
 				// Simulates an empty result set per default.
 				find: createFind(createResult(0))
-			}
+			},
+			ObjectId: createObjectId
 		};
 		repository = new GameRepository.class(connectionMock);
 	});
@@ -200,4 +206,28 @@ describe('GameRepository', function() {
  
     });
     
+
+    describe('findGameById', function(){
+    	it('should create a query object containing the game id', function(done){
+    		var game = new Game.class();
+    		game.setId("12");
+    		
+        	connectionMock.games.find = function(query, callback) {
+        		        		
+        		assert.deepEqual(query, { _id: connectionMock.ObjectId("12") });
+        		done();
+    		};
+
+    		repository.findGameById(game.getId());
+    	});
+    	
+/*    	it('should return a game with corresponding id and full content', function(done){
+        	connectionMock.games.find = createFind(createResult(10));
+        	repository.findGameById(game)(function(result){
+    			assert.equal(result.length, 10);
+    			done();
+    		});
+    	});*/
+    	
+    });
 });  
