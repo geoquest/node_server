@@ -13,7 +13,7 @@ Home.prototype.handleRequest = function(request, response)
 		response.render('login.ejs', params);
 	}else{
 		
-		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.session.user.getFirstname() + '!'};
+		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.session.user + '!'};
 		response.render('home.ejs', params);
 	}
 };
