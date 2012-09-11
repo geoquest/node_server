@@ -45,6 +45,18 @@ describe('PageDispatcher', function() {
 	 * @var {Object}
 	 */
 	var response = null;
+	
+	/**
+	 * Creates a new user object for testing.
+	 * 
+	 * @return {User.class}
+	 */
+	var createUser = function() {
+		var user = new User.class();
+		user.setLoginType('GeoQuest');
+		user.setIdentifier('max.mustermann');
+		return user;
+	};
 
 	/**
 	 * Is executed before each test runs and sets up the environment.
@@ -127,16 +139,36 @@ describe('PageDispatcher', function() {
 			assert.strictEqual(page.called, true);
 		});
 		it('calls handleRequest() if page is restricted to user and user is logged in', function() {
-			
+			config.restrictedTo = 'user';
+			request.session.user = createUser();
+			var handler = dispatcher.createHandlerFor(config);
+			var page = handler(request, response);
+			assert.ok(page instanceof Page.class);
+			assert.strictEqual(page.called, true);
 		});
 		it('calls handleRequest() if page is restricted to guest and no user is logged in', function() {
-			
+			config.restrictedTo = 'guest';
+			request.session.user = undefined;
+			var handler = dispatcher.createHandlerFor(config);
+			var page = handler(request, response);
+			assert.ok(page instanceof Page.class);
+			assert.strictEqual(page.called, true);
 		});
 		it('proceeds without calling handleRequest() if page is restricted to user and no user is logged in', function() {
-			
+			config.restrictedTo = 'user';
+			request.session.user = undefined;
+			var handler = dispatcher.createHandlerFor(config);
+			var page = handler(request, response);
+			assert.ok(page instanceof Page.class);
+			assert.strictEqual(page.called, false);
 		});
 		it('proceeds without calling handleRequest() if page is restricted to guest and user is logged in', function() {
-			
+			config.restrictedTo = 'guest';
+			request.session.user = createUser();
+			var handler = dispatcher.createHandlerFor(config);
+			var page = handler(request, response);
+			assert.ok(page instanceof Page.class);
+			assert.strictEqual(page.called, false);
 		});
 	});
 
