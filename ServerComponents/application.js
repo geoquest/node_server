@@ -13,7 +13,7 @@ var serverConf = require('./conf/serverConf');
 //login dependencies
 var everyauth = require('everyauth');
 var extAuthConf = require('./conf/extAuthConf');
-
+var userAdapter = require('./middleware/UserAdapter');
 
 var app = express();
 
@@ -67,7 +67,9 @@ app.configure(function() {
 	// for authentication against external services (for example
 	// Facebook or Google+).
 	app.use(everyauth.middleware());
-	
+	// Automatically converts JSON objects in the session back into
+	// User instances (if needed).
+	app.use(userAdapter.fromJsonAdapter());
 	app.use(expressLayouts);
 });
 
@@ -102,12 +104,6 @@ for (var route in pages) {
 	// for a simple example of the problem and a simple solution.
 	var handler = function(pageInfo) {
 		return function(request, response) {
-			if ((typeof request.session.user) === 'object') {
-				var User = require('./User');
-				if (!(request.session.user instanceof User.class)) {
-					request.session.user = User.fromJSON(request.session.user);
-			    }
-			}
 			var module = require(__dirname + '/pages/' + pageInfo.module);
 			var page = new module.class();
 			injector.inject(page);
