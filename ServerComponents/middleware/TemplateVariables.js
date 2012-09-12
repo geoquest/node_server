@@ -7,7 +7,9 @@
  * @param {function} next
  */
 var importVariables = function(request, response, next) {
-	request.app.locals.user = _getUser(request.session);
+	request.app.locals.user = function() {
+		return _getUser(request.session);
+	};
 	next();
 };
 
