@@ -4,7 +4,7 @@ fs.renameSync(__dirname + "/../ServerComponents", __dirname + "/../ServerCompone
 
 // Instrument the source files.
 var process = require('child_process');
-var command = "jscoverage " + __dirname + "/../ServerComponents-original  " + __dirname + "/../ServerComponents";
+var command = "jscoverage --no-highlight " + __dirname + "/../ServerComponents-original  " + __dirname + "/../ServerComponents";
 console.log("Executing: ");
 console.log(command);
 process.exec(command, function (error, stdout, stderr) {
