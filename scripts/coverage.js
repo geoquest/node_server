@@ -13,7 +13,7 @@ process.exec("node " + __dirname + "/instrument.js", function (error, stdout, st
 		fs.mkdirSync(__dirname + "/../build");
 		
 		// Run tests on instrumented files.
-		var command = "node " + __dirname + "/../node_modules/mocha/bin/mocha " + __dirname + "/../tests --reporter html-cov > " + __dirname + "/../build/coverage.html";
+		var command = "node " + __dirname + "/../node_modules/mocha/bin/mocha " + __dirname + "/../tests --recursive --reporter html-cov > " + __dirname + "/../build/coverage.html";
 		process.exec(command,  function (error, stdout, stderr) {
 			console.log(stdout);
 			console.log(stderr);
