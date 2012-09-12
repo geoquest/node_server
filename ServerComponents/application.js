@@ -40,7 +40,7 @@ app.configure(function() {
 	// User instances (if needed).
 	app.use(userAdapter.fromJsonAdapter());
 	app.use(expressLayouts);
-	// Exposes the currently logged in user as "user" parameter to 
+	// Exposes the currently logged in user as function "user" to 
 	// the view templates.
 	app.use(templateVariables.importVariables());
 });
