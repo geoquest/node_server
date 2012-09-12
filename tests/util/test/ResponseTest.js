@@ -89,5 +89,18 @@ describe('Response', function() {
 			assert.equal(response.redirectStatus, 302);
 		});
 	});
+	
+	describe('status code', function() {
+		it('is initially 200', function() {
+			assert.strictEqual(response.statusCode, 200);
+		});
+		it('is changed by status()', function() {
+			response.status(404);
+			assert.strictEqual(response.statusCode, 404);
+		});
+		it('is changed by status()', function() {
+			assert.strictEqual(response.status(200), response);
+		});
+	});
 
 });
