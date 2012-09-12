@@ -83,6 +83,14 @@ describe('User', function() {
         });
     });
     
+    describe('setEmail', function() {
+    	it('throws exception if invalid mail address is provided', function() {
+    		assert.throws(function() {
+    			user.setEmail('invalid');
+    		});
+    	});
+    });
+    
     describe('getEmail', function() {
 		it('returns null if no address was provided', function() {
     		assert.ok(user.getEmail() === null);
