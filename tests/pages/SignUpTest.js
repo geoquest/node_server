@@ -130,7 +130,7 @@ describe('SignUp page', function() {
 						
 			page.handleRequest(request, response);
 			assert.equal('home.ejs', response.template);
-			assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.username + '!'}, response.templateVars);
+			assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.fName + '!'}, response.templateVars);
 			
 		});
 		
