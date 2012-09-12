@@ -281,9 +281,7 @@ User.prototype.getLastname = function()
  */
 User.prototype.setEmail = function(email)
 {
-	if (!check(email).isEmail()) {
-		throw new Error(email + " is not a valid email address.");
-	}
+	check(email).isEmail();
 	this._email = email;
 };
 
