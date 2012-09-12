@@ -84,11 +84,11 @@ describe('User', function() {
     });
     
     describe('setEmail', function() {
-    	it('throws exception if invalid mail address is provided', function() {
+    	it('throws exception if invalid address is provided', function() {
     		assert.throws(function() {
     			user.setEmail('invalid');
     		});
-    	});
+        });
     });
     
     describe('getEmail', function() {
@@ -98,11 +98,6 @@ describe('User', function() {
 		it('returns correct value', function() {
     		user.setEmail('example@geoquest.com');
     		assert.equal(user.getEmail(), 'example@geoquest.com');
-        });
-		it('throws exception if invalid address is provided', function() {
-    		assert.throws(function() {
-    			user.setEmail('invalid');
-    		});
         });
     });
     
