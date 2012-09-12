@@ -23,7 +23,7 @@ everyauth
 everyauth.google
 	.appId(extAuthConf.google.clientId)
 	.appSecret(extAuthConf.google.clientSecret)
-	.scope('https://www.googleapis.com/auth/userinfo.profile https://www.google.com/m8/feeds/')
+	.scope('https://www.googleapis.com/auth/userinfo.profile')
 	.findOrCreateUser(function (session, accessToken, extra, googleUser) {
 		// Pass Google user data to the session, so that it
 		// can be processed by the login page module.
