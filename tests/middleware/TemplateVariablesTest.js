@@ -54,13 +54,20 @@ describe('Template variables middleware', function() {
 	});
 	
 	it('exposes null if user is not logged in', function() {
-		
+		middleware(request, response, function(){});
+		assert.strictEqual(request.app.locals.user, null); 
 	});
 	it('exposes user data if user is logged in', function() {
-		
+		var user = {'name': 'Max Power'};
+		request.session.user = user;
+		middleware(request, response, function(){});
+		assert.strictEqual(request.app.locals.user, user); 
 	});
-	it('invokes next() callback', function() {
-		
+	it('invokes next() callback', function(done) {
+		var next = function() {
+			done();
+		};
+		middleware(request, response, next);
 	});
 
 });
