@@ -22,7 +22,7 @@ var importVariables = function(request, response, next) {
  * @returns {Object}|null
  */
 function _getUser(session) {
-	if (session.user) {
+	if (session && session.user) {
 		return session.user;
 	}
 	return null;
