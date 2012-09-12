@@ -61,6 +61,11 @@ describe('Template variables middleware', function() {
 		middleware(request, response, function(){});
 		assert.strictEqual(request.app.locals.user(), null); 
 	});
+	it('exposes function that returns null if session does not exist', function() {
+		request.session = undefined;
+		middleware(request, response, function(){});
+		assert.strictEqual(request.app.locals.user(), null); 
+	});
 	it('exposes function that returns user data if user is logged in', function() {
 		var user = {'name': 'Max Power'};
 		request.session.user = user;
