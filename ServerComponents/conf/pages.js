@@ -49,6 +49,10 @@ var pages = {
 	'/games/listPublic': {
 		'module': 'games/ShowAllPublicGames'
 	},
+	'/games/saveState': {
+		'module': 'games/SaveState',
+		'restrictedTo': 'user'
+	},
 	'/login': {
 		'module': 'login/GeoQuest',
 		'restrictedTo': 'guest'
