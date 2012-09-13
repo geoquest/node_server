@@ -13,7 +13,7 @@ module.exports = {
 
 var dbconf = {
 	url: host + ":" + port + "/" + dbname
-  , collections : ["REGISTERED", "users", "games", "gameStates"]
+  , collections : ["users", "games", "gameStates"]
   , salt : '1@#4%^78()'
 };
 
