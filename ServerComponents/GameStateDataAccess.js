@@ -48,9 +48,9 @@ GameStateRepository.prototype.save = function(state, user) {
 /**
  * Creates a callback that handles a MongoDB result.
  * 
- * Throws an exception if an error occurs. In case of
+ * Notifies error handlers if an error occurs. In case of
  * a successful result it will convert the result set 
- * into a User object (or null if not found) and 
+ * into a GameState object (or null if not found) and 
  * pass it to the provided callback.
  * 
  * @param {function}
