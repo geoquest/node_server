@@ -10,7 +10,7 @@ var crypto = require('crypto');
 var express = require("express");
 var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
-var everyauth = require('./middleware/everyauth');
+var everyauth = require('./middleware/Everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
 
