@@ -1,7 +1,8 @@
 var assert = require("assert");
 var SaveState = require("../../../ServerComponents/pages/games/SaveState.js");
-var req = require("../../../ServerComponents/util/test/request.js")
+var req = require("../../../ServerComponents/util/test/request.js");
 var Response = require("../../../ServerComponents/util/test/Response");
+var GameState = require("../../../ServerComponents/GameState");
 
 describe('SaveState',function(){
 	var saveState ;
@@ -26,6 +27,7 @@ describe('SaveState',function(){
 		request.body = json;
 		response = new Response.class();
 	});
+	
 	afterEach (function(){
 		response = null;
 		request = null;
@@ -44,17 +46,29 @@ describe('SaveState',function(){
 			saveState.handleRequest(request, response);
 			assert.equal(response.statusCode, 500);
 		});
-		it('passes game state model to persistence layer', function() {
-			
+		it('passes game state model to persistence layer', function(done) {
+			gameStateDataAccess.save = function(state) {
+				assert.ok(state instanceof GameState.class);
+				done();
+			};
+			saveState.handleRequest(request, response);
 		});
 		it('uses provided JSON to create game state', function() {
-			
+			gameStateDataAccess.save = function(state) {
+				assert.ok(state instanceof GameState.class);
+				assert.deepEqual(state.json, json);
+				done();
+			};
+			saveState.handleRequest(request, response);
 		});
 		it('terminates response correctly in case of success', function() {
-			
+			saveState.handleRequest(request, response);
+			assert.strictEqual(response.ended, true);
 		});
 		it('terminates response correctly in case of error', function() {
-			
+			request.method = 'GET';
+			saveState.handleRequest(request, response);
+			assert.strictEqual(response.ended, true);
 		});
 	});
 });
