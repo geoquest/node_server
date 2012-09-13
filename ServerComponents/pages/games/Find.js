@@ -7,8 +7,15 @@ Find = function() {
 
 Find.prototype.handleRequest = function(request, response)
 {
+	var callbackGiven = request.query['jsonCallback'];
+	
 	this._gameRepository.findAll(function(result){
-		var responseText = "jsonCallback({\"games\":  " + JSON.stringify(result) +"})";
+		var responseText;
+		if (callbackGiven){
+			responseText = callbackGiven+"({\"games\":  " + JSON.stringify(result) +"})";
+		}else{
+			responseText = "jsonCallback({\"games\":  " + JSON.stringify(result) +"})";
+		}
 		response.setHeader("Content-Type", "application/json;charset=UTF-8");
 		response.write(responseText);
 		response.end();
