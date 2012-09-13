@@ -32,7 +32,28 @@ describe('GameState', function() {
     });
     it('tests the getState',function(){
 	  assert.deepEqual(gameState.getState(), state);
-  });
+    });
+    
+    describe('toJSON', function() {
+    	it('returns object', function() {
+    		
+    	});
+    	it('exports state information', function() {
+    		
+    	});
+    });
+    
+    describe('fromJSON', function() {
+    	it('returns GameState object', function() {
+    		
+    	});
+    	it('throws exception if no JSON is provided', function() {
+    		
+    	});
+    	it('throws exception if information in JSON object is missing', function() {
+    		
+    	});
+    });
 
 });
 

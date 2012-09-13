@@ -13,6 +13,7 @@ GameState.prototype.getGameSessionId = function(){
 GameState.prototype.getState = function() {
 	return this.state;
 };
+
 GameState.prototype.toJSON = function() {
   
     var jsonObj = {};
@@ -21,4 +22,10 @@ GameState.prototype.toJSON = function() {
     }
     return jsonObj;
 };
+
+var fromJSON = function(json) {
+	
+};
+
 exports.class = GameState;
+exports.fromJSON = fromJSON;
