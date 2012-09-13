@@ -36,6 +36,10 @@ var pages = {
 		'module': 'games/Upload',
 		'restrictedTo': 'user'
 	},
+	'/games/uploadResources': {
+		'module': 'games/UploadResources',
+		'restrictedTo': 'user'
+	},
 	'/games/findAll': {
 		'module': 'games/Find'
 	},
