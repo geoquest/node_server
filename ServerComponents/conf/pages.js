@@ -49,7 +49,7 @@ var pages = {
 	'/games/listPublic': {
 		'module': 'games/ShowAllPublicGames'
 	},
-	'/games/save-state': {
+	'/games/saveState': {
 		'module': 'games/SaveState',
 		'restrictedTo': 'user'
 	},
