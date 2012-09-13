@@ -102,5 +102,19 @@ describe('Response', function() {
 			assert.strictEqual(response.status(200), response);
 		});
 	});
+	
+	describe('ended', function() {
+		it('is initially false', function() {
+			assert.strictEqual(response.ended, false);
+		});
+		it('is true if end() was called', function() {
+			response.end();
+			assert.strictEqual(response.ended, true);
+		});
+		it('is true if a template was rendered', function() {
+			response.render('any.ejs');
+			assert.strictEqual(response.ended, true);
+		});
+	});
 
 });

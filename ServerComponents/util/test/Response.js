@@ -55,4 +55,11 @@ Response.prototype.status = function(code) {
 	return this;
 };
 
+/**
+ * Simulates the termination of the response.
+ */
+Response.prototype.end = function() {
+	
+};
+
 exports.class = Response;
