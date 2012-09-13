@@ -55,7 +55,7 @@ describe('GameStateDataAccess layer', function() {
 		var result = {};
 		result.length = 0;
 		connection = {
-			users: {
+			gameStates: {
 				// Simulates an empty result set per default.
 				find: createFind(result)
 			}
@@ -71,9 +71,36 @@ describe('GameStateDataAccess layer', function() {
 		connection = null;
 	});
 
-	describe('', function() {
-		it('', function() {
-
+	describe('constructor', function() {
+		it('creates instance', function() {
+			assert.ok(repository instanceof GameStateDataAccess.class);
+		});
+		it('throws exception if connection is omitted', function() {
+			
+		});
+	});
+	
+	describe('save', function() {
+		it('creates new record if the state did not exist', function() {
+			
+		});
+		it('updates the old record if the state already existed', function() {
+			
+		});
+	});
+	
+	describe('byGameSessionId', function() {
+		it('returns null if state does not exist', function() {
+			
+		});
+		it('returns GameState object if record was found', function() {
+			
+		});
+		it('filters by user id', function() {
+			
+		});
+		it('filters by game state session id', function() {
+			
 		});
 	});
 
