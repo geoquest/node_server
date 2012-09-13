@@ -13,5 +13,12 @@ GameState.prototype.getGameSessionId = function(){
 GameState.prototype.getState = function() {
 	return this.state;
 };
-
+GameState.prototype.toJSON = function() {
+  
+    var jsonObj = {};
+    for (var property in mapping) {
+        jsonObj[property] = this[mapping[property]];
+    }
+    return jsonObj;
+};
 exports.class = GameState;
