@@ -187,7 +187,14 @@ describe('Upload Page', function() {
 				page.handleRequest(request,response);
 
 			});
-			
+
+			it('should add logged in user as author', function(done) {
+				gameRepo.insert = function(game) {
+					assert.deepEqual(game.getAuthors(), [request.session.user.getId()]);
+					done();
+				};
+				page.handleRequest(request,response);
+			});
 
 		});
 		
