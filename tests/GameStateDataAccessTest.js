@@ -175,6 +175,13 @@ describe('GameStateDataAccess layer', function() {
 			};
 			repository.byGameSessionId('any-id', createUser(), function(){});
 		});
+		it('notifies error handlers if an error occurs', function(done) {
+			connection.gameStates.find = createFind("Database is not available.");
+			repository.addErrorHandler(function() {
+				done();
+			});
+			repository.byGameSessionId('any-id', createUser(), function(){});
+		});
 	});
 
 });
