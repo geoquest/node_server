@@ -78,3 +78,5 @@ GameStateRepository.prototype._createResultHandler = function(callback) {
 		callback(self._jsonToUser(result));
 	};
 };
+
+exports.class = GameStateRepository;
