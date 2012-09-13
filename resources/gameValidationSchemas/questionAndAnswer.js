@@ -1,7 +1,6 @@
 var schema = {
 	"description":"A Question And Answer game element",
 	"type":"object",
-
 	"properties":{
 		"id":{
 			"type": "string",
@@ -10,7 +9,7 @@ var schema = {
 		"name":{
 			"type":"string",
 			"required":true
-		},			
+		},
 		"correctAnswersNeeded" :{
 			"type":"integer",
 			"required":true
@@ -32,7 +31,7 @@ var schema = {
 			"type":"string",
 			"required":true
 		},
-		"questions":{			
+		"questions":{
 			"type":"array",
 			"required":true,
 			"items" : {
@@ -45,25 +44,28 @@ var schema = {
 						},
 						"answers":{
 							"type":"array",
+							"required":true,
 							"items": {
 								"title":"answer object",
-								"type":"object",							
+								"type":"object",
 								"properties": {
 									"correct": {
-										"type":"integer"
+										"type":"integer",
+										"required":true
 									},
 									"answerText": {
-										"type":"string"
+										"type":"string",
+										"required":true
 									},
 									"responseText": {
 										"type":"string"
 									}
 								}
-						}							
+						}
 					}
 				}
 			}
 		}
-	}		
+	}
 };
 module.exports = schema;
