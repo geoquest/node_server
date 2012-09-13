@@ -36,22 +36,32 @@ describe('GameState', function() {
     
     describe('toJSON', function() {
     	it('returns object', function() {
-    		
+    		var json = gameState.toJSON();
+    		assert.equal(typeof json, 'object');
     	});
     	it('exports state information', function() {
-    		
+    		var json = gameState.toJSON();
+    		assert.deepEqual(json.state, state);
     	});
     });
     
     describe('fromJSON', function() {
     	it('returns GameState object', function() {
-    		
+    		var json = {
+				'state': state
+    		};
+    		var gameState = BluePrint.fromJSON(json);
+    		assert.ok(gameState instanceof BluePrint.class);
     	});
     	it('throws exception if no JSON is provided', function() {
-    		
+    		assert.throws(function() {
+    			BluePrint.fromJSON();
+    		});
     	});
     	it('throws exception if information in JSON object is missing', function() {
-    		
+    		assert.throws(function() {
+    			BluePrint.fromJSON({'name': 'Max'});
+    		});
     	});
     });
 

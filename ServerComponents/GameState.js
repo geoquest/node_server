@@ -15,7 +15,6 @@ GameState.prototype.getState = function() {
 };
 
 GameState.prototype.toJSON = function() {
-  
     var jsonObj = {};
     for (var property in mapping) {
         jsonObj[property] = this[mapping[property]];
@@ -23,6 +22,12 @@ GameState.prototype.toJSON = function() {
     return jsonObj;
 };
 
+/**
+ * Uses the provided JSON data to create a new game state.
+ * 
+ * @param {Object} json
+ * @return {GameState}
+ */
 var fromJSON = function(json) {
 	
 };
