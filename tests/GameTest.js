@@ -108,6 +108,53 @@ describe('Game', function() {
 		});
 	});
 	
+    describe('fromJSON', function() {
+		it('returns a Game object', function() {
+			var json = {
+				"authors" : ["author 1", "author 2"],
+				"name": "a valid game", 
+				"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
+			};
+			assert.ok(Game.fromJSON(json) instanceof Game.class);
+        });
+		it('throws exception if property is missing', function() {
+			var json = {
+					"authors" : ["author 1", "author 2"],
+					//name is missing
+					"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
+				};
+			assert.throws(function() {
+				Game.fromJSON(json);
+			});
+        });
+		it('maps properties correctly', function() {
+			var json = {
+					"authors" : ["author 1", "author 2"],
+					"name": "a valid game", 
+					"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
+				};
+			var game = Game.fromJSON(json);
+			assert.ok(game instanceof Game.class);
+			assert.equal(game.getName(), "a valid game");
+			assert.deepEqual(game.getContent(), {"mission" : "best mission ever", "mission" : "best mission 2 ever"});
+        });
+		
+		it('works with empty content', function() {
+			var json = {
+					"authors" : ["author 1", "author 2"],
+					"name": "a valid game", 
+					"content": {}
+				};
+			assert.ok(Game.fromJSON(json) instanceof Game.class);
+        });
+		it('throws exception if no object is provided', function() {
+			assert.throws(function() {
+				Game.fromJSON('This is not valid');
+			});
+		});
+    });
+	
+	
 	describe('toString', function() {
 		it('returns non-empty string', function() {
 			assert.equal(typeof object.toString(), 'string');
