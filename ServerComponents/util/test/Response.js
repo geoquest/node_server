@@ -9,6 +9,7 @@ Response = function()
 	this.redirectUrl = null;
 	this.redirectStatus = null;
 	this.statusCode = 200;
+	this.ended = false;
 };
 
 /**
@@ -21,6 +22,7 @@ Response.prototype.render = function(template, templateVars)
 {
 	this.template = template;
 	this.templateVars = templateVars || {};
+	this.end();
 };
 
 /**
@@ -59,7 +61,7 @@ Response.prototype.status = function(code) {
  * Simulates the termination of the response.
  */
 Response.prototype.end = function() {
-	
+	this.ended = true;
 };
 
 exports.class = Response;
