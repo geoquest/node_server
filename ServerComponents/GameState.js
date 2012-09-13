@@ -24,11 +24,11 @@ GameState.prototype.getState = function() {
 };
 
 GameState.prototype.getId = function() {
-	
+	return this._id;
 };
 
 GameState.prototype.setId = function(id) {
-	
+	this._id = id;
 };
 
 GameState.prototype.toJSON = function() {
