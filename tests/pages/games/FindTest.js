@@ -91,7 +91,7 @@ describe('games/Find page', function() {
 	
 	describe('find', function(){
 		it("should display a JSON, that contains all uploaded games", function(){
-			var req = {}, 
+			var req = {query: {}}, 
 				res = {
 					responseText : "",
 					header : "",
@@ -104,5 +104,20 @@ describe('games/Find page', function() {
 			assert.equal(res.header, "Content-Type/application/json;charset=UTF-8");
 		});
 	});
-	
+
+	describe('find', function(){
+		it("should display a JSONp with custom callback", function(){
+			var req = {query: {jsonCallback: 'myCustomCallback'}}, 
+				res = {
+					responseText : "",
+					header : "",
+					write: function(text){this.responseText+=text;},
+					setHeader: function(name, value){this.header = name+"/"+value;},
+					end : function(text){} 
+			};
+			page.handleRequest(req,res);
+			assert.equal(res.responseText, "myCustomCallback({\"games\":  " + JSON.stringify(gameRepository.result) +"})");
+			assert.equal(res.header, "Content-Type/application/json;charset=UTF-8");
+		});
+	});
 });
