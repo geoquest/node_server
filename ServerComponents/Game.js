@@ -141,6 +141,10 @@ var fromJSON = function(jsonObject) {
 	var game = new Game();
 	for (var property in mapping) {
 		if (!jsonObject.hasOwnProperty(property)) {
+			if (property == '_id'){
+				// in this case the game hasn't been inserted into the database yet
+				continue;
+			}
 			// The JSON object does not contain
 			// the required property.
 			throw new Error('JSON object does not contain property ' + property);
