@@ -87,7 +87,7 @@ describe('Upload Page', function() {
 
 			beforeEach(function() {
 				// create file
-				fs.writeFileSync(uploadedFileName, '{"foo":"bär"}');
+				fs.writeFileSync(uploadedFileName, '{"name": "bubus game", "content": {"lala":"lulu"}}');
 				
 				request = {
 						method: "POST",
@@ -180,7 +180,7 @@ describe('Upload Page', function() {
 
 				gameRepo = {
 						insert: function(game){
-							assert.deepEqual(game.getContent(),{foo: "bär"});
+							assert.deepEqual(game.getContent(),{"lala":"lulu"});
 							done();
 						}
 				};

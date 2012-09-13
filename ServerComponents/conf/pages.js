@@ -65,15 +65,20 @@ var pages = {
 		'module': 'SignUp',
 		'restrictedTo': 'guest'
 	},
-	'/signout': {
+	'/logout': {
 		'module': 'Logout',
 		'restrictedTo': 'user'
+	},
+	//That's a workaround solution for the unused everyauth logout feature 
+	'/error/notfound': {
+		'module': 'error/NotFound'
 	},
 	// Register a catch-all route that handles requests that point
 	// to not existing pages.
 	'*': {
 		'module': 'error/NotFound'
-	}
+	},
+	
 };
 
 module.exports = pages;

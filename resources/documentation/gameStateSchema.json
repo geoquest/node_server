@@ -1,0 +1,100 @@
+/*
+ * Proposal 1 : In this we are storing the state of currently active mission. 
+ */
+
+var gameStateSchema1 = {
+
+	"description": "Represents the current state of overall Game.",
+	"properties": {
+		  "id" : {
+			  "description": "This holds the unique game id.",
+			  "type" : "string",
+			  "required": true
+		  },
+		  "gameState" : {
+			  "description": "This holds the current game state.",
+			  "type" : "string",
+			  "enum" : ["NEW", "RUNNING", "SUCCESS", "FAIL"],
+			  "required": true
+		  },
+		  "currentMission" : {
+			  "description": "This holds the id of currently active mission.",
+			  "type" : "object",
+			  "required": true
+			  "properties" :{
+				  	  "id" : {
+				  		  "description": "The id of the mission (unique throughout the game).",
+				  		  "type" : "string",
+				  		  "required": true
+					  },
+					  "missionState" : {
+						  "description": "This holds the current mission state.",
+						  "type" : "string",
+						  "enum" : ["NEW", "RUNNING", "SUCCESS", "FAIL"],
+						  "required": true
+					  },
+					  "currentIndex" : {
+						  "description": "Only for NPCTalk mission. It holds the index of current dialog item.",
+						  "type" : "string",
+						  "required": false
+					  }
+			  	}	 
+		  }
+	}
+}
+
+
+/*
+ * Proposal 2 : In this we are saving states of already played missions and currently active mission.
+ * 
+ */
+
+var gameStateSchema2 = {
+
+		"description": "Represents the current state of overall Game.",
+		"properties": {
+			  "id" : {
+				  "description": "This holds the unique game id.",
+				  "type" : "string",
+				  "required": true
+			  },
+			  "gameState" : {
+				  "description": "This holds the current game state.",
+				  "type" : "string",
+				  "enum" : ["NEW", "RUNNING", "SUCCESS", "FAIL"],
+				  "required": true
+			  },
+			  "currentMission" : {
+				  "description": "This holds the id of currently active mission.",
+				  "type" : "string",
+				  "required": true
+			  },
+			  "missions" :{
+				  "description": "This holds the states of already played and currently running mission.",
+				  "type" : "array",
+				  "required": true,
+				  "items" : {
+					  "type" : "object",
+					  "properties" :{
+						  	  "id" : {
+						  		  "description": "The id of the mission (unique throughout the game).",
+						  		  "type" : "string",
+						  		  "required": true
+							  },
+							  "missionState" : {
+								  "description": "This holds the current mission state.",
+								  "type" : "string",
+								  "enum" : ["NEW", "RUNNING", "SUCCESS", "FAIL"],
+								  "required": true
+							  },
+							  "currentIndex" : {
+								  "description": "Only for NPCTalk mission. It holds the index of current dialog item.",
+								  "type" : "string",
+								  "required": false
+							  }
+					  	}	 
+				  }
+				  
+			  }
+		}
+	}

@@ -45,11 +45,14 @@ Upload.prototype.handleRequest = function(request, response) {
 
 		// Upload successful
 		var params = { title: 'Game Upload Response', msg: 'Your game has been uploaded successfully.'};
-
-		var game = new Game.class();
-		game.setContent(content);
+		
+		
 		// TODO: set game author (get it from session)
-
+        content['authors'] = [];
+		
+        var game = new Game.fromJSON(content);      
+	 
+		
 		this._gameRepository.insert(game);
 
 		response.render('upload-response', params);

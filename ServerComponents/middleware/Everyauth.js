@@ -31,4 +31,8 @@ everyauth.google
 	    return googleUser;
 	}).redirectPath('/login/google');
 
+everyauth.everymodule.logoutPath('/bye');
+//workaround: abolish the everyauth logout feature
+everyauth.everymodule.logoutRedirectPath('/error/notfound');
+
 module.exports = everyauth;
