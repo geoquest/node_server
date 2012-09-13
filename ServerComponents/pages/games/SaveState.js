@@ -22,7 +22,7 @@ SaveState.prototype.handleRequest = function(request, response)
 	}
 	var stateData = request.body;
 	var state = new GameState.class(stateData);
-	this.gameStateRepository.save(state);
+	this.gameStateRepository.save(state, request.session.user);
 	response.end();
 };
 
