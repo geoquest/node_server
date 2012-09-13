@@ -1,4 +1,5 @@
 var schema = {
+	"description":"A NPCTalk game element",
 	"properties": {
 	  "id" : {
 	    "description": "The id of the mission (unique throughout the game).",
@@ -28,6 +29,8 @@ var schema = {
 	  "dialogItem": {
 	    "description": "The array containing all dialog options.",
 	    "type": "array",
+	    "minItems": 1,
+	    "required": true,
 	    "items": {
 	      "properties": {
 	        "text":{
