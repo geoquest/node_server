@@ -91,4 +91,35 @@ GameStateRepository.prototype._gameStateToJson = function(state, user) {
 	return json;
 };
 
+/**
+ * Registers an additional error handler that is called whenever an
+ * internal MongoDB error occurs.
+ * 
+ * Example:
+ * <code>
+ * repository.addErrorHandler(function(error) {
+ *     // Handle error here.
+ * });
+ * </code>
+ * 
+ * @param {function} callback
+ */
+GameStateRepository.prototype.addErrorHandler = function(callback)
+{
+	this.errorHandlers.push(callback);
+};
+
+/**
+ * Notifies all registered error callback about an error that occurred recently.
+ * 
+ * @param {String} error
+ */
+GameStateRepository.prototype._notifyAboutError = function(error) 
+{
+	for (var i = 0; i < this.errorHandlers.length; i++) {
+		// Pass the error to each handler.
+		this.errorHandlers[i](error);
+	}
+};
+
 exports.class = GameStateRepository;
