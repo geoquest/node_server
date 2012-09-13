@@ -34,6 +34,7 @@ var schema = {
 		"questions":{
 			"type":"array",
 			"required":true,
+			"minItems": 1,
 			"items" : {
 					"title":"question object",
 					"type" : "object",
