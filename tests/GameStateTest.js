@@ -64,6 +64,19 @@ describe('GameState', function() {
     		});
     	});
     });
+    
+    describe('internal id', function() {
+    	it('is initially null', function() {
+    		assert.strictEqual(gameState.getId(), null);
+    	});
+    });
+    
+    describe('setId()', function() {
+    	it('changes id', function() {
+    		gameState.setId(42);
+    		assert.strictEqual(gameState.getId(), 42);
+    	});
+    });
 
 });
 

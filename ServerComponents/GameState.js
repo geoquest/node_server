@@ -3,23 +3,32 @@
  */
 var mapping = {
     // Expected JSON property -> private GameState attributes 
-    'state': 'state'
+    'state': '_state'
 };
 
 GameState = function(json){
 	if(!((typeof json)=='object')){
 		throw new Error("object not received");
 	}
-	this.state = json;	
+	this._id = null;
+	this._state = json;
 };
 
 GameState.prototype.getGameSessionId = function(){
-	var sessionId = this.state.id;
+	var sessionId = this._state.id;
 	return sessionId;
 };
 
 GameState.prototype.getState = function() {
-	return this.state;
+	return this._state;
+};
+
+GameState.prototype.getId = function() {
+	
+};
+
+GameState.prototype.setId = function(id) {
+	
 };
 
 GameState.prototype.toJSON = function() {
