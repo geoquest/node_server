@@ -33,6 +33,11 @@ Upload.prototype.handleRequest = function(request, response) {
 		var content = fs.readFileSync(request.files.game.path, 'utf8');
 		try {
 			content = JSON.parse(content);
+			if (false){
+				this.renderUploadForm(response, 'Error! Not a proper game file.');
+				return;
+			}
+			
 		} catch(err) {
 			this.renderUploadForm(response, 'Error! Not a legal JSON file.');
 			return;
