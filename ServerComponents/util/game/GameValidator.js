@@ -9,7 +9,7 @@
  */
 
 var schemas = require('../../conf/gameSchemas');
-var JSV = require("jsv").JSV;
+var JSV = require("JSV").JSV;
 
 
 GameValidator = function(){
