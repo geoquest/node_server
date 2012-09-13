@@ -17,6 +17,7 @@ describe('GameState', function() {
 	   gameState = null;
 	   state = null ;
    });
+
    
     it('tests the constructor', function() {
         assert.ok(gameState instanceof BluePrint.class);
@@ -27,8 +28,12 @@ describe('GameState', function() {
 	   }); 
     });
     it('tests the getId function',function(){
-    	assert.equal("buhuhu",gameState.getGameSessionId())
+    	assert.equal("buhuhu",gameState.getGameSessionId());
     });
+    it('tests the getState',function(){
+	  assert.deepEqual(gameState.getState(), state);
+  });
+
 });
 
  
