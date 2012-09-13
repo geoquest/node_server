@@ -1,5 +1,5 @@
 var schemasDir = "../../../resources/gameValidationSchemas/";
-var gameSchema = "gameDefinition";
+var gameSchema = "gameSchema";
 
 var atomicGameSchemas = {
 		gameSchema:schemasDir+gameSchema,
