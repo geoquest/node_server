@@ -37,8 +37,8 @@ GameStateRepository.prototype.byGameSessionId = function(identifier, user, callb
 GameStateRepository.prototype.save = function(state, user) {
 	var self = this;
 	this.byGameSessionId(state.getGameSessionId(), user, function(existingState) {
-		if (existingState === null) {
-			
+		if (existingState !== null) {
+			state.setId(existingState.getId());
 		}
 		var json = self._gameStateToJson(state, user);
 		self.connection.gameStates.save(json);
@@ -74,7 +74,9 @@ GameStateRepository.prototype._jsonToGameState = function(result) {
 		// No game state was found.
 		return null;
 	}
-	return GameState.fromJSON(result[0].gameState);
+	var state = GameState.fromJSON(result[0].gameState);
+	state.setId(result[0]._id);
+	return state;
 };
 
 GameStateRepository.prototype._gameStateToJson = function(state, user) {
@@ -83,8 +85,11 @@ GameStateRepository.prototype._gameStateToJson = function(state, user) {
 		'userId': user.getId(),
 		'gameState': stateAsJson
 	};
+	if (state.getId() != null) {
+		json._id = state.getId();
+	}
 	return json;
-}
+};
 
 
 
