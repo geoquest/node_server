@@ -1,6 +1,8 @@
 var assert = require('assert');
 var fs = require('fs');
 var Upload = require("../../ServerComponents/pages/games/Upload.js");
+var Request = require("../../ServerComponents/util/test/Request");
+var User = require("../../ServerComponents/User");
 var GameRepository = require("../../ServerComponents/GameRepository.js");
 
 describe('Upload Page', function() {
@@ -11,8 +13,13 @@ describe('Upload Page', function() {
 	
 	beforeEach(function() {
 		page = new Upload.class();
-		request = {};
-	
+		request = new Request.class();
+		// Simulate logged in user.
+		var user = new User.class();
+		user.setLoginType('GeoQuest');
+		user.setIdentifier('max.power');
+		user.setId('mongodb-id');
+		request.session.user = user;
 		response = {
 				filename: '',
 				params: '',
@@ -88,16 +95,13 @@ describe('Upload Page', function() {
 			beforeEach(function() {
 				// create file
 				fs.writeFileSync(uploadedFileName, '{"name": "bubus game", "content": {"lala":"lulu"}}');
-				
-				request = {
-						method: "POST",
-						files: {
-							game: {
-								path: uploadedFileName,
-								name: uploadedFileName
-							}
-						}
-					};
+				request.method = 'POST';
+				request.files = {
+					game: {
+						path: uploadedFileName,
+						name: uploadedFileName
+					}
+				};
 				
 			});
 			
@@ -124,32 +128,26 @@ describe('Upload Page', function() {
 			});
 			
 			it('should load the upload form if no files property exists ', function() {
-				request = {
-						method: "POST"
-					};
+				request.method = 'POST';
+				request.files = null;
 				page.handleRequest(request,response);
 				assert.equal(response.filename, 'upload');
 			});
 			
 		
 			it('should load the upload form if game input field not set', function() {
-				request = {
-						method: "POST",
-						files: {
-						}
-					};
+				request.method = 'POST';
+				request.files = {};
 				page.handleRequest(request,response);
 				assert.equal(response.filename, 'upload');
 			});
 
 			it('should load the upload form if game input is empty', function() {
-				request = {
-						method: "POST",
-						files: {
-							game: {
-							}
-						}
-					};
+				request.method = 'POST';
+				request.files = {
+					game: {
+					}
+				};
 				page.handleRequest(request,response);
 				assert.equal(response.filename, 'upload');
 			});

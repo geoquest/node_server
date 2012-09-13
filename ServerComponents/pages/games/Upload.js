@@ -48,7 +48,7 @@ Upload.prototype.handleRequest = function(request, response) {
 		
 		
 		// TODO: set game author (get it from session)
-        content['authors'] = [];
+        content['authors'] = [request.session.user.getId()];
 		
         var game = new Game.fromJSON(content);      
 	 
