@@ -1,6 +1,6 @@
 var assert = require("assert");
 var SaveState = require("../../../ServerComponents/pages/games/SaveState.js");
-var req = require("../../../ServerComponents/util/test/request.js");
+var req = require("../../../ServerComponents/util/test/Request.js");
 var Response = require("../../../ServerComponents/util/test/Response");
 var GameState = require("../../../ServerComponents/GameState");
 var User = require("../../../ServerComponents/User");
