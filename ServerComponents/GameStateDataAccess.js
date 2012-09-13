@@ -1,4 +1,4 @@
-var gameState = require('./GameState');
+var GameState = require('./GameState');
 
 GameStateRepository = function(connection) 
 {
@@ -22,7 +22,73 @@ GameStateRepository = function(connection)
 	 */
 	this.errorHandlers = [];
 };
-GameStateRepository.prototype.insertGame = function(gameState){
+
+GameStateRepository.prototype.byGameSessionId = function(identifier, user, callback)
+{
+	var query = {
+		'userId': user.getId(), 
+		'state': {
+			'id': identifier
+		}
+	};
+	this.connection.gameStates.find(query, this._createResultHandler(callback));
+};
+
+GameStateRepository.prototype.save = function(state, user) {
+	var self = this;
+	this.byGameSessionId(state.getGameSessionId(), user, function(existingState) {
+		if (existingState === null) {
+			
+		}
+		var json = self._gameStateToJson(state, user);
+		self.connection.gameStates.save(json);
+	});
+};
+
+/**
+ * Creates a callback that handles a MongoDB result.
+ * 
+ * Throws an exception if an error occurs. In case of
+ * a successful result it will convert the result set 
+ * into a User object (or null if not found) and 
+ * pass it to the provided callback.
+ * 
+ * @param {function}
+ * @return {function}
+ */
+GameStateRepository.prototype._createResultHandler = function(callback) {
+	// Store the current context as the scope changes in the callback.
+	var self = this;
+	return function(error, result) {
+		if (error) {
+			self._notifyAboutError(error);
+			return;
+		}
+		// Convert result to model.
+		callback(self._jsonToGameState(result));
+	};
+};
+
+GameStateRepository.prototype._jsonToGameState = function(result) {
+	if (result.length === 0) {
+		// No game state was found.
+		return null;
+	}
+	return GameState.fromJSON(result[0].gameState);
+};
+
+GameStateRepository.prototype._gameStateToJson = function(state, user) {
+	var stateAsJson = state.toJSON();
+	var json = {
+		'userId': user.getId(),
+		'gameState': stateAsJson
+	};
+	return json;
+}
+
+
+
+GameStateRepository.prototype.insertGame = function(gameState) {
     var self = this;
     var insertCallback = function(queryResult){
         if (queryResult == null){
@@ -37,46 +103,8 @@ GameStateRepository.prototype.insertGame = function(gameState){
         }
     };
 }
-GameStateRepository.prototype.byGameSessionId = function(identifier,user, callback)
-{
-	var query = {
-		'userId': user.getId(), 
-		'state': {
-			'id': identifier
-		}
-	};
-	this.connection.users.find(query, this._createResultHandler(callback));
-};
-GameStateRepository.prototype._jsonToGameState = function(result) {
-	if (result.length === 0) {
-		// No user was found.
-		return null;
-	}
-	return GameState.fromJSON(result[0]);
-};
-/**
- * Creates a callback that handles a MongoDB result.
- * 
- * Throws an exception if an error occurs. In case of
- * a successful result it will convert the result set 
- * into a User object (or null if not found) and 
- * pass it to the provided callback.
- * 
- * @param {function}
- * @return {function}
- * @throws Error If an internal error occurred.
- */
-GameStateRepository.prototype._createResultHandler = function(callback) {
-	// Store the current context as the scope changes in the callback.
-	var self = this;
-	return function(error, result) {
-		if (error) {
-			self._notifyAboutError(error);
-			return;
-		}
-		// Convert result to model.
-		callback(self._jsonToUser(result));
-	};
-};
+
+
+
 
 exports.class = GameStateRepository;

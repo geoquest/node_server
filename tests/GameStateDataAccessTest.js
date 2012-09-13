@@ -60,8 +60,10 @@ describe('GameStateDataAccess layer', function() {
 		results[0] = {
 			'_id': 'mongo-db-id',
 			'userId': 'uid',
-			'state': {
-				'id': 'gsid'
+			'gameState': {
+				'state': {
+					'id': 'gsid'
+				}
 			}
 		};
 		results.length = 1;
@@ -125,7 +127,7 @@ describe('GameStateDataAccess layer', function() {
 				done();
 			};
 			var state = new GameState.class({'id': 'another-state-id'});
-			repository.save(state);
+			repository.save(state, createUser());
 		});
 		it('updates the old record if the state already existed', function(done) {
 			connection.gameStates.find = createFind(createResult());
@@ -135,7 +137,7 @@ describe('GameStateDataAccess layer', function() {
 				done();
 			};
 			var state = new GameState.class({'id': 'gsid'});
-			repository.save(state);
+			repository.save(state, createUser());
 		});
 	});
 	
