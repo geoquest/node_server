@@ -91,25 +91,4 @@ GameStateRepository.prototype._gameStateToJson = function(state, user) {
 	return json;
 };
 
-
-
-GameStateRepository.prototype.insertGame = function(gameState) {
-    var self = this;
-    var insertCallback = function(queryResult){
-        if (queryResult == null){
-            var json = user.toJSON();
-            self.connection.gameState.insert(json, function(err){
-                if (err) {
-                    self._notifyAboutError(err);
-                }
-            });
-        } else {
-            self._notifyAboutError('GameState is already in the DB.');
-        }
-    };
-}
-
-
-
-
 exports.class = GameStateRepository;
