@@ -84,6 +84,34 @@ GameRepository.prototype._createResultHandler = function(callback) {
 	};
 };
 
+/**
+ * Creates a callback that handles a MongoDB result.
+ * 
+ * Resultset is expected to be projected to meta game information (authors, title, _id)
+ * adds empty content field, so that transformation methods can be reused
+ * 
+ * Throws an exception if an error occurs. In case of
+ * a successful result it will 
+ * pass the result to the provided callback.
+ * 
+ * @param {function}
+ * @return {function}
+ * @throws Error If an internal error occurred.
+ */
+GameRepository.prototype._createResultHandlerForMetaInfo = function(callback) {
+	// Store the current context as the scope changes in the callback.
+	var self = this;
+	return function(error, result) {
+		if (error) {
+			self._notifyAboutError(error);
+			return;
+		}
+		for (var i = 0; i<result.length; i++){
+			result[i]['content']={};
+		}
+		callback(self._jsonToGame(result));
+	};
+};
 
 /**
  * 
@@ -91,7 +119,8 @@ GameRepository.prototype._createResultHandler = function(callback) {
  */
 GameRepository.prototype.findAll = function(callback) {
 	var query = {};
-	this._connection.games.find(query, this._createResultHandler(callback));
+	var proj = {'authors' : 1, 'name': 1};
+	this._connection.games.find(query, proj,  this._createResultHandlerForMetaInfo(callback));
 };
 
 

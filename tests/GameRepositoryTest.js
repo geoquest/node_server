@@ -39,7 +39,8 @@ describe('GameRepository', function() {
 		for (var i = 0; i < number; i++) {
 			result[i] = {
 				"_id": i,
-				"authors": [], 
+				"authors": [],
+				"name": "Game " + i,
 				"content": {}
 			};
 		}
@@ -71,7 +72,38 @@ describe('GameRepository', function() {
 		return find;
 	};
 
-	
+	var createProjectedFind = function(result) {
+		/**
+		 * Simulates the find() function of MongoDB.
+		 * 
+		 * @param {Object} query JSON object that specifies the query criteria.
+		 * @param {Object} query JSON object that specifies the projection.
+		 * @param {function} callback Callback that receives an error and the result.
+		 */
+		var find = function(query, proj, callback) {
+			if ((typeof result) === 'string') {
+				// Simulate an error.
+				callback(result, createResult(0));
+			} else {
+				// Simulate a projected returned collection.
+				var projectedResult = {};
+				// we get the same length but a subset of the fields
+				projectedResult['length'] = result['length'];
+				for (var row in result){
+					if(row == 'length')  continue;
+					projectedResult[row]={};
+					projectedResult[row]['_id']=result[row]['_id'];
+					for (var projField in proj){
+						if(result[row][projField]){
+						projectedResult[row][projField] =result[row][projField];
+						}
+					}
+				}
+				callback(null, projectedResult);
+			}
+		};
+		return find;
+	};
 	var createObjectId = function(id){
 		return {id:id}; 
 	};
@@ -173,7 +205,7 @@ describe('GameRepository', function() {
     
     describe('findGames', function(){
     	it('successfully finds all Game objects', function(done){
-        	connectionMock.games.find = createFind(createResult(10));
+        	connectionMock.games.find = createProjectedFind(createResult(10));
     		repository.findAll(function(result){
     			assert.equal(result.length, 10);
     			done();
@@ -181,7 +213,7 @@ describe('GameRepository', function() {
     	});
     	
     	it('should return empty list when 0 games contained in db', function(done){
-        	connectionMock.games.find = createFind(createResult(0));
+        	connectionMock.games.find = createProjectedFind(createResult(0));
     		repository.findAll(function(result){
     			assert.equal(result.length, 0);
     			done();
