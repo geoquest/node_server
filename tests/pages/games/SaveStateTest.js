@@ -3,6 +3,7 @@ var SaveState = require("../../../ServerComponents/pages/games/SaveState.js");
 var req = require("../../../ServerComponents/util/test/request.js");
 var Response = require("../../../ServerComponents/util/test/Response");
 var GameState = require("../../../ServerComponents/GameState");
+var User = require("../../../ServerComponents/User");
 
 describe('SaveState',function(){
 	var saveState ;
@@ -19,12 +20,16 @@ describe('SaveState',function(){
 			'save': function(state, user) {
 			}
 		};
+		var user = new User.class();
+		user.setLoginType('GeoQuest');
+		user.setIdentifier('max.power');
 		saveState = new SaveState.class();
 		saveState.setGameStateRepository(gameStateDataAccess);
 		request = new req.class();
 		request.method = 'POST';
 		json = {"id":"lalala"};
 		request.body = json;
+		request.session.user = user;
 		response = new Response.class();
 	});
 	
@@ -69,6 +74,13 @@ describe('SaveState',function(){
 			request.method = 'GET';
 			saveState.handleRequest(request, response);
 			assert.strictEqual(response.ended, true);
+		});
+		it('passes current user to persistence layer', function(done) {
+			gameStateDataAccess.save = function(state, user) {
+				assert.strictEqual(user, request.session.user);
+				done();
+			};
+			saveState.handleRequest(request, response);
 		});
 	});
 });
