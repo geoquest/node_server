@@ -53,10 +53,10 @@ describe('SaveState',function(){
 			};
 			saveState.handleRequest(request, response);
 		});
-		it('uses provided JSON to create game state', function() {
+		it('uses provided JSON to create game state', function(done) {
 			gameStateDataAccess.save = function(state) {
 				assert.ok(state instanceof GameState.class);
-				assert.deepEqual(state.json, json);
+				assert.deepEqual(state.getState(), json);
 				done();
 			};
 			saveState.handleRequest(request, response);
