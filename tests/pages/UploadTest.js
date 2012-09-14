@@ -34,6 +34,12 @@ describe('Upload Page', function() {
 			}
 		};
 		page.setGameRepository(gameRepo);
+		// Simulate successful validation per default.
+		page.setGameValidator({
+			validateGame: function() {
+				return true;
+			}
+		});
 	});
 
 	describe('constructor', function() {
@@ -91,10 +97,12 @@ describe('Upload Page', function() {
 
 		describe('POST', function() {
 			var uploadedFileName = 'uploadedTestFile.json';
-
+			var content = null;
+			
 			beforeEach(function() {
 				// create file
-				fs.writeFileSync(uploadedFileName, '{"name": "bubus game", "content": {"lala":"lulu"}}');
+				content = {"name": "bubus game", "lala":"lulu"};
+				fs.writeFileSync(uploadedFileName, JSON.stringify(content));
 				request.method = 'POST';
 				request.files = {
 					game: {
@@ -108,6 +116,7 @@ describe('Upload Page', function() {
 			afterEach(function() {
 				// delete file
 				fs.unlinkSync(uploadedFileName);
+				content = null;
 			});
 			
 			it('should load the upload-response view if file is uploaded', function() {
@@ -178,7 +187,7 @@ describe('Upload Page', function() {
 
 				gameRepo = {
 						insert: function(game){
-							assert.deepEqual(game.getContent(),{"lala":"lulu"});
+							assert.deepEqual(game.getContent(), {"name": "bubus game", "lala":"lulu"});
 							done();
 						}
 				};
@@ -194,6 +203,29 @@ describe('Upload Page', function() {
 					done();
 				};
 				page.handleRequest(request,response);
+			});
+			
+			
+			it('should pass the received JSON to the validator', function(done) {
+				page.setGameValidator({
+					validateGame: function(gameData) {
+						assert.deepEqual(content, gameData);
+						done();
+						return true;
+					}
+				});
+				page.handleRequest(request,response);
+			});
+			
+			it('should reject the game if the validation fails', function() {
+				page.setGameValidator({
+					validateGame: function() {
+						return false;
+					}
+				});
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+				assert.equal(response.params.msg, 'Error! Not a proper game file.');
 			});
 
 		});

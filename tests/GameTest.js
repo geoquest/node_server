@@ -112,7 +112,6 @@ describe('Game', function() {
 		it('returns a Game object', function() {
 			var json = {
 				"authors" : ["author 1", "author 2"],
-				"name": "a valid game", 
 				"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
 			};
 			assert.ok(Game.fromJSON(json) instanceof Game.class);
@@ -120,8 +119,6 @@ describe('Game', function() {
 		it('throws exception if property is missing', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
-					//name is missing
-					"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
 				};
 			assert.throws(function() {
 				Game.fromJSON(json);
@@ -130,19 +127,16 @@ describe('Game', function() {
 		it('maps properties correctly', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
-					"name": "a valid game", 
 					"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
 				};
 			var game = Game.fromJSON(json);
 			assert.ok(game instanceof Game.class);
-			assert.equal(game.getName(), "a valid game");
 			assert.deepEqual(game.getContent(), {"mission" : "best mission ever", "mission" : "best mission 2 ever"});
         });
 		
 		it('works with empty content', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
-					"name": "a valid game", 
 					"content": {}
 				};
 			assert.ok(Game.fromJSON(json) instanceof Game.class);
@@ -165,6 +159,20 @@ describe('Game', function() {
 			assert.ok(description.length > 0);
 		});
 	});
+	
+	describe('getName', function() {
+		it('determines name from content', function() {
+			object.setContent({'name': 'Demo Game'});
+			assert.equal(object.getName(), 'Demo Game');
+		});
+		it('throws exception if content is not available', function() {
+			object.setContent(null);
+			assert.throws(function() {
+				object.getName();
+			});
+		});
+	});
+	
 });
     
     

@@ -61,6 +61,10 @@ var dependencies = {
 	'setGameStateRepository': function() {
 		var GameStateRepository = require('./GameStateDataAccess');
 		return new GameStateRepository.class(this.setDatabaseConnection());
+	},
+	'setGameValidator': function() {
+		var GameValidator = require('./util/game/GameValidator');
+		return new GameValidator.class();
 	}
 };
 var DependencyInjector = require('./DependencyInjector');
