@@ -23,9 +23,6 @@ describe('Database configuration', function() {
 		assert.ok(dbconf.collections);
 		assert.ok(dbconf.collections instanceof Array);
 	});
-	it('contains salt', function() {
-		assert.ok(dbconf.salt);
-	});
 
 });
 	
