@@ -52,3 +52,7 @@ Provides functions for several validation tasks (for example checking email addr
 [Project on Github](https://github.com/visionmedia/mocha)
 
 ## rimraf ##
+
+Provides a function that deletes a directory with all of it contents.
+
+[Project on Github](https://github.com/isaacs/rimraf)
