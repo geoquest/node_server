@@ -3,7 +3,6 @@
   , "version": "0.0.1"
   , "scripts": { 
       "test": "node node_modules/mocha/bin/mocha --recursive --reporter spec tests > build/xunit.xml",
-      "test-xml": "node node_modules/mocha/bin/mocha --recursive --reporter xunit tests > build/xunit.xml",
       "coverage": "node scripts/coverage.js",
       "start-server": "node ServerComponents/application.js"
   }
