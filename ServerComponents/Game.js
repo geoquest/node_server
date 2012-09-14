@@ -1,10 +1,9 @@
 var mapping = {
-        // Expected JSON property -> private Game attributes 
-        'authors': '_authors',
-        'content': '_content',
-        'name' : '_name',
-        '_id': '__id'
-    };
+    // Expected JSON property -> private Game attributes 
+    'authors': '_authors',
+    'content': '_content',
+    '_id': '__id'
+};
 
 Game = function() {
 
@@ -33,12 +32,6 @@ Game = function() {
 	 */
 	this.__id = null;
 	
-	/**
-	 * Name of the uploaded Game (what the user sees)
-	 * 
-	 * @var {String}
-	 */
-	this._name = null;
 };
 
 
@@ -87,20 +80,17 @@ Game.prototype.setContent = function(content) {
 	this._content = content;
 };
 
-
-Game.prototype.setName = function(name) {
-	if(name !== null) {
-		this._name = name;
-	} else {
-		throw new Error("No game name passed. Please give your Game name");
-	}
-};
-
+/**
+ * Determines the name of the game.
+ * 
+ * @returns {String}
+ */
 Game.prototype.getName = function() {
-	return this._name;
+	if (this._content === null) {
+		throw new Error('No content available: Cannot determine game name.');
+	}
+	return this._content.name;
 };
-
-
 
 /**
  * Creates a human-readable description of the game.
@@ -108,11 +98,10 @@ Game.prototype.getName = function() {
  * @return {String}
  */
 Game.prototype.toString = function() {
-	// TODO extract game description from JSON content
-	if (!this['_name']){
+	if (this._content === null){
 		return 'No Description Available';
 	}
-	return this['_name'];
+	return this.getName();
 };
 
 /**
