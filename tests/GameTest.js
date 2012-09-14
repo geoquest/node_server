@@ -165,6 +165,20 @@ describe('Game', function() {
 			assert.ok(description.length > 0);
 		});
 	});
+	
+	describe('getName', function() {
+		it('determines name from content', function() {
+			object.setContent({'name': 'Demo Game'});
+			assert.equal(object.getName(), 'Demo Game');
+		});
+		it('throws exception if content is not available', function() {
+			object.setContent(null);
+			assert.throws(function() {
+				object.getName();
+			});
+		});
+	});
+	
 });
     
     
