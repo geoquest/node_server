@@ -30,6 +30,215 @@ describe('GameValidator',function() {
 	//
 	// });
 
+	describe('function validateGame', function() {
+		it('returns true if game json is valid', function() {
+			var testJSON = {				
+				"name" : "Fragen",
+				"gameElements" : [
+ 				                  {
+									"type" : "npcTalk",
+									"id" : "Intro_2",
+									"name" : "Intro",
+									"charimage" : "Schatzkarte-0.png",
+									"nextdialogbuttontext" : "Weiter ...",
+									"endbuttontext" : "Caching starten...",
+									"dialogItem" : [ {
+										"text" : "this is dialog 1"
+									}, {
+										"text" : "this is dialog 2"
+									}, {
+										"text" : "this is dialog 3"
+									} ],
+									"onEnd" : "showMessage",
+									"onStart" : "showMessage"
+								},
+				                  {
+				                	  "type":"questionAndAnswer",
+				                	  "id" : "Question1",
+				      				"name" : "Fragen",
+				      				"correctAnswersNeeded" : 1,
+				      				"charimage" : "Schatzkarte-0.png",
+				      				"shuffle" : "all",
+				      				"introText" : "Wenn ihr hier nach Nord-Westen über den See zum Yachthafen schaut ...",
+				      				"outroSuccessText" : "Sehr gut, ihr habt genügend Fragen korrekt beantwortet.",
+				      				"outroFailText" : "Ihr habt zu viele Fragen Falsch beantwortet.",
+				      				"questions" : [
+				      						{
+				      							"questionText" : "Wie weit ist das andere Ufer ungefähr entfernt?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"answerText" : "100 m",
+				      										"responseText" : "100m? nein das ist zu wenig."
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "300 m",
+				      										"responseText" : "Richtig! Es sind etwa 300m bis zum anderen Ufer."
+				      									} ]
+				      						},
+				      						{
+				      							"questionText" : "Wie viele Kirchen kann man in der Stadt am andern Ufer sehen?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"answerText" : "1",
+				      										"responseText" : "I HATE LULU!"
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "3"
+				      									} ]
+				      						} ]
+				                  }
+				 ]
+			};
+			assert.equal(true, gameValidator.validateGame(testJSON));
+		});
+		it('returns false if game json is invalid( invalid npcTalk element)', function() {
+			var testJSON = {				
+				"name" : "Fragen",
+				"gameElements" : [
+ 				                  {
+									"type" : "npcTalk",
+									"id" : "Intro_2",
+									"name" : "Intro",
+									"charimage" : "Schatzkarte-0.png",
+									"nextdialogbuttontext" : "Weiter ...",
+									"endbuttontext" : "Caching starten...",
+									"dialogItem" : [],
+									"onEnd" : "showMessage",
+									"onStart" : "showMessage"
+								},
+				                  {
+				                	  "type":"questionAndAnswer",
+				                	  "id" : "Question1",
+				      				"name" : "Fragen",
+				      				"correctAnswersNeeded" : 1,
+				      				"charimage" : "Schatzkarte-0.png",
+				      				"shuffle" : "all",
+				      				"introText" : "Wenn ihr hier nach Nord-Westen über den See zum Yachthafen schaut ...",
+				      				"outroSuccessText" : "Sehr gut, ihr habt genügend Fragen korrekt beantwortet.",
+				      				"outroFailText" : "Ihr habt zu viele Fragen Falsch beantwortet.",
+				      				"questions" : [
+				      						{
+				      							"questionText" : "Wie weit ist das andere Ufer ungefähr entfernt?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"answerText" : "100 m",
+				      										"responseText" : "100m? nein das ist zu wenig."
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "300 m",
+				      										"responseText" : "Richtig! Es sind etwa 300m bis zum anderen Ufer."
+				      									} ]
+				      						},
+				      						{
+				      							"questionText" : "Wie viele Kirchen kann man in der Stadt am andern Ufer sehen?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"answerText" : "1",
+				      										"responseText" : "I HATE LULU!"
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "3"
+				      									} ]
+				      						} ]
+				                  }
+				 ]
+			};
+			assert.equal(false, gameValidator.validateGame(testJSON));
+		});
+		it('returns false if game json is invalid(invalid Q&A element)', function() {
+			var testJSON = {				
+				"name" : "Fragen",
+				"gameElements" : [
+ 				                  {
+									"type" : "npcTalk",
+									"id" : "Intro_2",
+									"name" : "Intro",
+									"charimage" : "Schatzkarte-0.png",
+									"nextdialogbuttontext" : "Weiter ...",
+									"endbuttontext" : "Caching starten...",
+									"dialogItem" : [ {
+										"text" : "this is dialog 1"
+									}, {
+										"text" : "this is dialog 2"
+									}, {
+										"text" : "this is dialog 3"
+									} ],
+									"onEnd" : "showMessage",
+									"onStart" : "showMessage"
+								},
+				                  {
+				                	  "type":"questionAndAnswer",
+				                	  "id" : "Question1",
+				      				"name" : "Fragen",
+				      				"correctAnswersNeeded" : 1,
+				      				"charimage" : "Schatzkarte-0.png",
+				      				"shuffle" : "all",
+				      				"introText" : "Wenn ihr hier nach Nord-Westen über den See zum Yachthafen schaut ...",
+				      				"outroSuccessText" : "Sehr gut, ihr habt genügend Fragen korrekt beantwortet.",
+				      				"outroFailText" : "Ihr habt zu viele Fragen Falsch beantwortet.",
+				      				"questions" : [
+				      						{
+				      							"questionText" : "Wie weit ist das andere Ufer ungefähr entfernt?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"answerText" : "100 m",
+				      										"responseText" : "100m? nein das ist zu wenig."
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "300 m",
+				      										"responseText" : "Richtig! Es sind etwa 300m bis zum anderen Ufer."
+				      									} ]
+				      						},
+				      						{
+				      							"questionText" : "Wie viele Kirchen kann man in der Stadt am andern Ufer sehen?",
+				      							"answers" : [
+				      									{
+				      										"correct" : 0,
+				      										"responseText" : "I HATE LULU!"
+				      									},
+				      									{
+				      										"correct" : 1,
+				      										"answerText" : "3"
+				      									} ]
+				      						} ]
+				                  }
+				 ]
+			};
+			assert.equal(false, gameValidator.validateGame(testJSON));
+		});
+		it('returns false if game json is invalid(missing type attribute)', function() {
+			var testJSON = {				
+				"name" : "Fragen",
+				"gameElements" : [
+				                  {
+				                	  "typo":"npcTalk"
+				                  },
+				                  {
+				                	  "type":"questionAndAnswer"
+				                  }
+				 ]
+			};
+			assert.equal(false, gameValidator.validateGame(testJSON));
+		});
+		it('returns false if game json is invalid(gameElements empty)', function() {
+			var testJSON = {				
+				"name" : "Fragen",
+				"gameElements" : [
+				 ]
+			};
+			assert.equal(false, gameValidator.validateGame(testJSON));
+		});
+	});	
 	describe('function validate', function() {
 		it('returns false if json is invalid', function() {
 			var testJSON = {
@@ -99,7 +308,8 @@ describe('GameValidator',function() {
 				}, {
 					"text" : "this is dialog 3"
 				} ],
-				"onEnd" : "showMessage"
+				"onEnd" : "showMessage",
+				"onStart" : "showMessage"
 			};
 			assert.equal(true, gameValidator.validate(testJSON, "npcTalk"));
 		});

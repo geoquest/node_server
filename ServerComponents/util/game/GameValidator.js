@@ -32,17 +32,20 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 	}
 };
 
-//GameValidator.prototype.validateOLD = function(jsonObject, atomicGameTypeName){
-//	if (schemas.hasOwnProperty(atomicGameTypeName)) {
-//		//the schema for the type is defined, so proceed with validation
-//		var schema = require(schemas[atomicGameTypeName]);		
-//		
-//		return (report.errors.length === 0);
-//	} else {
-//		//the schema was not found so just return false
-//		//(may extend later to throw exception for this)
-//		return false;
-//	}
-//};
+GameValidator.prototype.validateGame = function(jsonObject){	
+	var schema = require(schemas["gameSchema"]);
+	var report = this._env.validate(jsonObject, schema);	
+	if(report.errors.length === 0){
+		var gameElements = jsonObject["gameElements"];
+		for(var i in gameElements){
+			var elem = gameElements[i];
+			var type = elem["type"];
+			var valid = this.validate(elem, type);
+			if(valid == false) return false;
+		}
+		return true;
+	}	
+	return false;
+}
 
 exports.class = GameValidator;
