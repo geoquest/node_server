@@ -14,7 +14,8 @@
       "mongojs": "*",
       "ejs": "*",
       "validator": "*",
-      "express-ejs-layouts": "*"
+      "express-ejs-layouts": "*",
+      "JSV": "*"
   }
   , "devDependencies": {
       "mocha": "*",

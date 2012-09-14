@@ -66,4 +66,10 @@ describe('Request', function() {
 		});
 	});
 	
+	describe('body', function() {
+		it('is initially null', function() {
+			assert.strictEqual(request.body, null);
+		});
+	});
+	
 });

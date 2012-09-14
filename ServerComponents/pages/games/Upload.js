@@ -3,6 +3,7 @@ var fs = require('fs');
 
 Upload = function() {
 	this._gameRepository = null;
+	this._gameValidator = null;
 };
 
 /**
@@ -14,6 +15,14 @@ Upload.prototype.setGameRepository = function(repository) {
 	this._gameRepository = repository;
 };
 
+/**
+ * Receives the GameValidator via dependency injection.
+ * 
+ * @param {GameValidator} validator
+ */
+Upload.prototype.setGameValidator = function(validator) {
+	this._gameValidator = validator;
+};
 
 Upload.prototype.handleRequest = function(request, response) {
 	
@@ -31,8 +40,14 @@ Upload.prototype.handleRequest = function(request, response) {
 		
 		// Read file contents and try to parse it as JSON
 		var content = fs.readFileSync(request.files.game.path, 'utf8');
-		try {
+		try {			
 			content = JSON.parse(content);
+			var valid = this._gameValidator.validateGame(content);
+			if (valid == false){
+				this.renderUploadForm(response, 'Error! Not a proper game file.');
+				return;
+			}
+			
 		} catch(err) {
 			this.renderUploadForm(response, 'Error! Not a legal JSON file.');
 			return;
@@ -40,11 +55,14 @@ Upload.prototype.handleRequest = function(request, response) {
 
 		// Upload successful
 		var params = { title: 'Game Upload Response', msg: 'Your game has been uploaded successfully.'};
-
-		var game = new Game.class();
-		game.setContent(content);
-		// TODO: set game author (get it from session)
-
+		
+		var gameData = {
+			'authors': [request.session.user.getId()],
+			'content': content
+		};
+        var game = new Game.fromJSON(gameData);      
+	 
+		
 		this._gameRepository.insert(game);
 
 		response.render('upload-response', params);

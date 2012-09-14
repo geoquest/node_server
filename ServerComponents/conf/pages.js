@@ -36,6 +36,10 @@ var pages = {
 		'module': 'games/Upload',
 		'restrictedTo': 'user'
 	},
+	'/games/uploadResources': {
+		'module': 'games/UploadResources',
+		'restrictedTo': 'user'
+	},
 	'/games/findAll': {
 		'module': 'games/Find'
 	},
@@ -48,6 +52,10 @@ var pages = {
 	},
 	'/games/listPublic': {
 		'module': 'games/ShowAllPublicGames'
+	},
+	'/games/saveState': {
+		'module': 'games/SaveState',
+		'restrictedTo': 'user'
 	},
 	'/login': {
 		'module': 'login/GeoQuest',

@@ -10,7 +10,7 @@ var crypto = require('crypto');
 var express = require("express");
 var expressLayouts = require('express-ejs-layouts');
 var serverConf = require('./conf/serverConf');
-var everyauth = require('./middleware/everyauth');
+var everyauth = require('./middleware/Everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
 var connection = new Db(dbconf.dbname, new Server(dbconf.host, dbconf.port));
@@ -62,6 +62,14 @@ var dependencies = {
 	'setGameRepository': function() {
 		var GameRepository = require('./GameRepository');
 		return new GameRepository.class(this.setDatabaseConnection());
+	},
+	'setGameStateRepository': function() {
+		var GameStateRepository = require('./GameStateDataAccess');
+		return new GameStateRepository.class(this.setDatabaseConnection());
+	},
+	'setGameValidator': function() {
+		var GameValidator = require('./util/game/GameValidator');
+		return new GameValidator.class();
 	}
 };
 var DependencyInjector = require('./DependencyInjector');

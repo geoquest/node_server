@@ -163,18 +163,15 @@ describe('SignUp page', function() {
 			request.params.fName = 'fName',
 			request.params.lName = 'lName',
 			request.params.email = 'agile@lab.com';
-			
-			var newGQUser = new User.class();
-			newGQUser.setLoginType("GeoQuest");
-			newGQUser.setIdentifier(request.params.username);
-			newGQUser.setPassword(request.params.password);
-			newGQUser.setFirstname(request.params.fName);
-			newGQUser.setLastname(request.params.lName);
-			newGQUser.setEmail(request.params.email);
-			
+
 			page.handleRequest(request, response);
-			assert.deepEqual(newGQUser, userRepository.user);
 			
+			assert.equal(userRepository.user.getLoginType(), 'GeoQuest');
+			assert.equal(userRepository.user.getIdentifier(), 'max.mustermann');
+			assert.equal(userRepository.user.getFirstname(), 'fName');
+			assert.equal(userRepository.user.getLastname(), 'lName');
+			assert.equal(userRepository.user.getEmail(), 'agile@lab.com');
+			assert.ok(userRepository.user.hasPassword('secret'));
 		});
 		
 	});

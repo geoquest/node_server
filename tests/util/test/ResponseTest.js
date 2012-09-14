@@ -89,5 +89,32 @@ describe('Response', function() {
 			assert.equal(response.redirectStatus, 302);
 		});
 	});
+	
+	describe('status code', function() {
+		it('is initially 200', function() {
+			assert.strictEqual(response.statusCode, 200);
+		});
+		it('is changed by status()', function() {
+			response.status(404);
+			assert.strictEqual(response.statusCode, 404);
+		});
+		it('is changed by status()', function() {
+			assert.strictEqual(response.status(200), response);
+		});
+	});
+	
+	describe('ended', function() {
+		it('is initially false', function() {
+			assert.strictEqual(response.ended, false);
+		});
+		it('is true if end() was called', function() {
+			response.end();
+			assert.strictEqual(response.ended, true);
+		});
+		it('is true if a template was rendered', function() {
+			response.render('any.ejs');
+			assert.strictEqual(response.ended, true);
+		});
+	});
 
 });

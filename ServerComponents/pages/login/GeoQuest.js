@@ -15,6 +15,17 @@ GeoQuestLogin.prototype.setUserRepository = function(repository)
 	this._userRepository = repository;
 };
 
+/**
+ * Concerns with the login procedure of GeoQuest users.
+ * 
+ * On GET request the login form will be presented.
+ * If a POST request is received, then this module
+ * uses the provided credentials to perform a login
+ * attempt.
+ * 
+ * @param {Object} request
+ * @param {Object} response
+ */
 GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
 	if (request.method === 'GET') {

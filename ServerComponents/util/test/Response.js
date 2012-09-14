@@ -8,6 +8,8 @@ Response = function()
 	this.templateVars = null;
 	this.redirectUrl = null;
 	this.redirectStatus = null;
+	this.statusCode = 200;
+	this.ended = false;
 };
 
 /**
@@ -20,6 +22,7 @@ Response.prototype.render = function(template, templateVars)
 {
 	this.template = template;
 	this.templateVars = templateVars || {};
+	this.end();
 };
 
 /**
@@ -41,6 +44,24 @@ Response.prototype.redirect = function(status, url) {
 	this.redirectStatus = status;
 	this.redirectUrl = url;
 	
+};
+
+/**
+ * Simulates the method that sets the status code.
+ * 
+ * @param {integer} code
+ * @return {Object} The response object (provides a fluent interface).
+ */
+Response.prototype.status = function(code) {
+	this.statusCode = code;
+	return this;
+};
+
+/**
+ * Simulates the termination of the response.
+ */
+Response.prototype.end = function() {
+	this.ended = true;
 };
 
 exports.class = Response;
