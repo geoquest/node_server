@@ -10,6 +10,7 @@
   , "dependencies": {
   	 "express": "*",
       "everyauth": "*",
+      "mongodb": "*",
       "mongojs": "*",
       "ejs": "*",
       "validator": "*",
