@@ -34,6 +34,12 @@ describe('Upload Page', function() {
 			}
 		};
 		page.setGameRepository(gameRepo);
+		// Simulate successful validation per default.
+		page.setGameValidator({
+			validateGame: function() {
+				return true;
+			}
+		});
 	});
 
 	describe('constructor', function() {
@@ -194,6 +200,30 @@ describe('Upload Page', function() {
 					done();
 				};
 				page.handleRequest(request,response);
+			});
+			
+			
+			it('should pass the received JSON to the validator', function(done) {
+				var json = {"name": "bubus game", "content": {"lala":"lulu"}};
+				page.setGameValidator({
+					validateGame: function(gameData) {
+						assert.deepEqual(json, gameData);
+						done();
+						return true;
+					}
+				});
+				page.handleRequest(request,response);
+			});
+			
+			it('should reject the game if the validation fails', function() {
+				page.setGameValidator({
+					validateGame: function() {
+						return false;
+					}
+				});
+				page.handleRequest(request,response);
+				assert.equal(response.filename, 'upload');
+				assert.equal(response.params.msg, 'Error! Not a proper game file.');
 			});
 
 		});
