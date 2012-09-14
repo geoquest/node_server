@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-//var Resource = require("../ServerComponents/Game.js");
+var Resource = require("../ServerComponents/Resource.js");
 var ResourceRepository = require("../ServerComponents/ResourceRepository.js");
 //var User = require("../ServerComponents/User.js");
 
@@ -23,22 +23,25 @@ describe('ResourceRepository', function() {
 	 * 
 	 * @var {Object}
 	 */
-	var connectionMock = null;
+	var gridFS = null;
 	
 
 	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
-		connectionMock = {};
-		repository = new ResourceRepository.class(connectionMock);
+		gridFS = {
+			saveFile: function() {
+			}
+		};
+		repository = new ResourceRepository.class(gridFS);
 	});
 
 	/**
 	 * Removes instances that were created for testing after each test.
 	 */
 	afterEach(function() {
-		connectionMock = null;
+		gridFS = null;
 		repository = null;
 	});
 
@@ -46,7 +49,7 @@ describe('ResourceRepository', function() {
         it('should create a ResourceRepository instance', function() {
             assert.ok(repository instanceof ResourceRepository.class);
         });
-        it('throws exception if connection is omitted', function() {
+        it('throws exception if gridFSConnection is omitted', function() {
             assert.throws(function() {
             	new ResourceRepository.class();
             });
@@ -57,36 +60,51 @@ describe('ResourceRepository', function() {
             });
         });
     });
-    
-//    describe('insertResource', function() {
-//    	it('successfully inserts resource file into GridFS', function(done) {
-////    		connectionMock.games.insert = function(game) {
-////    			assert.ok((typeof game) === 'object');
-////    			done();
-////    		};
-//    		//var tempResource = new Resource.class();
-//    		repository.insert(tempResource);
-//    	});
-//
-//    	it('fails if parameter to insert is not an instance of Game', function() {
-//    		connectionMock.games.insert = function() {};
-//
-//    		assert.throws(function() {
-//        		repository.insert();
-//            });
-//    		assert.throws(function() {
-//        		repository.insert(null);
-//            });
-//    		assert.throws(function() {
-//        		repository.insert("string");
-//            });
-//    		assert.throws(function() {
-//        		repository.insert(true);
-//            });
-//    		assert.throws(function() {
-//        		repository.insert(1);
-//            });
-//    	});
-//    }); 
+
+    describe('insert', function() {
+    	it('fails if parameter to insert is not an instance of Resource', function() {
+    		assert.throws(function() {
+        		repository.insert();
+            });
+    		assert.throws(function() {
+        		repository.insert(null);
+            });
+    		assert.throws(function() {
+        		repository.insert("string");
+            });
+    		assert.throws(function() {
+        		repository.insert(true);
+            });
+    		assert.throws(function() {
+        		repository.insert(1);
+            });
+    	});
+    	
+    	it('calls the saveFile function of the GridFSConnection object', function(done){    		
+    		gridFS.saveFile = function() {
+    			done();
+    		};
+    		repository.insert(new Resource.class());
+    	});
+    	
+    	it('calls the saveFile function with the appropriate parameters',function(done){
+    		
+    		gridFS.saveFile = function(fileName, filePath) {
+    			assert.equal(fileName, "abc");
+    			assert.equal(filePath, "def");
+    			done();
+    		};
+    		
+    		var resource = new Resource.class();
+    		
+    		resource._filename = "abc";    		
+    		resource._tempPath = "def";
+    		
+    		repository.insert(resource);
+    	});
+    	
+    	
+    	
+    }); 
 
 });  
