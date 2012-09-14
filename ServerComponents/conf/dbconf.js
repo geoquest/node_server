@@ -1,19 +1,13 @@
 var dbname = "test";
 var host = "localhost";
-var port = "27017";
-
-/*
-module.exports = {
-	url: host + ":" + port + "/" + dbname
-  , collections : ["REGISTERED"]
-  , salt : '1@#4%^78()'
-};
-*/
-
+var port = 27017;
 
 var dbconf = {
+	dbname: dbname,
+	host: host,
+	port: port,
 	url: host + ":" + port + "/" + dbname
-  , collections : ["REGISTERED", "users", "games"]
+  , collections : ["REGISTERED", "users", "games", "fs.chunks"]
   , salt : '1@#4%^78()'
 };
 
