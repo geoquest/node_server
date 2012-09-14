@@ -58,35 +58,35 @@ describe('ResourceRepository', function() {
         });
     });
     
-    describe('insertResource', function() {
-    	it('successfully inserts resource file into GridFS', function(done) {
-//    		connectionMock.games.insert = function(game) {
-//    			assert.ok((typeof game) === 'object');
-//    			done();
-//    		};
-    		//var tempResource = new Resource.class();
-    		repository.insert(tempResource);
-    	});
-
-    	it('fails if parameter to insert is not an instance of Game', function() {
-    		connectionMock.games.insert = function() {};
-
-    		assert.throws(function() {
-        		repository.insert();
-            });
-    		assert.throws(function() {
-        		repository.insert(null);
-            });
-    		assert.throws(function() {
-        		repository.insert("string");
-            });
-    		assert.throws(function() {
-        		repository.insert(true);
-            });
-    		assert.throws(function() {
-        		repository.insert(1);
-            });
-    	});
-    }); 
+//    describe('insertResource', function() {
+//    	it('successfully inserts resource file into GridFS', function(done) {
+////    		connectionMock.games.insert = function(game) {
+////    			assert.ok((typeof game) === 'object');
+////    			done();
+////    		};
+//    		//var tempResource = new Resource.class();
+//    		repository.insert(tempResource);
+//    	});
+//
+//    	it('fails if parameter to insert is not an instance of Game', function() {
+//    		connectionMock.games.insert = function() {};
+//
+//    		assert.throws(function() {
+//        		repository.insert();
+//            });
+//    		assert.throws(function() {
+//        		repository.insert(null);
+//            });
+//    		assert.throws(function() {
+//        		repository.insert("string");
+//            });
+//    		assert.throws(function() {
+//        		repository.insert(true);
+//            });
+//    		assert.throws(function() {
+//        		repository.insert(1);
+//            });
+//    	});
+//    }); 
 
 });  
