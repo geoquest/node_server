@@ -13,6 +13,8 @@ var serverConf = require('./conf/serverConf');
 var everyauth = require('./middleware/everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
+var connection = new Db(dbconf.dbname, new Server(dbconf.host, dbconf.port));
+var GridFSConnection = require("./GridFSConnection.js");
 
 var app = express();
 
@@ -49,6 +51,9 @@ var dependencies = {
 	'setDatabaseConnection': function() {
 		var dbconf = require('./conf/dbconf');
 		return require("mongojs").connect(dbconf.url, dbconf.collections);
+	},
+	'setGridFSConnection': function() {
+		return new GridFSConnection.class();
 	},
 	'setUserRepository': function() {
 		var UserRepository = require('./UserDataAccess');
