@@ -21,7 +21,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	var self = this;
 	
 	if (request.method === 'GET') {
-		console.log('rendering signup page');
+		//console.log('rendering signup page');
 		response.render('signup.ejs', {msg: "Please fill out the following fields."});
 	}
 	if (request.method === 'POST') {
