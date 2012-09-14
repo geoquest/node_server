@@ -45,7 +45,13 @@ Provides functions for several validation tasks (for example checking email addr
 
 ## JSV ##
 
+A JSON schema validator.
+
+[Project on Github](https://github.com/garycourt/JSV)
+
 ## mocha ##
+
+Framework that is used for unit testing.
 
 [Project page](http://visionmedia.github.com/mocha/)
 
