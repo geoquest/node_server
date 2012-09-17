@@ -27,6 +27,8 @@ The following dependencies are used by the server.
 
 Web framework that this server is based upon.
 
+[Project page](http://expressjs.com/)
+
 [Project on Github](https://github.com/visionmedia/express)
 
 ## ejs ##
