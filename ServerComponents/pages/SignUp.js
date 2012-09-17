@@ -25,12 +25,21 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 		response.render('signup.ejs', {msg: "Please fill out the following fields."});
 	}
 	if (request.method === 'POST') {
-				
+		
+		request.assert('email', 'Email is not valid.').isEmail();
+		
+		var errors = request.validationErrors();
+		if(errors)
+		{
+			response.render('signup.ejs', {msg: this._formatErrors(errors)});
+		    return;
+		}
+		
 	    if(request.param('password') == request.param('confirmPassword')){
 
 	    	//password matched
 	    	var username = request.param('username');
-
+	    	
 			self._userRepository.addErrorHandler(function(error) {
                 response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});
             });
@@ -78,6 +87,17 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	    	response.render('signup.ejs', {msg: "Password not matched. Please retry."});
 	    }        
 	}
+};
+
+GeoQuestSignUp.prototype._formatErrors = function(errors) {
+	
+	var errorResult = '';
+	
+	for(var i=0; i < errors.length; i++){
+		errorResult += errors[i].msg + '<br/>';
+	}
+	return errorResult;
+	
 };
 
 exports.class = GeoQuestSignUp;
