@@ -1,6 +1,7 @@
 var assert = require("assert");
 var User = require("../../ServerComponents/User");
 var SignUp = require("../../ServerComponents/pages/SignUp");
+var Request = require("../../ServerComponents/util/test/Request");
 
 describe('SignUp page', function() {
 	
@@ -11,18 +12,7 @@ describe('SignUp page', function() {
 	
 	beforeEach(function() {
 		
-		request = {
-			'method': 'GET',
-			'params': {},
-			'session': {},
-			// Simulate param() function.
-			'param': function(name) {
-				if (name in this.params) {
-					return this.params[name];
-				}
-				return undefined;
-			}
-		};
+		request = new Request.class();
 		
 		response = {
 			// The object remembers the last rendered template
@@ -89,8 +79,35 @@ describe('SignUp page', function() {
 			
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
-			assert.deepEqual({ msg: 'Password not matched. Please retry.'}, response.templateVars);
+			assert.ok(response.templateVars.msg.indexOf('Password not matched. Please retry.') !== -1);
+		});
+		
+		it('should render "Email is not valid." if invalid mail is provided', function() {
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agilelab.com';
 			
+			page.handleRequest(request, response);
+			assert.equal('signup.ejs', response.template);
+			assert.ok(response.templateVars.msg.indexOf('Email is not valid.') !== -1);
+		});
+		
+		it('should render "Username must be at least 6 characters." if username is not long enough', function(){
+			request.method = 'POST';
+			request.params.username = 'max';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			page.handleRequest(request, response);
+			assert.equal('signup.ejs', response.template);
+			assert.ok(response.templateVars.msg.indexOf('Username must be at least 6 characters.') !== -1);
 		});
 		
 		it('should render "User already in DB" if username already in DB', function(done){
@@ -115,7 +132,7 @@ describe('SignUp page', function() {
 			
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
-			assert.deepEqual({ msg: 'SignUp Failed. This Username already existed.'}, response.templateVars);
+			assert.ok(response.templateVars.msg.indexOf('SignUp Failed. This Username already existed.') !== -1);
 			
 		});
 		

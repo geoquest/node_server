@@ -25,9 +25,21 @@ The following dependencies are used by the server.
 
 ## express ##
 
+Web framework that this server is based upon.
+
+[Project on Github](https://github.com/visionmedia/express)
+
 ## ejs ##
 
+EJS template engine for express.
+
+[Project on Github](https://github.com/visionmedia/ejs)
+
 ## express-ejs-layouts ##
+
+Module that addes layout functionality to EJS.
+
+[Project on Github](https://github.com/Soarez/express-ejs-layouts)
 
 ## everyauth ##
 
@@ -37,11 +49,21 @@ Library that is used to perform Facebook and Google+ authentication.
 
 ## mongojs ##
 
+MongoDB driver that is used to access the database.
+
+[Project on Github](https://github.com/gett/mongojs)
+
 ## validator ##
 
 Provides functions for several validation tasks (for example checking email addresses).
 
 [Project on Github](https://github.com/chriso/node-validator)
+
+## express-validator ##
+
+Middleware that integrates validation capabilities into the request object.
+
+[Project on Github](https://github.com/ctavan/express-validator)
 
 ## JSV ##
 

@@ -4,12 +4,18 @@
  * Provides properties and methods that are often used in pages.
  */
 
+var expressValidator = require('express-validator');
+
 Request = function() 
 {
 	this.method = "GET";
 	this.params = {};
 	this.session = {};
 	this.body = null;
+	// Simulate passing this request object to the  validation middleware.
+	// The middleware will add several function that can be used for checking
+	// input parameters.
+	expressValidator(this, {}, function() {});
 };
 
 /**

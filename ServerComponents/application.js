@@ -13,6 +13,7 @@ var serverConf = require('./conf/serverConf');
 var everyauth = require('./middleware/Everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
+var expressValidator = require('express-validator');
 var connection = new Db(dbconf.dbname, new Server(dbconf.host, dbconf.port));
 var GridFSConnection = require("./GridFSConnection.js");
 
@@ -45,6 +46,9 @@ app.configure(function() {
 	// Exposes the currently logged in user as function "user" to 
 	// the view templates.
 	app.use(templateVariables.importVariables());
+	// Enable middleware that adds advanced validation functions 
+	// to the request object.
+	app.use(expressValidator);
 });
 
 var dependencies = {
