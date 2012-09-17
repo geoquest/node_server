@@ -32,7 +32,7 @@ describe('GridFSConnection', function() {
     	});
     });
 	
-	describe('writeFile',function() {
+	describe('saveFile',function() {
 		var fileToSave = 'fileToSave.file';
 		var fileContents = 'ABCDEFG';
 		beforeEach(function() {
@@ -45,13 +45,34 @@ describe('GridFSConnection', function() {
 			fs.unlinkSync(fileToSave);
 		});
 
-		it('successfully writes a file to the database',function(done){
-			connection.saveFile("newFile", fileToSave, function(error, result) {
+		it('successfully writes a file to the database when no metadata is given',function(done){
+			connection.saveFile("newFile", fileToSave, null, function(error, result) {
 				assert.ok(!error);
 				assert.equal(result.length, fileContents.length);
 				done();
 			});
 		});
+		
+		it('successfully writes a file to the database with added metadata',function(done){
+			var metadata = {
+				foo:"bar",
+				foo2:"bar2"
+			};			
+			
+			connection.saveFile("newFile", fileToSave, metadata, function(error, result) {
+				assert.ok(!error);
+				assert.equal(result.length, fileContents.length);
+				assert.deepEqual(result.metadata, metadata);
+				done();
+			});
+			
+		});
 	});
+	
+	
+	
+	
+	
+	
 	
 });
