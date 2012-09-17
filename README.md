@@ -43,6 +43,12 @@ Provides functions for several validation tasks (for example checking email addr
 
 [Project on Github](https://github.com/chriso/node-validator)
 
+## express-validator ##
+
+Middleware that integrates validation capabilities into the request object.
+
+[Project on Github](https://github.com/ctavan/express-validator)
+
 ## JSV ##
 
 A JSON schema validator.
