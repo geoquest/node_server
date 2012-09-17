@@ -98,7 +98,7 @@ GameRepository.prototype._createResultHandler = function(callback) {
  * @return {function}
  * @throws Error If an internal error occurred.
  */
-GameRepository.prototype._createResultHandlerForMetaInfo = function(callback) {
+GameRepository.prototype._createResultHandlerForGames = function(callback) {
 	// Store the current context as the scope changes in the callback.
 	var self = this;
 	return function(error, result) {
@@ -106,10 +106,8 @@ GameRepository.prototype._createResultHandlerForMetaInfo = function(callback) {
 			self._notifyAboutError(error);
 			return;
 		}
-		for (var i = 0; i<result.length; i++){
-			result[i]['content']={};
-		}
-		callback(self._jsonToGame(result));
+		var games = self._jsonToGame(result);
+		callback(games);
 	};
 };
 
@@ -119,8 +117,7 @@ GameRepository.prototype._createResultHandlerForMetaInfo = function(callback) {
  */
 GameRepository.prototype.findAll = function(callback) {
 	var query = {};
-	var proj = {'authors' : 1, 'name': 1};
-	this._connection.games.find(query, proj,  this._createResultHandlerForMetaInfo(callback));
+	this._connection.games.find(query, this._createResultHandlerForGames(callback));
 };
 
 

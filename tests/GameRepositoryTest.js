@@ -205,7 +205,7 @@ describe('GameRepository', function() {
     
     describe('findGames', function(){
     	it('successfully finds all Game objects', function(done){
-        	connectionMock.games.find = createProjectedFind(createResult(10));
+        	connectionMock.games.find = createFind(createResult(10));
     		repository.findAll(function(result){
     			assert.equal(result.length, 10);
     			done();
@@ -213,7 +213,7 @@ describe('GameRepository', function() {
     	});
     	
     	it('should return empty list when 0 games contained in db', function(done){
-        	connectionMock.games.find = createProjectedFind(createResult(0));
+        	connectionMock.games.find = createFind(createResult(0));
     		repository.findAll(function(result){
     			assert.equal(result.length, 0);
     			done();
