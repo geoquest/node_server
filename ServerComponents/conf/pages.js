@@ -32,8 +32,8 @@ var pages = {
 	'/': {
 		'module': 'Home'
 	},
-	'/games/upload': {
-		'module': 'games/Upload',
+	'/games': {
+		'module': 'games/YourGames',
 		'restrictedTo': 'user'
 	},
 	'/games/uploadResources': {
@@ -42,10 +42,6 @@ var pages = {
 	},
 	'/games/findAll': {
 		'module': 'games/Find'
-	},
-	'/games/uploaded': {
-		'module': 'games/AuthorRelated',
-		'restrictedTo': 'user'
 	},
 	'/games/download': {
 		'module': 'games/Download'
@@ -56,6 +52,10 @@ var pages = {
 	'/games/saveState': {
 		'module': 'games/SaveState',
 		'restrictedTo': 'user'
+	},
+	'/login/mobile': {
+		'module': 'login/GeoQuestMobile',
+		'restrictedTo': 'guest'
 	},
 	'/login': {
 		'module': 'login/GeoQuest',
