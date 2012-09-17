@@ -84,11 +84,6 @@ describe('AuthorRelated games page', function() {
 	});
 	
 	describe('handleRequest', function() {
-		it('redirects to home if user is not logged in', function() {
-			delete request.session.user;
-			page.handleRequest(request, response);
-			assert.equal(response.redirectUrl, '/');
-		});
 		it('passes logged in user to game repository', function(done) {
 			gameRepository.findAllByUser = function(user, callback) {
 				assert.equal(user.getIdentifier(), request.session.user.getIdentifier());

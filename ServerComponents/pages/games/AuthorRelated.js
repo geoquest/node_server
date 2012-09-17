@@ -10,14 +10,9 @@ AuthorRelated.prototype.setGameRepository = function(gameRepository){
 AuthorRelated.prototype.handleRequest = function(request, response)
 {
 	var user = request.session.user;
-	if (user) {
-		this._gameRepository.findAllByUser(user, function(result){		
-			response.render('games/list.ejs', {'games' : result});
-		});
-	} else {
-		// User is not logged in.
-		response.redirect('/');
-	}
+	this._gameRepository.findAllByUser(user, function(result){		
+		response.render('games/list.ejs', {'games' : result});
+	});
 };
 
 exports.class = AuthorRelated;
