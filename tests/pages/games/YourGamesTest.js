@@ -122,7 +122,7 @@ describe('Your games page', function() {
 		it('renders games template', function() {
 			// TODO: check
 			page.handleRequest(request, response);
-			assert.equal(response.template, 'games/list.ejs');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		it('passes received games to template', function() {
 			var games = [new Game.class(), new Game.class()];
@@ -135,14 +135,14 @@ describe('Your games page', function() {
 		});
 		it('should load the upload view',	function() {
 			page.handleRequest(request,response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		it('should have the correct title',	function() {
 			page.handleRequest(request,response);
 			assert.equal(response.templateVars.title, 'Game Upload');
 		
 		});
-		it('should have the correct message',	function() {
+		it('should have the correct message', function() {
 			page.handleRequest(request,response);
 		    assert.equal(response.templateVars.msg, 'Please upload your game in JSON format.');
 		});
@@ -174,7 +174,7 @@ describe('Your games page', function() {
 		
 		it('should load the upload-response view if file is uploaded', function() {
 			page.handleRequest(request, response);
-			assert.equal(response.template, 'upload-response');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		
 		it('should have the correct title',	function() {
@@ -186,14 +186,14 @@ describe('Your games page', function() {
 		it('should load the upload form if no files property exists ', function() {
 			request.files = null;
 			page.handleRequest(request, response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		
 	
 		it('should load the upload form if game input field not set', function() {
 			request.files = {};
 			page.handleRequest(request, response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 
 		it('should load the upload form if game input is empty', function() {
@@ -202,14 +202,14 @@ describe('Your games page', function() {
 				}
 			};
 			page.handleRequest(request,response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		
 		it('should load the upload form if no file is uploaded', function() {
 			request.files.game.name = "";
 			
 			page.handleRequest(request,response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 		});
 
 		it('should load the upload form if file is not a legal JSON file', function() {
@@ -217,26 +217,23 @@ describe('Your games page', function() {
 			fs.writeFileSync(uploadedFileName, 'Hello Pookie!');
 			
 			page.handleRequest(request,response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 			assert.equal(response.templateVars.msg, 'Error! Not a legal JSON file.');
 		});
 		
 		it('should access uploaded file from request and save to GameRepository', function(done) {
 
-			gameRepo = {
-					insert: function(game){
-						assert.deepEqual(game.getContent(), {"name": "bubus game", "lala":"lulu"});
-						done();
-					}
+			gameRepository.insert = function(game){
+				assert.deepEqual(game.getContent(), {"name": "bubus game", "lala":"lulu"});
+				done();
 			};
-			page.setGameRepository(gameRepo);
 			
 			page.handleRequest(request, response);
 
 		});
 
 		it('should add logged in user as author', function(done) {
-			gameRepo.insert = function(game) {
+			gameRepository.insert = function(game) {
 				assert.deepEqual(game.getAuthors(), [request.session.user.getId()]);
 				done();
 			};
@@ -261,7 +258,7 @@ describe('Your games page', function() {
 				}
 			});
 			page.handleRequest(request, response);
-			assert.equal(response.template, 'upload');
+			assert.equal(response.template, 'games/your-games.ejs');
 			assert.equal(response.templateVars.msg, 'Error! Not a proper game file.');
 		});
 		
