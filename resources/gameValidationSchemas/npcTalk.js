@@ -11,17 +11,17 @@ var schema = {
 	    "type" : "string",
 	    "required": true
 	  },
-	  "charimage": {
+	  "charImage": {
 	    "description": "The filename of the background image that is displayed (image of the NPC).",
 	    "type": "string",
 	    "required":false
 	  },
-	  "nextdialogbuttontext": {
+	  "nextDialogButtonText": {
 	    "description": "Text displayed on the <<next>> button. Default: ?!?!? ",
 	    "type" : "string",
 	    "required": false
 	  },
-	  "endbuttontext": {
+	  "endButtonText": {
 	    "description": "Text displayed on the <<next>> button. Default: ?!?!? ",
 	    "type" : "string",
 	    "required": false

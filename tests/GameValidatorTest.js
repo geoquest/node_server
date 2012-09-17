@@ -32,16 +32,17 @@ describe('GameValidator',function() {
 
 	describe('function validateGame', function() {
 		it('returns true if game json is valid', function() {
-			var testJSON = {				
+			var testJSON = {
 				"name" : "Fragen",
-				"gameElements" : [
+				"content" : {
+					"gameElements" : [
  				                  {
 									"type" : "npcTalk",
 									"id" : "Intro_2",
 									"name" : "Intro",
-									"charimage" : "Schatzkarte-0.png",
-									"nextdialogbuttontext" : "Weiter ...",
-									"endbuttontext" : "Caching starten...",
+									"charImage" : "Schatzkarte-0.png",
+									"nextDialogButtonText" : "Weiter ...",
+									"endButtonText" : "Caching starten...",
 									"dialogItem" : [ {
 										"text" : "this is dialog 1"
 									}, {
@@ -57,7 +58,7 @@ describe('GameValidator',function() {
 				                	  "id" : "Question1",
 				      				"name" : "Fragen",
 				      				"correctAnswersNeeded" : 1,
-				      				"charimage" : "Schatzkarte-0.png",
+				      				"charImage" : "Schatzkarte-0.png",
 				      				"shuffle" : "all",
 				      				"introText" : "Wenn ihr hier nach Nord-Westen über den See zum Yachthafen schaut ...",
 				      				"outroSuccessText" : "Sehr gut, ihr habt genügend Fragen korrekt beantwortet.",
@@ -91,20 +92,22 @@ describe('GameValidator',function() {
 				      									} ]
 				      						} ]
 				                  }
-				 ]
+					]
+				}
 			};
 			assert.equal(true, gameValidator.validateGame(testJSON));
 		});
 		it('returns false if game json is invalid( invalid npcTalk element)', function() {
 			var testJSON = {				
 				"name" : "Fragen",
-				"gameElements" : [
+				"content" : {
+					"gameElements" : [
  				                  {
 									"type" : "npcTalk",
 									"id" : "Intro_2",
 									"name" : "Intro",
-									"charimage" : "Schatzkarte-0.png",
-									"nextdialogbuttontext" : "Weiter ...",
+									"charImage" : "Schatzkarte-0.png",
+									"nextDialogButtonText" : "Weiter ...",
 									"endbuttontext" : "Caching starten...",
 									"dialogItem" : [],
 									"onEnd" : "showMessage",
@@ -149,14 +152,16 @@ describe('GameValidator',function() {
 				      									} ]
 				      						} ]
 				                  }
-				 ]
+					]
+				}
 			};
 			assert.equal(false, gameValidator.validateGame(testJSON));
 		});
 		it('returns false if game json is invalid(invalid Q&A element)', function() {
 			var testJSON = {				
 				"name" : "Fragen",
-				"gameElements" : [
+				"content": {
+					"gameElements" : [
  				                  {
 									"type" : "npcTalk",
 									"id" : "Intro_2",
@@ -212,29 +217,34 @@ describe('GameValidator',function() {
 				      									} ]
 				      						} ]
 				                  }
-				 ]
+					]
+				}
 			};
 			assert.equal(false, gameValidator.validateGame(testJSON));
 		});
 		it('returns false if game json is invalid(missing type attribute)', function() {
 			var testJSON = {				
 				"name" : "Fragen",
-				"gameElements" : [
+				"content" : {
+					"gameElements" : [
 				                  {
 				                	  "typo":"npcTalk"
 				                  },
 				                  {
 				                	  "type":"questionAndAnswer"
 				                  }
-				 ]
+				    ]
+				}
 			};
 			assert.equal(false, gameValidator.validateGame(testJSON));
 		});
 		it('returns false if game json is invalid(gameElements empty)', function() {
 			var testJSON = {				
 				"name" : "Fragen",
-				"gameElements" : [
-				 ]
+				"content" : {
+					"gameElements" : [
+					                  ]
+				}
 			};
 			assert.equal(false, gameValidator.validateGame(testJSON));
 		});

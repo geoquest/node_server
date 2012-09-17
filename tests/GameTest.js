@@ -116,14 +116,6 @@ describe('Game', function() {
 			};
 			assert.ok(Game.fromJSON(json) instanceof Game.class);
         });
-		it('throws exception if property is missing', function() {
-			var json = {
-					"authors" : ["author 1", "author 2"],
-				};
-			assert.throws(function() {
-				Game.fromJSON(json);
-			});
-        });
 		it('maps properties correctly', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
@@ -161,15 +153,9 @@ describe('Game', function() {
 	});
 	
 	describe('getName', function() {
-		it('determines name from content', function() {
-			object.setContent({'name': 'Demo Game'});
-			assert.equal(object.getName(), 'Demo Game');
-		});
-		it('throws exception if content is not available', function() {
-			object.setContent(null);
-			assert.throws(function() {
-				object.getName();
-			});
+		it('determines name correctly', function() {
+			object.setName('name');
+			assert.equal(object.getName(), 'name');
 		});
 	});
 	

@@ -39,15 +39,14 @@ Upload.prototype.handleRequest = function(request, response) {
 		}
 		
 		// Read file contents and try to parse it as JSON
-		var content = fs.readFileSync(request.files.game.path, 'utf8');
+		var gameData = fs.readFileSync(request.files.game.path, 'utf8');
 		try {			
-			content = JSON.parse(content);
-			var valid = this._gameValidator.validateGame(content);
+			gameData = JSON.parse(gameData);
+			var valid = this._gameValidator.validateGame(gameData);
 			if (valid == false){
 				this.renderUploadForm(response, 'Error! Not a proper game file.');
 				return;
 			}
-			
 		} catch(err) {
 			this.renderUploadForm(response, 'Error! Not a legal JSON file.');
 			return;
@@ -56,12 +55,9 @@ Upload.prototype.handleRequest = function(request, response) {
 		// Upload successful
 		var params = { title: 'Game Upload Response', msg: 'Your game has been uploaded successfully.'};
 		
-		var gameData = {
-			'authors': [request.session.user.getId()],
-			'content': content
-		};
+		gameData.authors = [request.session.user.getId()];
+
         var game = new Game.fromJSON(gameData);      
-	 
 		
 		this._gameRepository.insert(game);
 

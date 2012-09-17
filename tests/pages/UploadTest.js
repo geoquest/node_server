@@ -101,7 +101,18 @@ describe('Upload Page', function() {
 			
 			beforeEach(function() {
 				// create file
-				content = {"name": "bubus game", "lala":"lulu"};
+				content = {
+						"name": "bubus game",
+						"content": {
+							"gameElements" : [{
+									"type": "npcTalk",
+									"id": "Intro_2",
+									"name": "Intro",
+									"dialogItem": [{"text": "this is dialog 1"}],
+									"onStart": "showMessage"
+							}]
+						}
+					};
 				fs.writeFileSync(uploadedFileName, JSON.stringify(content));
 				request.method = 'POST';
 				request.files = {
@@ -187,7 +198,7 @@ describe('Upload Page', function() {
 
 				gameRepo = {
 						insert: function(game){
-							assert.deepEqual(game.getContent(), {"name": "bubus game", "lala":"lulu"});
+							assert.deepEqual(game.getContent(), content.content);
 							done();
 						}
 				};

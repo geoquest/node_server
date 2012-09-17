@@ -23,7 +23,8 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 		var report = this._env.validate(jsonObject, schema);	
 //		console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //		console.log(schema);
-//		console.log(report);			
+//		console.log(report);
+		console.log(report.errors);
 		return (report.errors.length === 0);
 	} else {
 		//the schema was not found so just return false
@@ -35,8 +36,11 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 GameValidator.prototype.validateGame = function(jsonObject){	
 	var schema = require(schemas["gameSchema"]);
 	var report = this._env.validate(jsonObject, schema);	
+
+	console.log(report.errors);
+	
 	if(report.errors.length === 0){
-		var gameElements = jsonObject["gameElements"];
+		var gameElements = jsonObject.content.gameElements;
 		for(var i in gameElements){
 			var elem = gameElements[i];
 			var type = elem["type"];

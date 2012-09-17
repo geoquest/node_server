@@ -2,6 +2,7 @@ var mapping = {
     // Expected JSON property -> private Game attributes 
     'authors': '_authors',
     'content': '_content',
+    'name': '_name',
     '_id': '__id'
 };
 
@@ -31,7 +32,9 @@ Game = function() {
 	 * @var {String}
 	 */
 	this.__id = null;
-	
+
+	this._name = null;
+
 };
 
 
@@ -86,10 +89,11 @@ Game.prototype.setContent = function(content) {
  * @returns {String}
  */
 Game.prototype.getName = function() {
-	if (this._content === null) {
-		throw new Error('No content available: Cannot determine game name.');
-	}
-	return this._content.name;
+	return this._name;
+};
+
+Game.prototype.setName = function(name) {
+	this._name = name;
 };
 
 /**
@@ -98,10 +102,11 @@ Game.prototype.getName = function() {
  * @return {String}
  */
 Game.prototype.toString = function() {
-	if (this._content === null){
-		return 'No Description Available';
+	var result = this.getName();
+	if (result == null || result.length < 1) {
+		result = "No game description given";
 	}
-	return this.getName();
+	return result;
 };
 
 /**
@@ -129,17 +134,6 @@ var fromJSON = function(jsonObject) {
 	}
 	var game = new Game();
 	for (var property in mapping) {
-		if (!jsonObject.hasOwnProperty(property)) {
-			if (property == '_id'){
-				// in this case the game hasn't been inserted into the database yet
-				continue;
-			}
-			// The JSON object does not contain
-			// the required property.
-			throw new Error('JSON object does not contain property ' + property);
-		}
-		// Find the private attribute that we have to map 
-		// this property to.
 		var attribute = mapping[property];
 		game[attribute] = jsonObject[property];
 	}
