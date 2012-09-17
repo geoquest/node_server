@@ -133,11 +133,6 @@ describe('Your games page', function() {
 			page.handleRequest(request,response);
 			assert.equal(response.template, 'games/your-games.ejs');
 		});
-		it('should have the correct title',	function() {
-			page.handleRequest(request,response);
-			assert.equal(response.templateVars.title, 'Game Upload');
-		
-		});
 		it('should have the correct message', function() {
 			page.handleRequest(request,response);
 		    assert.equal(response.templateVars.msg, 'Please upload your game in JSON format.');
@@ -173,19 +168,12 @@ describe('Your games page', function() {
 			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		
-		it('should have the correct title',	function() {
-			page.handleRequest(request, response);
-			assert.equal(response.templateVars.title, 'Game Upload Response');
-		
-		});
-		
 		it('should load the upload form if no files property exists ', function() {
 			request.files = null;
 			page.handleRequest(request, response);
 			assert.equal(response.template, 'games/your-games.ejs');
 		});
 		
-	
 		it('should load the upload form if game input field not set', function() {
 			request.files = {};
 			page.handleRequest(request, response);
