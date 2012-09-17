@@ -1,6 +1,7 @@
 var assert = require("assert");
 var User = require("../../ServerComponents/User");
 var SignUp = require("../../ServerComponents/pages/SignUp");
+var Request = require("../../ServerComponents/util/test/Request");
 
 describe('SignUp page', function() {
 	
@@ -11,18 +12,7 @@ describe('SignUp page', function() {
 	
 	beforeEach(function() {
 		
-		request = {
-			'method': 'GET',
-			'params': {},
-			'session': {},
-			// Simulate param() function.
-			'param': function(name) {
-				if (name in this.params) {
-					return this.params[name];
-				}
-				return undefined;
-			}
-		};
+		request = new Request.class();
 		
 		response = {
 			// The object remembers the last rendered template
