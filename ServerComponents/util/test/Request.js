@@ -12,6 +12,9 @@ Request = function()
 	this.params = {};
 	this.session = {};
 	this.body = null;
+	// Simulate passing this request object to the  validation middleware.
+	// The middleware will add several function that can be used for checking
+	// input parameters.
 	expressValidator(this, {}, function() {});
 };
 
