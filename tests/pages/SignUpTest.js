@@ -83,6 +83,20 @@ describe('SignUp page', function() {
 			
 		});
 		
+		it('should render "Email is not valid." if invalid mail is provided', function() {
+			request.method = 'POST';
+			request.params.username = 'max.mustermann';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agilelab.com';
+			
+			page.handleRequest(request, response);
+			assert.equal('signup.ejs', response.template);
+			assert.ok(response.templateVars.msg.indexOf('Email is not valid.') !== -1);
+		});
+		
 		it('should render "User already in DB" if username already in DB', function(done){
 			request.method = 'POST';
 			request.params.username = 'max.mustermann';
