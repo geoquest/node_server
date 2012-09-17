@@ -48,4 +48,14 @@ describe('list games template', function() {
  			done();
  		});
 	});
+	
+	it('shows provided message', function(done) {
+		ejs.renderFile(templatePath, {'games': [], 'msg': 'Hello World!'}, function(error, html) {
+ 			if (error) {
+ 				assert.fail('Rendering error: ' + error);
+ 			}
+ 			assert.notEqual(html.indexOf('Hello World!'), -1);
+ 			done();
+ 		});
+	});
 });
