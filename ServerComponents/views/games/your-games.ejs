@@ -1,0 +1,16 @@
+<h1>Game Upload</h1>
+<p class="alert"><%= msg %></p>
+<form action="/games" method="POST" enctype="multipart/form-data">
+	<fieldset>
+		<label for="game">Game as JSON</label>
+		<input name="game" type="file" size="50"/>
+	</fieldset>
+	<input value="Upload" type="submit" class="btn" />
+</form>
+
+<h1>Your Games</h1>
+<ul>
+	<% for(var index in games) { %>
+	   <li><%= games[index] %></li>
+	<% } %>
+</ul>
