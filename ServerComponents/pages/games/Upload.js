@@ -33,10 +33,22 @@ Upload.prototype.handleRequest = function(request, response) {
 	}
 };
 
+/**
+ * Handles GET requests.
+ * 
+ * @param {Object} request
+ * @param {Object} response
+ */
 Upload.prototype._handleGet = function(request, response) {
 	this.renderUploadForm(response, 'Please upload your game in JSON format.');
 };
 
+/**
+ * Handles POST requests to upload games.
+ * 
+ * @param {Object} request
+ * @param {Object} response
+ */
 Upload.prototype._handlePost = function(request, response) {
 	// Check if a file has been provided
 	if (!request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
