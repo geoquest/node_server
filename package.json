@@ -13,6 +13,7 @@
       "mongojs": "*",
       "ejs": "*",
       "validator": "*",
+      "express-validator": "*",
       "express-ejs-layouts": "*",
       "JSV": "*"
   }
