@@ -281,6 +281,18 @@ describe('User', function() {
                 user.toJSON();
             });
         });
+        
+        it('adds database id to JSON object', function() {
+        	user.setId("mongodb-id");
+        	user.setLoginType("GeoQuest");
+            user.setIdentifier("asdf");
+            user.setFirstname("IHate");
+            user.setLastname("LULU!");
+            user.setPassword("whatever");
+            user.setEmail("and@lsoBu.bu");
+            var newJSONObj = user.toJSON();
+            assert.equal(newJSONObj._id, "mongodb-id");
+        });
     });
     
     describe('toString', function() {
