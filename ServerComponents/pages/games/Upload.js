@@ -27,7 +27,6 @@ Upload.prototype.setGameValidator = function(validator) {
 };
 
 Upload.prototype.handleRequest = function(request, response) {
-	
 	if (request.method === 'GET') {
 		this._handleGet(request);
 	} else if (request.method === 'POST') {
