@@ -49,6 +49,10 @@ Library that is used to perform Facebook and Google+ authentication.
 
 ## mongojs ##
 
+MongoDB driver that is used to access the database.
+
+[Project on Github](https://github.com/gett/mongojs)
+
 ## validator ##
 
 Provides functions for several validation tasks (for example checking email addresses).
