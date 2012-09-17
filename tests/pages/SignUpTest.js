@@ -79,7 +79,7 @@ describe('SignUp page', function() {
 			
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
-			assert.deepEqual({ msg: 'Password not matched. Please retry.'}, response.templateVars);
+			assert.ok(response.templateVars.msg.indexOf('Password not matched. Please retry.') !== -1);
 			
 		});
 		
@@ -105,7 +105,7 @@ describe('SignUp page', function() {
 			
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
-			assert.deepEqual({ msg: 'SignUp Failed. This Username already existed.'}, response.templateVars);
+			assert.ok(response.templateVars.msg.indexOf('SignUp Failed. This Username already existed.') !== -1);
 			
 		});
 		
