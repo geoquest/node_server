@@ -25,9 +25,21 @@ The following dependencies are used by the server.
 
 ## express ##
 
+Web framework that this server is based upon.
+
+[Project on Github](https://github.com/visionmedia/express)
+
 ## ejs ##
 
+EJS template engine for express.
+
+[Project on Github](https://github.com/visionmedia/ejs)
+
 ## express-ejs-layouts ##
+
+Module that addes layout functionality to EJS.
+
+[Project on Github](https://github.com/Soarez/express-ejs-layouts)
 
 ## everyauth ##
 
