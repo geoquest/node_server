@@ -80,8 +80,8 @@ Upload.prototype._handlePost = function(request, response) {
 	};
     var game = new Game.fromJSON(gameData);      
  
-	
 	this._gameRepository.insert(game);
+	
 
 	response.render('upload-response', params);
 };
