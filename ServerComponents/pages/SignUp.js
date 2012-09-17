@@ -27,6 +27,10 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	if (request.method === 'POST') {
 		
 		request.assert('email', 'Email is not valid.').isEmail();
+		request.assert('password', 'Password not matched. Please retry.').equals(request.param('confirmPassword'));
+		request.assert('username', 'Username must be at least 6 characters.').len(6);
+		request.assert('fName','Please provide your first name.').notEmpty();
+		request.assert('lName','Please provide your last name.').notEmpty();
 		
 		var errors = request.validationErrors();
 		if(errors)
@@ -34,58 +38,53 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 			response.render('signup.ejs', {msg: this._formatErrors(errors)});
 		    return;
 		}
+
+
+    	//password matched
+    	var username = request.param('username');
+    	
+		self._userRepository.addErrorHandler(function(error) {
+            response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});
+        });
 		
-	    if(request.param('password') == request.param('confirmPassword')){
+    	self._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
 
-	    	//password matched
-	    	var username = request.param('username');
-	    	
-			self._userRepository.addErrorHandler(function(error) {
-                response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});
-            });
+    		if (userOrNull === null) {	    			
+    			//user not in DB
+    			
+				var password = request.param('password'),
+				firstName = request.param('fName'),
+				lastName = request.param('lName'),
+				email = request.param('email');
 			
-	    	self._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
+				try {
+					var newGQUser = new User.class();
+					newGQUser.setLoginType("GeoQuest");
+					newGQUser.setIdentifier(username);
+					newGQUser.setPassword(password);
+					newGQUser.setFirstname(firstName);
+					newGQUser.setLastname(lastName);
+					newGQUser.setEmail(email);
+					
+					
+					self._userRepository.insertUser(newGQUser);
+		            
+	        		request.session.user = newGQUser;
 
-	    		if (userOrNull === null) {	    			
-	    			//user not in DB
-	    			
-					var password = request.param('password'),
-					firstName = request.param('fName'),
-					lastName = request.param('lName'),
-					email = request.param('email');
-				
-					try {
-						var newGQUser = new User.class();
-						newGQUser.setLoginType("GeoQuest");
-						newGQUser.setIdentifier(username);
-						newGQUser.setPassword(password);
-						newGQUser.setFirstname(firstName);
-						newGQUser.setLastname(lastName);
-						newGQUser.setEmail(email);
-						
-						
-						self._userRepository.insertUser(newGQUser);
-			            
-		        		request.session.user = newGQUser;
-	
-		        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.session.user + '!'};
-		        		response.render('home.ejs', params);
-		        		
-		        		//var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
-		        		//response.render('signupResult.ejs', params);
-					} catch (error) {
-						response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});					
-					}
-	    		}
-	    		else {
-	    			//user already in DB
-	    			response.render('signup.ejs', {msg: "SignUp Failed. This Username already existed."});
-	    		}
-	    	});            
-	    }
-	    else{
-	    	response.render('signup.ejs', {msg: "Password not matched. Please retry."});
-	    }        
+	        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.session.user + '!'};
+	        		response.render('home.ejs', params);
+	        		
+	        		//var params =  {"title":"SignUp Succeed.","result":"Hi, " + newGQUser.getFirstname() + "!"};
+	        		//response.render('signupResult.ejs', params);
+				} catch (error) {
+					response.render('signup.ejs', {msg: "SignUp Failed. Please retry."});					
+				}
+    		}
+    		else {
+    			//user already in DB
+    			response.render('signup.ejs', {msg: "SignUp Failed. This Username already existed."});
+    		}
+    	});              
 	}
 };
 
