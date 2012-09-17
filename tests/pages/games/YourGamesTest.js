@@ -264,6 +264,22 @@ describe('Your games page', function() {
 			assert.equal(response.template, 'upload');
 			assert.equal(response.templateVars.msg, 'Error! Not a proper game file.');
 		});
+		
+		it('should display the uploaded game', function() {
+			page.handleRequest(request, response);
+			assert.equal(response.templateVars.games.length, 1);
+		});
+		
+		it('should not overwrite the other loaded games', function() {
+			gameRepository.findAllByUser = function(user, callback) {
+				// Simulate 1 game in the list.
+				var game = new Game.class();
+				callback([game]);
+			};
+			page.handleRequest(request, response);
+			assert.equal(response.templateVars.games.length, 2);
+		});
+
 	});
 	
 });
