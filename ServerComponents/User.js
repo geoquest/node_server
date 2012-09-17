@@ -362,6 +362,9 @@ var fromJSON = function(jsonObject) {
 		var attribute = mapping[property];
 		user[attribute] = jsonObject[property];
 	}
+	if ('_id' in jsonObject) {
+		user._id = jsonObject._id;
+	}
 	return user;
 };
 
