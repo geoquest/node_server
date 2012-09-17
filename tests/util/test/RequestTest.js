@@ -72,4 +72,33 @@ describe('Request', function() {
 		});
 	});
 	
+	describe('validation middleware', function() {
+		it('provides an assert function', function() {
+			assert.equal(typeof request.assert, 'function');
+		});
+		it('provides an validationErrors function', function() {
+			assert.equal(typeof request.validationErrors, 'function');
+		});
+		describe('assert()', function() {
+			it('adds error if param does not fulfill validation rules', function() {
+				request.params.email = 'invalid email';
+				request.assert('email', 'error message').isEmail();
+				assert.ok(request.validationErrors().length > 0);
+			});
+			it('does not add error if param fulfills validation rules', function() {
+				request.params.email = 'info@geoquest.com';
+				request.assert('email', 'error message').isEmail();
+				assert.equal(request.validationErrors(), false);
+			});
+			
+		});
+		describe('validationErrors()', function() {
+			it('evaluates to true if there is an error', function() {
+				request.params.email = 'invalid email';
+				request.assert('email', 'error message').isEmail();
+				assert.ok(request.validationErrors());
+			});
+		});
+	});
+	
 });
