@@ -76,6 +76,7 @@ YourGames.prototype._handleUpload = function(request) {
  
 	this._gameRepository.insert(game);
 	
+	this._templateVariables.games.push(game);
 	this._setMessage('Your game has been uploaded successfully.');
 };
 
