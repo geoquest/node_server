@@ -80,7 +80,6 @@ describe('SignUp page', function() {
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
 			assert.ok(response.templateVars.msg.indexOf('Password not matched. Please retry.') !== -1);
-			
 		});
 		
 		it('should render "Email is not valid." if invalid mail is provided', function() {
@@ -95,6 +94,20 @@ describe('SignUp page', function() {
 			page.handleRequest(request, response);
 			assert.equal('signup.ejs', response.template);
 			assert.ok(response.templateVars.msg.indexOf('Email is not valid.') !== -1);
+		});
+		
+		it('should render "Username must be at least 6 characters." if username is not long enough', function(){
+			request.method = 'POST';
+			request.params.username = 'max';
+			request.params.password = 'secret';
+			request.params.confirmPassword = 'secret';
+			request.params.firstName = 'fName',
+			request.params.lastName = 'lName',
+			request.params.email = 'agile@lab.com';
+			
+			page.handleRequest(request, response);
+			assert.equal('signup.ejs', response.template);
+			assert.ok(response.templateVars.msg.indexOf('Username must be at least 6 characters.') !== -1);
 		});
 		
 		it('should render "User already in DB" if username already in DB', function(done){
