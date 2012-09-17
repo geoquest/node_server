@@ -101,12 +101,8 @@ describe('Your games page', function() {
 	});
 	
 	describe('view', function() {
-		// TODO check if required or view changes
-		it('"upload" should exist',	function() {
-			assert.ok(fs.existsSync('ServerComponents/views/upload.ejs'));
-		});
-		it('"upload-response" should exist',	function() {
-			assert.ok(fs.existsSync('ServerComponents/views/upload-response.ejs'));
+		it('"your-games" should exist',	function() {
+			assert.ok(fs.existsSync('ServerComponents/views/games/your-games.ejs'));
 		});
 	});
 	
