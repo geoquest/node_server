@@ -4,6 +4,8 @@ var fs = require('fs');
 Upload = function() {
 	this._gameRepository = null;
 	this._gameValidator = null;
+	this._template = null;
+	this._templateVariables = {};
 };
 
 /**
@@ -27,32 +29,31 @@ Upload.prototype.setGameValidator = function(validator) {
 Upload.prototype.handleRequest = function(request, response) {
 	
 	if (request.method === 'GET') {
-		this._handleGet(request, response);
+		this._handleGet(request);
 	} else if (request.method === 'POST') {
-		this._handlePost(request, response);
+		this._handlePost(request);
 	}
+	response.render(this._template, this._templateVariables);
 };
 
 /**
  * Handles GET requests.
  * 
  * @param {Object} request
- * @param {Object} response
  */
-Upload.prototype._handleGet = function(request, response) {
-	this.renderUploadForm(response, 'Please upload your game in JSON format.');
+Upload.prototype._handleGet = function(request) {
+	this.renderUploadForm('Please upload your game in JSON format.');
 };
 
 /**
  * Handles POST requests to upload games.
  * 
  * @param {Object} request
- * @param {Object} response
  */
-Upload.prototype._handlePost = function(request, response) {
+Upload.prototype._handlePost = function(request) {
 	// Check if a file has been provided
 	if (!request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
-		this.renderUploadForm(response, 'Error! Please choose a file to upload.');
+		this.renderUploadForm('Error! Please choose a file to upload.');
 		return;
 	}
 	
@@ -62,18 +63,16 @@ Upload.prototype._handlePost = function(request, response) {
 		content = JSON.parse(content);
 		var valid = this._gameValidator.validateGame(content);
 		if (valid == false){
-			this.renderUploadForm(response, 'Error! Not a proper game file.');
+			this.renderUploadForm('Error! Not a proper game file.');
 			return;
 		}
 		
 	} catch(err) {
-		this.renderUploadForm(response, 'Error! Not a legal JSON file.');
+		this.renderUploadForm('Error! Not a legal JSON file.');
 		return;
 	}
-
-	// Upload successful
-	var params = { title: 'Game Upload Response', msg: 'Your game has been uploaded successfully.'};
 	
+	// Upload successful
 	var gameData = {
 		'authors': [request.session.user.getId()],
 		'content': content
@@ -83,12 +82,15 @@ Upload.prototype._handlePost = function(request, response) {
 	this._gameRepository.insert(game);
 	
 
-	response.render('upload-response', params);
+	this._template = 'upload-response';
+	this._templateVariables.title = 'Game Upload Response';
+	this._templateVariables.msg = 'Your game has been uploaded successfully.';
 };
 
-Upload.prototype.renderUploadForm = function(response, msgParam) {
-	var params = { title: 'Game Upload' , msg: msgParam };
-	response.render('upload', params);
+Upload.prototype.renderUploadForm = function(msgParam) {
+	this._templateVariables.title = 'Game Upload';
+	this._templateVariables.msg = msgParam;
+	this._template = 'upload';
 };
 
 exports.class = Upload;
