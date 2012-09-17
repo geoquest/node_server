@@ -15,7 +15,7 @@ describe('list games template', function() {
 	 * Is executed before each test runs and sets up the environment.
 	 */
 	beforeEach(function() {
-		templatePath = __dirname + '/../../../ServerComponents/views/games/list.ejs';
+		templatePath = __dirname + '/../../../ServerComponents/views/games/your-games.ejs';
 		templatePath = fs.realpathSync(templatePath);
 	});
 
@@ -39,7 +39,7 @@ describe('list games template', function() {
  				}
  			}
  		];
- 		ejs.renderFile(templatePath, {'games': games}, function(error, html) {
+ 		ejs.renderFile(templatePath, {'games': games, 'msg': 'Hello'}, function(error, html) {
  			if (error) {
  				assert.fail('Rendering error: ' + error);
  			}
