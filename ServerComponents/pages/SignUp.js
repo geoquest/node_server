@@ -25,12 +25,12 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 		response.render('signup.ejs', {msg: "Please fill out the following fields."});
 	}
 	if (request.method === 'POST') {
-		
-		request.assert('email', 'Email is not valid.').isEmail();
-		request.assert('password', 'Password not matched. Please retry.').equals(request.param('confirmPassword'));
+				
 		request.assert('username', 'Username must be at least 6 characters.').len(6);
+		request.assert('password', 'Password not matched. Please retry.').equals(request.param('confirmPassword'));
 		request.assert('fName','Please provide your first name.').notEmpty();
 		request.assert('lName','Please provide your last name.').notEmpty();
+		request.assert('email', 'Email is not valid.').isEmail();
 		
 		var errors = request.validationErrors();
 		if(errors)
