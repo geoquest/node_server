@@ -131,7 +131,7 @@ describe('Your games page', function() {
 				callback(games);
 			};
 			page.handleRequest(request, response);
-			assert.deepEqual(response.templateVars['games'], games);
+			assert.equal(response.templateVars.games.length, 2);
 		});
 		it('should load the upload view',	function() {
 			page.handleRequest(request,response);
