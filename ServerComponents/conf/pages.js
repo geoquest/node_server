@@ -57,6 +57,10 @@ var pages = {
 		'module': 'games/SaveState',
 		'restrictedTo': 'user'
 	},
+	'/login/mobile': {
+		'module': 'login/GeoQuestMobile',
+		'restrictedTo': 'guest'
+	},
 	'/login': {
 		'module': 'login/GeoQuest',
 		'restrictedTo': 'guest'
