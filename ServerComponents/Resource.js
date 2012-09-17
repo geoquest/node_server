@@ -115,4 +115,36 @@ Resource.prototype.setDate = function(date) {
 	}
 };
 
+
+/**
+ * Validates if the resource has all fields required for being persisted to the database.
+ * 
+ * @returns {Boolean} true if the resource is valid, else false
+ */
+Resource.prototype.validate = function(){
+	var valid = true;
+	
+	//Resource.prototype.checkFileName()
+	valid &= (this._filename != null && this._filename.length > 0);
+		
+	//Resource.prototype.checkTempPath()
+	// TODO: check if file given by tempPath exists and is a valid file?
+	valid &= (this._tempPath != null && this._tempPath.length > 0);
+	
+	//Resource.prototype.checkGame()
+	valid &= (this._game != null);
+	
+	//Resource.prototype.checkUser()
+	valid &= (this._user != null);
+		
+	return valid;
+};
+
+
+
+
+
+
+
+
 exports.class = Resource;
