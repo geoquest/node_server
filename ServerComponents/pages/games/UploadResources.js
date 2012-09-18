@@ -35,36 +35,36 @@ UploadResources.prototype.handleRequest = function(request, response) {
 	}
 };
 
-UploadResources.prototype._handlePOST = function(request, reponse) {
+UploadResources.prototype._handlePOST = function(request, response) {
 	var gameId = request.param('gameId');
 	if (gameId === undefined) {
-		reponse.redirect('error/NotFound');
+		response.redirect('error/NotFound');
 		return;
 	}
 	if (!this._hasUploadedFile(request)) {
-		// TODO: re-render form?
-		reponse.redirect('error/NotFound');
+		response.render('uploadResources.ejs', {msg:  'Please provide a resource file.'});
 		return;
 	}
 	var self = this;
 	this._gameRepository.findGameById(gameId, function(game) {
 		if (game === null) {
 			// Game does not exist.
-			reponse.redirect('error/NotFound');
+			response.redirect('error/NotFound');
 			return;
 		}
 		if (game.getAuthors().indexOf(request.session.user.getId()) === -1) {
-			reponse.redirect('error/NotFound');
+			response.redirect('error/NotFound');
 			return;
 		}
 		// Current user is author of the game and allowed to add resources.
 		var resource = self.constructResource(request, game);
 		self._resourceRepository.insert(resource);
+		response.render('uploadResources.ejs', {msg:  'Resource was successfully added.'});
 	});
 };
 
 /**
- * Checks if the request contains an uplaoded file.
+ * Checks if the request contains an uploaded file.
  * 
  * @param {Object} request
  * @return {Boolean}
@@ -73,7 +73,7 @@ UploadResources.prototype._hasUploadedFile = function(request) {
 	if (request.files === null || (typeof request.files) !== 'object') {
 		return false;
 	}
-	if (!('game' in request.files) || (typeof request.files.game) !== 'object') {
+	if (!('game' in request.files) || request.files.game ===null || (typeof request.files.game) !== 'object') {
 		// We are expecting a file named "game".
 		return false;
 	}

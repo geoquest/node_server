@@ -130,4 +130,9 @@ describe('UploadResources page', function() {
 		resourceUploader.handleRequest(request, response);
 	});
 	
+	it('provides message if resource was uploaded successfully', function() {
+		resourceUploader.handleRequest(request, response);
+		assert.equal(response.templateVars.msg, 'Resource was successfully added.');
+	});
+	
 });
