@@ -52,7 +52,7 @@ UploadResources.prototype.handleRequest = function(request, response) {
 
 UploadResources.prototype._handlePOST = function(request, response, game) {
 	if (!this._hasUploadedFile(request)) {
-		response.render('uploadResources.ejs', {msg: 'Please provide a resource file.'});
+		response.render('uploadResources.ejs', {msg: 'Please provide a resource file.', game: game});
 		return;
 	}
 	// Current user is author of the game and allowed to add resources.
