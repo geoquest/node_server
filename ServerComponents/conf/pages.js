@@ -46,6 +46,9 @@ var pages = {
 	'/games/download': {
 		'module': 'games/Download'
 	},
+	'/games/downloadResources': {
+		'module': 'games/DownloadResources'
+	},
 	'/games/listPublic': {
 		'module': 'games/ShowAllPublicGames'
 	},
