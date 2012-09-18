@@ -13,7 +13,10 @@
 		            <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
 		            <input class="btn" data-inline="true" value="Resource upload" type="submit">
 		        </form>
-		        <div id="game<%= index %>"  style="display:inline" > <%= games[index] %> </div>
+		        <div id="game<%= index %>"  style="display:inline">
+		        	<a href="/uploadResources?gameId=<%= games[index].getId() %>">Resource upload</a>
+		        	<%= games[index] %>
+	        	</div>
 		        
 		        <%if(highlightGameId===games[index].getId()){%>
 		        	<script>
