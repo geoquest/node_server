@@ -3,11 +3,21 @@ var Resource= require("../../Resource.js");
 var fs = require('fs');
 
 UploadResources = function() {
+	this._gameRepository = null;
 	this._resourceRepository = null;
 };
 
 /**
- * Receives the User Repository and stores it for later usage.
+ * Receives the Game Repository and stores it for later usage.
+ * 
+ * @param {GameRepository}
+ */
+UploadResources.prototype.setGameRepository = function(gameRepository) {
+	this._gameRepository = gameRepository;
+};
+
+/**
+ * Receives the Resource Repository and stores it for later usage.
  * 
  * @param {ResourceRepository}
  */
