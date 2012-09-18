@@ -70,66 +70,9 @@ describe('GameRepository', function() {
 		};
 		return find;
 	};
-
-	var createProjectedFind = function(result) {
-		/**
-		 * Simulates the find() function of MongoDB.
-		 * 
-		 * @param {Object} query JSON object that specifies the query criteria.
-		 * @param {Object} query JSON object that specifies the projection.
-		 * @param {function} callback Callback that receives an error and the result.
-		 */
-		var find = function(query, proj, callback) {
-			if ((typeof result) === 'string') {
-				// Simulate an error.
-				callback(result, createResult(0));
-			} else {
-				// Simulate a projected returned collection.
-				var projectedResult = {};
-				// we get the same length but a subset of the fields
-				projectedResult['length'] = result['length'];
-				for (var row in result){
-					if(row == 'length')  continue;
-					projectedResult[row]={};
-					projectedResult[row]['_id']=result[row]['_id'];
-					for (var projField in proj){
-						if(result[row][projField]){
-						projectedResult[row][projField] =result[row][projField];
-						}
-					}
-				}
-				callback(null, projectedResult);
-			}
-		};
-		return find;
-	};
+	
 	var createObjectId = function(id){
 		return {id:id}; 
-	};
-	
-	
-	/**
-	 * TODO: move to utility class
-	 * 
-	 * Creates a simulated insert method.
-	 * 
-	 * When a string is provided instead of a JSON object an error will be simulated.
-	 * Otherwise it will pretend the JSON Object was successfully added to the DB.
-	 */
-	var createInsert = function(jsonObj) {
-	    /**
-	     * Simulates the insert() function in MongoDB.
-	     */
-	    var insert = function(query, callback) {
-	        if ((typeof jsonObj) === 'string') {
-	            //simulate err
-	            callback(jsonObj);
-	        } else {
-	            //simulate a successful insert
-	            callback(null);
-	        }
-	    };
-        return insert;
 	};
 	
 	/**
