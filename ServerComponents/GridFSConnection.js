@@ -71,6 +71,8 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 		if (metadata != null) {
 			gs.options.metadata = metadata;
 		}
+		
+		callback = callback || function() {};
 
 		gs.writeFile(fileToWrite, callback);
 	};
