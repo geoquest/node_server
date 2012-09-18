@@ -30,8 +30,18 @@ describe('UploadResources page', function() {
 	 */
 	var response = null;
 	
+	/**
+	 * The simulated game repository.
+	 * 
+	 * @var {Object}
+	 */
 	var gameRepository = null;
 	
+	/**
+	 * The simulated resource repository.
+	 * 
+	 * @var {Object}
+	 */
 	var resourceRepository = null;
 	
 	beforeEach(function() {
