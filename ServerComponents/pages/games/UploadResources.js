@@ -31,22 +31,7 @@ UploadResources.prototype.handleRequest = function(request, response) {
 		response.redirect('error/NotFound');
 		return;
 	}
-	if (request.method === 'GET') {
-		response.render('uploadResources.ejs', {msg:  'Please upload your game resources.'});
-		return;
-	}
-	if (request.method === 'POST') {
-		this._handlePOST(request, response);
-	}
-};
-
-UploadResources.prototype._handlePOST = function(request, response) {
-	if (!this._hasUploadedFile(request)) {
-		response.render('uploadResources.ejs', {msg:  'Please provide a resource file.'});
-		return;
-	}
 	var self = this;
-	var gameId = request.param('gameId');
 	this._gameRepository.findGameById(gameId, function(game) {
 		if (game === null) {
 			// Game does not exist.
@@ -57,11 +42,23 @@ UploadResources.prototype._handlePOST = function(request, response) {
 			response.redirect('error/NotFound');
 			return;
 		}
-		// Current user is author of the game and allowed to add resources.
-		var resource = self.constructResource(request, game);
-		self._resourceRepository.insert(resource);
-		response.render('uploadResources.ejs', {msg:  'Resource was successfully added.'});
+		if (request.method === 'GET') {
+			response.render('uploadResources.ejs', {msg:  'Please upload your game resources.'});
+		} else if (request.method === 'POST') {
+			self._handlePOST(request, response, game);
+		}
 	});
+};
+
+UploadResources.prototype._handlePOST = function(request, response, game) {
+	if (!this._hasUploadedFile(request)) {
+		response.render('uploadResources.ejs', {msg:  'Please provide a resource file.'});
+		return;
+	}
+	// Current user is author of the game and allowed to add resources.
+	var resource = this.constructResource(request, game);
+	this._resourceRepository.insert(resource);
+	response.render('uploadResources.ejs', {msg:  'Resource was successfully added.'});
 };
 
 /**
