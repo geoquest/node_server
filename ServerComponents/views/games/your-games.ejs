@@ -9,24 +9,24 @@
 	<%  games.reverse(); %>
 	<% 
 	for(var index in games) { %>
-		    	<form action="./uploadResources" method="POST" style="display:inline">
-		            <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
-		            <input class="btn" data-inline="true" value="Resource upload" type="submit">
-		        </form>
-		        <div id="game<%= index %>"  style="display:inline">
-		        	<a href="/uploadResources?gameId=<%= games[index].getId() %>">Resource upload</a>
-		        	<%= games[index] %>
-	        	</div>
-		        
-		        <%if(highlightGameId===games[index].getId()){%>
-		        	<script>
-					$(document).ready(function() {
-    					$('#game<%=index%>').effect("highlight", {}, 3000);
-					});
-					</script>
-		        <%}%>
-		        
-		        <hr style="height:0px; border:0;">
+    	<form action="./uploadResources" method="POST" style="display:inline">
+            <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
+            <input class="btn" data-inline="true" value="Resource upload" type="submit">
+        </form>
+        <div id="game<%= index %>"  style="display:inline">
+        	<a href="/games/uploadResources?gameId=<%= games[index].getId() %>">Resource upload</a>
+        	<%= games[index] %>
+    	</div>
+        
+        <%if(highlightGameId===games[index].getId()){%>
+        	<script>
+			$(document).ready(function() {
+				$('#game<%=index%>').effect("highlight", {}, 3000);
+			});
+			</script>
+        <%}%>
+        
+        <hr style="height:0px; border:0;">
 	<% } 
 	%>
 </ul>
