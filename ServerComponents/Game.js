@@ -102,6 +102,7 @@ Game.prototype.toString = function() {
 		return 'No Description Available';
 	}
 	return this.getName();
+
 };
 
 /**
