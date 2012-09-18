@@ -1,5 +1,5 @@
 
-<h1>Upload Resource <%= game.getName() %></h1>
+<h1>Upload Resource for <%= game.getName() %></h1>
 <p class="alert"><%= msg %></p>
 <form action="/games/uploadResources?gameId=<%= game.getId() %>" method="POST" enctype="multipart/form-data">
 	<fieldset>
