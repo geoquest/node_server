@@ -14,8 +14,6 @@ var everyauth = require('./middleware/Everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
 var expressValidator = require('express-validator');
-var connection = new Db(dbconf.dbname, new Server(dbconf.host, dbconf.port));
-var GridFSConnection = require("./GridFSConnection.js");
 
 var app = express();
 
@@ -57,6 +55,7 @@ var dependencies = {
 		return require("mongojs").connect(dbconf.url, dbconf.collections);
 	},
 	'setGridFSConnection': function() {
+		var GridFSConnection = require("./GridFSConnection.js");
 		return new GridFSConnection.class();
 	},
 	'setUserRepository': function() {
@@ -70,6 +69,10 @@ var dependencies = {
 	'setGameStateRepository': function() {
 		var GameStateRepository = require('./GameStateDataAccess');
 		return new GameStateRepository.class(this.setDatabaseConnection());
+	},
+	'setResourceRepository': function() {
+		var ResourceRepository = require('./ResourceRepository');
+		return new ResourceRepository.class(this.setGridFSConnection());
 	},
 	'setGameValidator': function() {
 		var GameValidator = require('./util/game/GameValidator');
