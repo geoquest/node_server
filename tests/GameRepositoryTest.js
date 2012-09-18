@@ -40,8 +40,9 @@ describe('GameRepository', function() {
 			result[i] = {
 				"_id": i,
 				"authors": [],
-				"name": "Game " + i,
-				"content": {}
+				"content": {
+					"name": "Game " + i
+				}
 			};
 		}
 		// Simulate the length property that is available
