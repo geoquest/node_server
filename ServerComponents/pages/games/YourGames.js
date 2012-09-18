@@ -5,7 +5,10 @@ YourGames = function() {
 	this._gameRepository = null;
 	this._gameValidator = null;
 	this._template = 'games/your-games.ejs';
-	this._templateVariables = {};
+	this._templateVariables = {
+			uploadError: false,
+			highlightGameId: null
+	};
 };
 
 /**
@@ -49,6 +52,7 @@ YourGames.prototype._handleUpload = function(request) {
 	// Check if a file has been provided
 	if (!request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
 		this._setMessage('Error! Please choose a file to upload.');
+		this._raiseUploadError();
 		return;
 	}
 	
@@ -59,11 +63,13 @@ YourGames.prototype._handleUpload = function(request) {
 		var valid = this._gameValidator.validateGame(content);
 		if (valid == false){
 			this._setMessage('Error! Not a proper game file.');
+			this._raiseUploadError();
 			return;
 		}
 		
 	} catch(err) {
 		this._setMessage('Error! Not a legal JSON file.');
+		this._raiseUploadError();
 		return;
 	}
 	
@@ -78,10 +84,19 @@ YourGames.prototype._handleUpload = function(request) {
 	
 	this._templateVariables.games.push(game);
 	this._setMessage('Your game has been uploaded successfully.');
+	this._setHighlightGame(game);
 };
 
 YourGames.prototype._setMessage = function(message) {
 	this._templateVariables.msg = message;
+};
+
+YourGames.prototype._raiseUploadError = function() {
+	this._templateVariables.uploadError = true;
+};
+
+YourGames.prototype._setHighlightGame = function(game) {
+	this._templateVariables.highlightGameId = game.getId();
 };
 
 exports.class = YourGames;
