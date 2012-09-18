@@ -65,7 +65,7 @@ describe('UploadResources page', function() {
 		};
 		request.params.gameId = "12345";
 		
-		response = new Reponse.class();
+		response = new Response.class();
 	});
 	
 	afterEach(function() {
