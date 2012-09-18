@@ -43,12 +43,12 @@ var schema = {
 	  },
 	  "onStart": {
 	    "description": "The event to be executed on the start of the mission",
-	    "type": "string",
+	    "type": "array",
 	    "required": false
 	  },
 	  "onEnd": {
 	    "description": "The event to be executed after the mission",
-	    "type": "string", 
+	    "type": "array", 
 	    "required": false
 	  }
 	}
