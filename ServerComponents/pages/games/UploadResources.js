@@ -26,56 +26,40 @@ UploadResources.prototype.setResourceRepository = function(resourceRepository) {
 };
 
 UploadResources.prototype.handleRequest = function(request, response) {
-	
 	if (request.method === 'GET') {
-		this.renderUploadForm(response, 'Please upload your game resources.');
-	} else if (request.method === 'POST') {
-
-		
-		
-		// Check if a file has been provided
-		if (!Request.files || !request.files.game || !request.files.game.path || !request.files.game.name) {
-			this.renderUploadForm(response, 'Error! Please choose a file to upload.');
-			return;
-		}
-		
-		var resource = constructResource(request);
-
-		
-		
-		
-		try{
-			fs.renameSync(request.files.game.path, "./public/images/" + request.files.game.name);
-			var params = { title: 'Game Upload Response', msg: 'Resource Uploaded Successfully.'};
-			response.render('upload-response', params);
-		}catch(error){
-			var params = { title: 'Game Upload Response', msg: 'Oooooppppssss Error : While uploading resource.'};
-			response.render('upload-response', params);
-		}
-		
-	} else {
-		response.render(new NotFound.class());
-		
+		response.render('uploadResources.ejs', {msg:  'Please upload your game resources.'});
+		return;
+	}
+	if (request.method === 'POST') {
+		this._handlePOST(request, response);
 	}
 };
 
-UploadResources.prototype.handleUnknownRequests = function(request){
-//redirects to the 404 page for all other requests, except POST
-	
-};
-
-UploadResources.prototype.handlePOST = function(request){
-//accepts POST requests 
-	
-	
-	this.validateGame(request, function(validationResult) {
-		if (validationResult == true) {
-			//response.render(...);
-		} else {
-			
+UploadResources.prototype._handlePOST = function(request, reponse) {
+	var gameId = request.param('gameId');
+	if (gameId === undefined) {
+		reponse.redirect('error/NotFound');
+		return;
+	}
+	this._gameRepository.findGameById(gameId, function(game) {
+		if (game === null) {
+			// Game does not exist.
+			reponse.redirect('error/NotFound');
+			return;
 		}
+		if (game.getAuthors().indexOf(request.session.user.getId()) === -1) {
+			reponse.redirect('error/NotFound');
+			return;
+		}
+		// Current user is author of the game and allowed to add resources.
+		
 	});
 };
+
+UploadResources.prototype.handleUnknownRequests = function(request){
+	//redirects to the 404 page for all other requests, except POST
+		
+	};
 
 UploadResources.prototype.validateGame = function(request, callback) {
 //checks if only a game id is passed - in this case it creates a Game object with only an id

@@ -6,6 +6,7 @@ var Request = require("../../../ServerComponents/util/test/Request.js");
 var Response = require("../../../ServerComponents/util/test/Response");
 var Resource = require("../../../ServerComponents/Resource");
 var User = require("../../../ServerComponents/User");
+var Game = require("../../../ServerComponents/Game");
 
 describe('UploadResources page', function() {
 
@@ -48,7 +49,6 @@ describe('UploadResources page', function() {
 		
 		resourceRepository = {
 			insert: function(resource) {
-				
 			}
 		};
 		resourceUploader.setResourceRepository(resourceRepository);
@@ -85,7 +85,7 @@ describe('UploadResources page', function() {
 	it('redirects to error page if game ID is missing', function() {
 		request.params.gameId = undefined;
 		resourceUploader.handleRequest(request, response);
-		assert.equal(response.redirectUrl, '/error/NotFound');
+		assert.equal(response.redirectUrl, 'error/NotFound');
 	});
 	
 	it('requests game with passed id from repository', function(done) {
@@ -99,7 +99,7 @@ describe('UploadResources page', function() {
 	it('redirects to error page if logged in user is not author of the requested game', function() {
 		request.session.user.setId('another-id');
 		resourceUploader.handleRequest(request, response);
-		assert.equal(response.redirectUrl, '/error/NotFound');
+		assert.equal(response.redirectUrl, 'error/NotFound');
 	});
 	
 	it('renders the upload form if page is requested via GET', function() {

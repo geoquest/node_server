@@ -3,6 +3,7 @@
   , "version": "0.0.1"
   , "scripts": { 
       "test": "node node_modules/mocha/bin/mocha --recursive --reporter spec tests",
+      "test-dot": "node node_modules/mocha/bin/mocha --recursive --reporter dot tests",
       "coverage": "node scripts/coverage.js",
       "start-server": "node ServerComponents/application.js"
   }
