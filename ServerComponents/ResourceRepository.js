@@ -66,8 +66,11 @@ ResourceRepository.prototype.insert = function(resource) {
 		date : resource.getDate()
 	};
 
-	this._gridFS.saveFile(resource.getFilename(), resource.getTempPath(),
-			metadata);
+	this._gridFS.saveFile(resource.getFilename(), resource.getTempPath(), metadata, function(error, fileInfo) {
+		if (error) {
+			console.log(error);
+		}
+	});
 };
 
 exports.class = ResourceRepository;

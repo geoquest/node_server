@@ -65,14 +65,16 @@ GridFSConnection.prototype._openConnection = function(callback) {
 GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 		metadata, callback) {
 
+	if (callback === undefined) {
+		throw new Error('Callback function is required.');
+	};
+	
 	var event = function(db) {
 		var gs = GridStore(db, newFilename, "w");
 
 		if (metadata != null) {
 			gs.options.metadata = metadata;
 		}
-		
-		callback = callback || function() {};
 
 		gs.writeFile(fileToWrite, callback);
 	};

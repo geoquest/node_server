@@ -53,7 +53,7 @@ describe('GridFSConnection', function() {
 			});
 		});
 		
-		it('successfully writes a file to the database with added metadata',function(done){
+		it('successfully writes a file to the database with added metadata', function(done){
 			var metadata = {
 				foo:"bar",
 				foo2:"bar2"
@@ -66,6 +66,16 @@ describe('GridFSConnection', function() {
 				done();
 			});
 			
+		});
+		
+		it('throws exception if callback is omitted', function() {
+			var metadata = {
+				foo:"bar",
+				foo2:"bar2"
+			};
+			assert.throws(function() {
+				connection.saveFile("newFile", fileToSave, metadata);
+			});
 		});
 	});
 	
