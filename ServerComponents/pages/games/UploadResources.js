@@ -41,6 +41,12 @@ UploadResources.prototype._handlePOST = function(request, reponse) {
 		reponse.redirect('error/NotFound');
 		return;
 	}
+	if (!this._hasUploadedFile(request)) {
+		// TODO: re-render form?
+		reponse.redirect('error/NotFound');
+		return;
+	}
+	var self = this;
 	this._gameRepository.findGameById(gameId, function(game) {
 		if (game === null) {
 			// Game does not exist.
@@ -52,113 +58,48 @@ UploadResources.prototype._handlePOST = function(request, reponse) {
 			return;
 		}
 		// Current user is author of the game and allowed to add resources.
-		
+		var resource = self.constructResource(request, game);
+		self._resourceRepository.insert(resource);
 	});
 };
 
-UploadResources.prototype.handleUnknownRequests = function(request){
-	//redirects to the 404 page for all other requests, except POST
-		
-	};
-
-UploadResources.prototype.validateGame = function(request, callback) {
-//checks if only a game id is passed - in this case it creates a Game object with only an id
-//checks the database entry for the game id and completes the full game object from there.
-//if the game does not exist, it redirects to a 404 page
-	GameRepository.findGameById("123", function(result) {
-		if (result == null) {
-			callback(false);
+/**
+ * Checks if the request contains an uplaoded file.
+ * 
+ * @param {Object} request
+ * @return {Boolean}
+ */
+UploadResources.prototype._hasUploadedFile = function(request) {
+	if (request.files === null || (typeof request.files) !== 'object') {
+		return false;
+	}
+	if (!('game' in request.files) || (typeof request.files.game) !== 'object') {
+		// We are expecting a file named "game".
+		return false;
+	}
+	var requiredAttributes = ['path', 'name', 'type'];
+	for (var i = 0; i < requiredAttributes.length; i++) {
+		var attribute = requiredAttributes[i];
+		if (!(attribute in request.files.game) || (typeof request.files.game[attribute]) !== 'string') {
+			return false;
 		}
-		callback(true);
-	});	
-	
-//	newGame = new Game.class();
-//	newGame.setId(request.files.game.gameid);
-	
-	//return newGame;
+	}
+	return true;
 };
 
-UploadResources.prototype.validateRequest = function(request){
-	//the request should have a user id, a game id (or a Game object), file name, file path, mime type and a date
-	allFieldsExist = request.hasOwnProperty
-	
-	//
-	allIsNonNull = (request.user.getIdentifier()!=null && 
-			request.files.game.path!=null && 
-			request.files.game.name!=null &&
-			request.files.game.type!=null &&
-			request.files.game.filename!=null);
-	
-	return allIsNonNull;	
-};
-
-UploadResources.prototype.constructResource = function(request){
-	
-	var game = this.validateGame(request);
-		
-	//Add resource data into Model
+UploadResources.prototype.constructResource = function(request, game){
 	var resource = new Resource.class();
+	
+	resource.setGame(game);	
+	
 	resource.setFilename(request.files.game.name);
 	resource.setTempPath(request.files.game.path);
 	resource.setMineType(request.files.game.mime);
+	resource.setUser(request.session.user);
 	
-	resource.setGame(game);
-	
-	resource.setUser(request.session.user.getIdentifier());
 	resource.setDate(new Date());
 	
-	//TODO Here we have to set setGame also. In order to know for which game we are uploading resources.
 	return resource;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-UploadResources.prototype.setGameRepository = function(repository) {
-	this._gameRepository = repository;
-};
-
-UploadResources.prototype.renderUploadForm = function(response, msgParam) {
-	var params = { title: 'Game Resources Upload' , msg: msgParam };
-	response.render('uploadResources', params);
 };
 
 exports.class = UploadResources;
