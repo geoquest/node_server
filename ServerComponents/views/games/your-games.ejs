@@ -9,12 +9,8 @@
 	<%  games.reverse(); %>
 	<% 
 	for(var index in games) { %>
-    	<form action="./uploadResources" method="POST" style="display:inline">
-            <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
-            <input class="btn" data-inline="true" value="Resource upload" type="submit">
-        </form>
-        <div id="game<%= index %>"  style="display:inline">
-        	<a href="/games/uploadResources?gameId=<%= games[index].getId() %>">Resource upload</a>
+        <div id="game<%= index %>" style="display:inline">
+        	<a href="/games/uploadResources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
         	<%= games[index] %>
     	</div>
         
