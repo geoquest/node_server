@@ -42,10 +42,10 @@ UploadResources.prototype.handleRequest = function(request, response) {
 			response.redirect('error/NotFound');
 			return;
 		}
-		if (request.method === 'GET') {
-			response.render('uploadResources.ejs', {msg:  'Please upload your game resources.', game: game});
-		} else if (request.method === 'POST') {
+		if (request.method === 'POST') {
 			self._handlePOST(request, response, game);
+		} else {
+			response.render('uploadResources.ejs', {msg:  'Please upload your game resources.', game: game});
 		}
 	});
 };
