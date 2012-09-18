@@ -10,7 +10,7 @@
 
 	<% for(var index in games) { %>
 		<div id="game<%= index %>"  style=" width:800px; padding:6px">
-			<form action="./uploadResources" method="GET" style="display:inline">
+			<form action="games/uploadResources" method="GET" style="display:inline">
 		        <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
 		        <input class="btn" data-inline="true" value="Resource upload" type="submit">
 		    </form>
