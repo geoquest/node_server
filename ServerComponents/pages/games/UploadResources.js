@@ -43,7 +43,7 @@ UploadResources.prototype.handleRequest = function(request, response) {
 			return;
 		}
 		if (request.method === 'GET') {
-			response.render('uploadResources.ejs', {msg:  'Please upload your game resources.'});
+			response.render('uploadResources.ejs', {msg:  'Please upload your game resources.', game: game});
 		} else if (request.method === 'POST') {
 			self._handlePOST(request, response, game);
 		}
@@ -58,7 +58,7 @@ UploadResources.prototype._handlePOST = function(request, response, game) {
 	// Current user is author of the game and allowed to add resources.
 	var resource = this.constructResource(request, game);
 	this._resourceRepository.insert(resource);
-	response.render('uploadResources.ejs', {msg:  'Resource was successfully added.'});
+	response.render('uploadResources.ejs', {msg:  'Resource was successfully added.', game: game});
 };
 
 /**
