@@ -134,7 +134,6 @@ GameRepository.prototype.findAllByUser = function(user, callback) {
 };
 
 /**
- * 
  * Returns a games according to the specified id
  * 
  * @returns Callback returns a {Game}
