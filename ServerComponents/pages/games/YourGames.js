@@ -8,7 +8,7 @@ YourGames = function() {
 	this._template = 'games/your-games.ejs';
 	this._templateVariables = {
 			showDialog: false,
-			title : '',
+			titleModel : '',
 			msgModal : '',
 			uploadError: false,
 			highlightGameId: null
@@ -46,19 +46,18 @@ YourGames.prototype.handleRequest = function(request, response) {
 		
 		var url_parts = url.parse(request.url, true);
 	    var query = url_parts.query;
-	    console.log(query);
 	    
 	    if(query.showDialog){
 	    	
 	    	self._templateVariables.showDialog = true;
-	    	self._templateVariables.title = 'GeoQuest Landing Page';
+	    	self._templateVariables.titleModel = 'GeoQuest Landing Page';
 	    	self._templateVariables.msgModal = 'Welcome ' + user + '!';
 			response.render(self._template, self._templateVariables);
 	    }
 	    else{
 	    	var params = {showDialog : false, title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
 	    	self._templateVariables.showDialog = false;
-	    	self._templateVariables.title = '';
+	    	self._templateVariables.titleModel = '';
 	    	self._templateVariables.msgModal = '';
 	    	
 			response.render(self._template, self._templateVariables);
