@@ -1,27 +1,23 @@
 var assert = require("assert");
 
 var Download = require("../../../ServerComponents/pages/games/Download.js");
+var Game = require("../../../ServerComponents/Game.js");
 
 describe('games/Download controller', function() {
 	
 	/**
-	 * Simulates a MongoDB result set that contains the
-	 * requested number of games.
+	 * Simulates a game result of the findGameById() function.
 	 * 
-	 * @param {integer} number
-	 * @return {Object}
+	 * @return {Game}
 	 */
 	var createResult = function() {
-		var result = {};
-		result = {
-				"_id": '504f05b13893d3a41f000002',
-				"authors": ['author1','author2'], 
-				"content": {"title":"Fancy title"}
-			};
-	    return result;
+		var game = new Game.class();
+		game.setId('504f05b13893d3a41f000002');
+		game.addAuthor('author1');
+		game.addAuthor('author2');
+		game.setContent({"title":"Fancy title"});
+	    return game;
 	};
-
-	
 	
 	var createFind = function(result) {
 		/**

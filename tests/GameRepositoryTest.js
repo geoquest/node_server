@@ -40,8 +40,9 @@ describe('GameRepository', function() {
 			result[i] = {
 				"_id": i,
 				"authors": [],
-				"name": "Game " + i,
-				"content": {}
+				"content": {
+					"name": "Game " + i
+				}
 			};
 		}
 		// Simulate the length property that is available
@@ -50,7 +51,6 @@ describe('GameRepository', function() {
 
 	    return result;
 	};
-
 	
 	
 	var createFind = function(result) {
@@ -71,66 +71,9 @@ describe('GameRepository', function() {
 		};
 		return find;
 	};
-
-	var createProjectedFind = function(result) {
-		/**
-		 * Simulates the find() function of MongoDB.
-		 * 
-		 * @param {Object} query JSON object that specifies the query criteria.
-		 * @param {Object} query JSON object that specifies the projection.
-		 * @param {function} callback Callback that receives an error and the result.
-		 */
-		var find = function(query, proj, callback) {
-			if ((typeof result) === 'string') {
-				// Simulate an error.
-				callback(result, createResult(0));
-			} else {
-				// Simulate a projected returned collection.
-				var projectedResult = {};
-				// we get the same length but a subset of the fields
-				projectedResult['length'] = result['length'];
-				for (var row in result){
-					if(row == 'length')  continue;
-					projectedResult[row]={};
-					projectedResult[row]['_id']=result[row]['_id'];
-					for (var projField in proj){
-						if(result[row][projField]){
-						projectedResult[row][projField] =result[row][projField];
-						}
-					}
-				}
-				callback(null, projectedResult);
-			}
-		};
-		return find;
-	};
+	
 	var createObjectId = function(id){
 		return {id:id}; 
-	};
-	
-	
-	/**
-	 * TODO: move to utility class
-	 * 
-	 * Creates a simulated insert method.
-	 * 
-	 * When a string is provided instead of a JSON object an error will be simulated.
-	 * Otherwise it will pretend the JSON Object was successfully added to the DB.
-	 */
-	var createInsert = function(jsonObj) {
-	    /**
-	     * Simulates the insert() function in MongoDB.
-	     */
-	    var insert = function(query, callback) {
-	        if ((typeof jsonObj) === 'string') {
-	            //simulate err
-	            callback(jsonObj);
-	        } else {
-	            //simulate a successful insert
-	            callback(null);
-	        }
-	    };
-        return insert;
 	};
 	
 	/**
@@ -232,10 +175,60 @@ describe('GameRepository', function() {
         		assert.deepEqual(query, {authors:"12"});
         		done();
     		};
-
+    		
     		repository.findAllByUser(user);
     	});
- 
+    	
+    	it('should return an array', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(3));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(typeof games, 'object');
+    			assert.equal(typeof games.length, 'number');
+    			done();
+    		});
+    	});
+    	
+    	it('should return an empty array if no game was found', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(0));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(games.length, 0);
+    			done();
+    		});
+    	});
+    	
+    	it('should return an array of games', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(5));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			for (var i = 0; i < games.length; i++) {
+    				assert.ok(games[i] instanceof Game.class);
+    			}
+    			done();
+    		});
+    	});
+    	
+    	it('should return an array with expected number of games', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(5));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(games.length, 5);
+    			done();
+    		});
+    	});
     });
     
 
@@ -245,7 +238,6 @@ describe('GameRepository', function() {
     		game.setId("12");
     		
         	connectionMock.games.find = function(query, callback) {
-        		        		
         		assert.deepEqual(query, { _id: connectionMock.ObjectId("12") });
         		done();
     		};
@@ -253,13 +245,30 @@ describe('GameRepository', function() {
     		repository.findGameById(game.getId());
     	});
     	
-/*    	it('should return a game with corresponding id and full content', function(done){
-        	connectionMock.games.find = createFind(createResult(10));
-        	repository.findGameById(game)(function(result){
-    			assert.equal(result.length, 10);
+    	it('should return a game', function(done){
+        	connectionMock.games.find = createFind(createResult(1));
+        	repository.findGameById('game-id', function(result){
+    			assert.ok(result instanceof Game.class);
     			done();
     		});
-    	});*/
+    	});
     	
+    	it('returns game that contains correct content', function(done) {
+    		connectionMock.games.find = createFind(createResult(1));
+        	repository.findGameById('game-id', function(result){
+    			assert.equal(result.getId(), 0);
+    			assert.equal(result.getName(), "Game 0");
+    			done();
+    		});
+    	});
+    	
+    	it('returns null if no game was found', function(done) {
+    		connectionMock.games.find = createFind(createResult(0));
+        	repository.findGameById('game-id', function(result){
+    			assert.strictEqual(result, null);
+    			done();
+    		});
+    	});
     });
+    
 });  

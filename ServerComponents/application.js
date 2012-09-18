@@ -54,6 +54,10 @@ var dependencies = {
 		var dbconf = require('./conf/dbconf');
 		return require("mongojs").connect(dbconf.url, dbconf.collections);
 	},
+	'setGridFSConnection': function() {
+		var GridFSConnection = require("./GridFSConnection.js");
+		return new GridFSConnection.class();
+	},
 	'setUserRepository': function() {
 		var UserRepository = require('./UserDataAccess');
 		return new UserRepository.class(this.setDatabaseConnection());
@@ -65,6 +69,10 @@ var dependencies = {
 	'setGameStateRepository': function() {
 		var GameStateRepository = require('./GameStateDataAccess');
 		return new GameStateRepository.class(this.setDatabaseConnection());
+	},
+	'setResourceRepository': function() {
+		var ResourceRepository = require('./ResourceRepository');
+		return new ResourceRepository.class(this.setGridFSConnection());
 	},
 	'setGameValidator': function() {
 		var GameValidator = require('./util/game/GameValidator');
