@@ -22,7 +22,8 @@ var schema = {
 				},
 				"initialVisibility" : {
 					"type" : "boolean",
-					"required" : false
+					"required" : false,
+					"default" : true
 				},
 				"onEnter" : {
 					"type" : "array",

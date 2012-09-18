@@ -482,6 +482,31 @@ describe('GameValidator',function() {
 			};
 			assert.equal(false, gameValidator.validate(testJSON, "questionAndAnswer"));
 		});
+		it('validates a correct Hotspot game (returns true) ', function() {
+			var testJSON = {
+				"id" : "Intro_Hot2",
+				"latitude" : "50.719078",
+				"longitude" : "7.121755",
+				"icon" : "Spot.ico",
+				"radius" : "10",
+				"initialVisibility":true,
+				"onEnter" : []
+			};
+			assert.equal(true, gameValidator.validate(testJSON, "hotspot"));
+		});
+		it('fails for an incorrect Hotspot game (returns false) ',function() {
+			var testJSON = {
+					"id" : "Intro_Hot2",
+					"latitude" : "50.719078",
+					"longitude" : "7.121755",
+					"icon" : "Spot.ico",
+					"radius" : "10",
+					"initialVisibility":true,
+					"onEnter" : "hallo"
+				};
+			assert.equal(false, gameValidator.validate(
+					testJSON, "hotspot"));
+		});
 	});
 
 });
