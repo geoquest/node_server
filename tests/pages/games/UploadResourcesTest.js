@@ -34,13 +34,25 @@ describe('UploadResources page', function() {
 		resourceUploader = new UploadResources.class();
 		resourceUploader.setGameRepository({
 			findGameById: function(id, callback) {
-				callback(new Game.class());
+				var game = new Game.class();
+				game.setId(id);
+				game.addAuthor('user-id');
+				callback(game);
+			}
+		});
+		
+		resourceUploader.setResourceRepository({
+			insert: function(resource) {
+				
 			}
 		});
 				
+		var user = new User.class();
+		user.setId('user-id');
+		
 		request = new Request.class();
 		request.method = 'POST';
-		request.session.user = new User.class();
+		request.session.user = user;
 		request.files = {
 			"game" : {
 				"path" : "C:/path/to/file",
