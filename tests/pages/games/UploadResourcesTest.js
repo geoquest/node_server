@@ -1,5 +1,4 @@
 var assert = require('assert');
-var fs = require('fs');
 
 var UploadResources = require("../../../ServerComponents/pages/games/UploadResources.js");
 var Request = require("../../../ServerComponents/util/test/Request.js");
