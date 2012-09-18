@@ -33,8 +33,7 @@ GeoQuestMobileLogin.prototype.handleRequest = function(request, response) {
         var rawPassword = data['password'];
         this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
-        		responseText = {'success':false,  'msg': 'User not found.'};
-        		response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        		var responseText = {'success':false,  'msg': 'User not found.'};
         		response.write(JSON.stringify(responseText));
         		response.end();
         		return;
@@ -45,15 +44,13 @@ GeoQuestMobileLogin.prototype.handleRequest = function(request, response) {
         		var givenUser = user.toJSON();
         		delete givenUser.password;
         		delete givenUser._id;
-        		responseText = {'success':true,  'msg': 'Welcome ' + user + '!', fullUser: givenUser};
-        		response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        		var responseText = {'success':true,  'msg': 'Welcome ' + user + '!', fullUser: givenUser};
         		response.write(JSON.stringify(responseText));
         		request.session.user = user;
         		response.end();
         	} else {
         		// Wrong password provided.
-        		responseText = {'success':false,  'msg': 'Wrong password. Please retry.'};
-        		response.setHeader("Content-Type", "application/json;charset=UTF-8");
+        		var responseText = {'success':false,  'msg': 'Wrong password. Please retry.'};
         		response.write(JSON.stringify(responseText));
         		response.end();
         	}
