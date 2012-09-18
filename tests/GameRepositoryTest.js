@@ -175,10 +175,60 @@ describe('GameRepository', function() {
         		assert.deepEqual(query, {authors:"12"});
         		done();
     		};
-
+    		
     		repository.findAllByUser(user);
     	});
- 
+    	
+    	it('should return an array', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(3));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(typeof games, 'object');
+    			assert.equal(typeof games.length, 'number');
+    			done();
+    		});
+    	});
+    	
+    	it('should return an empty array if no game was found', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(0));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(games.length, 0);
+    			done();
+    		});
+    	});
+    	
+    	it('should return an array of games', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(5));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			for (var i = 0; i < games.length; i++) {
+    				assert.ok(games[i] instanceof Game.class);
+    			}
+    			done();
+    		});
+    	});
+    	
+    	it('should return an array with expected number of games', function(done){
+    		var user = new User.class();
+    		user.setId("12");
+    		
+    		connectionMock.games.find = createFind(createResult(5));
+    		
+    		repository.findAllByUser(user, function(games) {
+    			assert.equal(games.length, 5);
+    			done();
+    		});
+    	});
     });
     
 
@@ -188,7 +238,6 @@ describe('GameRepository', function() {
     		game.setId("12");
     		
         	connectionMock.games.find = function(query, callback) {
-        		        		
         		assert.deepEqual(query, { _id: connectionMock.ObjectId("12") });
         		done();
     		};
@@ -220,6 +269,6 @@ describe('GameRepository', function() {
     			done();
     		});
     	});
-    	
     });
+    
 });  
