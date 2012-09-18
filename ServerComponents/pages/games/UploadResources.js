@@ -26,6 +26,11 @@ UploadResources.prototype.setResourceRepository = function(resourceRepository) {
 };
 
 UploadResources.prototype.handleRequest = function(request, response) {
+	var gameId = request.param('gameId');
+	if (gameId === undefined) {
+		response.redirect('error/NotFound');
+		return;
+	}
 	if (request.method === 'GET') {
 		response.render('uploadResources.ejs', {msg:  'Please upload your game resources.'});
 		return;
@@ -36,16 +41,12 @@ UploadResources.prototype.handleRequest = function(request, response) {
 };
 
 UploadResources.prototype._handlePOST = function(request, response) {
-	var gameId = request.param('gameId');
-	if (gameId === undefined) {
-		response.redirect('error/NotFound');
-		return;
-	}
 	if (!this._hasUploadedFile(request)) {
 		response.render('uploadResources.ejs', {msg:  'Please provide a resource file.'});
 		return;
 	}
 	var self = this;
+	var gameId = request.param('gameId');
 	this._gameRepository.findGameById(gameId, function(game) {
 		if (game === null) {
 			// Game does not exist.
