@@ -19,7 +19,16 @@ UploadResources.prototype.setGameRepository = function(repository) {
 UploadResources.prototype.handleRequest = function(request, response) {
 	
 	if (request.method === 'GET') {
-		this.renderUploadForm(response, 'Please upload your game resources.');
+		
+		if(request.query.gameid == "null"){
+			//No gameid provided
+			//TODO: The yourGame page just push the new uploaded game directly into list without actually query DB
+			//So there's no gameID for the just uploaded game
+			this.renderUploadForm(response, 'Wrong. No GameID.');
+		} else {
+			this.renderUploadForm(response, 'Please upload your game resources.');			
+		}
+
 	}
 	
 	if (request.method === 'POST') {

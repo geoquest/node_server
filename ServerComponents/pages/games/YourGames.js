@@ -107,6 +107,8 @@ YourGames.prototype._handleUpload = function(request) {
  
 	this._gameRepository.insert(game);
 	
+	//TODO: here we just push the game into game list without actually query the database,
+	// so we don't have the gameid there, which is neeeded
 	this._templateVariables.games.push(game);
 	this._setMessage('Your game has been uploaded successfully.');
 	this._setHighlightGame(game);
