@@ -46,8 +46,10 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
         	if (user.hasPassword(rawPassword)) {
         		// Credentials are correct, therefore store the user in the session.
         		request.session.user = user;
-        		var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
-        		response.render('home.ejs', params);
+        		
+        		//login behaviour change
+        		response.redirect('/games?showDialog=true');
+        		
         	} else {
         		// Wrong password provided.
         		response.render('login.ejs', { title: 'GeoQuest Author Management.', msg: 'Log in Failed. Please retry.'});

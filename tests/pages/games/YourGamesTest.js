@@ -58,6 +58,9 @@ describe('Your games page', function() {
 		request = new Request.class();
 		// Simulate a logged-in user per default.
 		request.session.user = createUser();
+		
+		request.url = '';
+		
 		response = new Response.class();
 		response.filename = '';
 		gameRepository = {
