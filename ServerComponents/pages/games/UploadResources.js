@@ -1,6 +1,5 @@
 var Game = require("../../Game.js");
 var Resource= require("../../Resource.js");
-var fs = require('fs');
 
 UploadResources = function() {
 	this._gameRepository = null;
