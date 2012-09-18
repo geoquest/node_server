@@ -10,10 +10,8 @@
  * any of the schemas, otherwise it will return false.
  */
 
-
 var schemas = require('../../conf/gameSchemas');
 var JSV = require("JSV").JSV;
-
 
 GameValidator = function(){
 	this._env = JSV.createEnvironment();
@@ -47,8 +45,8 @@ GameValidator.prototype.validateGame = function(jsonObject){
 			if(valid == false) return false;
 		}
 		return true;
-	}	
+	}
 	return false;
-}
+};
 
 exports.class = GameValidator;

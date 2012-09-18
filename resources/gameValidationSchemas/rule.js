@@ -1,4 +1,4 @@
-{
+var schema = {
 	"description" : "A rule that contains conditions and actions that will be executed if all conditions are true",
 	"properties" : {
 		"conditions" : {
@@ -26,8 +26,6 @@
 				}
 			}
 		}
-		
-		
 	}
-}
-
+};
+module.exports = schema;

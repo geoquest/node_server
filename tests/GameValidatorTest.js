@@ -49,8 +49,8 @@ describe('GameValidator',function() {
 									}, {
 										"text" : "this is dialog 3"
 									} ],
-									"onEnd" : "showMessage",
-									"onStart" : "showMessage"
+									"onEnd" : [],
+									"onStart" : []
 								},
 				                  {
 				                	  "type":"questionAndAnswer",
@@ -107,8 +107,8 @@ describe('GameValidator',function() {
 									"nextdialogbuttontext" : "Weiter ...",
 									"endbuttontext" : "Caching starten...",
 									"dialogItem" : [],
-									"onEnd" : "showMessage",
-									"onStart" : "showMessage"
+									"onEnd" : [],
+									"onStart" : []
 								},
 				                  {
 				                	  "type":"questionAndAnswer",
@@ -171,8 +171,8 @@ describe('GameValidator',function() {
 									}, {
 										"text" : "this is dialog 3"
 									} ],
-									"onEnd" : "showMessage",
-									"onStart" : "showMessage"
+									"onEnd" : [],
+									"onStart" : []
 								},
 				                  {
 				                	  "type":"questionAndAnswer",
@@ -308,8 +308,8 @@ describe('GameValidator',function() {
 				}, {
 					"text" : "this is dialog 3"
 				} ],
-				"onEnd" : "showMessage",
-				"onStart" : "showMessage"
+				"onEnd" : [],
+				"onStart" : []
 			};
 			assert.equal(true, gameValidator.validate(testJSON, "npcTalk"));
 		});
