@@ -5,6 +5,8 @@ var atomicGameSchemas = {
 		gameSchema:schemasDir+gameSchema,
 		"npcTalk":schemasDir+"npcTalk",
 		"questionAndAnswer":schemasDir+"questionAndAnswer",
+		"hotspot": schemasDir + "hotspot",
+		"rule" : schemasDir + "rule",
 		"testSchema":schemasDir+"testSchema"
 };
 
