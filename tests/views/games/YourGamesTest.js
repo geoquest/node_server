@@ -31,15 +31,21 @@ describe('list games template', function() {
  			{
  				toString: function() {
  					return 'Game1';
+ 				},
+ 				getId: function(){
+ 					return '7xq9t57z39yqsu9p';
  				}
  			},
  			{
  				toString: function() {
  					return 'Game2';
+ 				},
+ 				getId: function(){
+ 					return '9y7ed6gue6tsn6f9';
  				}
  			}
  		];
- 		ejs.renderFile(templatePath, {'games': games, 'msg': 'Hello'}, function(error, html) {
+ 		ejs.renderFile(templatePath, {'games': games, 'msg': 'Hello', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
  			if (error) {
  				assert.fail('Rendering error: ' + error);
  			}
@@ -50,7 +56,7 @@ describe('list games template', function() {
 	});
 	
 	it('shows provided message', function(done) {
-		ejs.renderFile(templatePath, {'games': [], 'msg': 'Hello World!'}, function(error, html) {
+		ejs.renderFile(templatePath, {'games': [], 'msg': 'Hello World!', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
  			if (error) {
  				assert.fail('Rendering error: ' + error);
  			}
