@@ -204,11 +204,19 @@ describe('GameRepository', function() {
     		});
     	});
     	
-    	it('contains correct content', function(done) {
+    	it('returns game that contains correct content', function(done) {
     		connectionMock.games.find = createFind(createResult(1));
         	repository.findGameById('game-id', function(result){
     			assert.equal(result.getId(), 0);
     			assert.equal(result.getName(), "Game 0");
+    			done();
+    		});
+    	});
+    	
+    	it('returns null if no game was found', function(done) {
+    		connectionMock.games.find = createFind(createResult(0));
+        	repository.findGameById('game-id', function(result){
+    			assert.strictEqual(result, null);
     			done();
     		});
     	});
