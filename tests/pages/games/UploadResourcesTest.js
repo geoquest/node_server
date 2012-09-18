@@ -1,7 +1,7 @@
 var assert = require('assert');
 
-var UploadResources = require("../../../ServerComponents/pages/games/UploadResources.js");
-var Request = require("../../../ServerComponents/util/test/Request.js");
+var UploadResources = require("../../../ServerComponents/pages/games/UploadResources");
+var Request = require("../../../ServerComponents/util/test/Request");
 var Response = require("../../../ServerComponents/util/test/Response");
 var Resource = require("../../../ServerComponents/Resource");
 var User = require("../../../ServerComponents/User");
