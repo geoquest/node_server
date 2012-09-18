@@ -204,7 +204,7 @@ describe('GameRepository', function() {
     		});
     	});
     	
-    	it('contains correct content', function() {
+    	it('contains correct content', function(done) {
     		connectionMock.games.find = createFind(createResult(1));
         	repository.findGameById('game-id', function(result){
     			assert.equal(result.getId(), 0);

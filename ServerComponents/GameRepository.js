@@ -64,15 +64,17 @@ GameRepository.prototype.insert = function(game) {
 /**
  * Creates a callback that handles a MongoDB result.
  * 
- * Throws an exception if an error occurs. In case of
- * a successful result it will 
- * pass the result to the provided callback.
+ * A successful result it will pass the result to the provided callback.
  * 
- * @param {function}
+ * @param {function} callback
+ * @param {function} conversionFunction Function that is used to transform the result set.
  * @return {function}
- * @throws Error If an internal error occurred.
  */
-GameRepository.prototype._createResultHandler = function(callback) {
+GameRepository.prototype._createResultHandler = function(callback, conversionFunction) {
+	if (conversionFunction === undefined) {
+		// Convert to an array of games per default.
+		conversionFunction = this._resultToGames;
+	}
 	// Store the current context as the scope changes in the callback.
 	var self = this;
 	return function(error, result) {
@@ -80,33 +82,7 @@ GameRepository.prototype._createResultHandler = function(callback) {
 			self._notifyAboutError(error);
 			return;
 		}
-		callback(self._jsonToGame(result));
-	};
-};
-
-/**
- * Creates a callback that handles a MongoDB result.
- * 
- * Resultset is expected to be projected to meta game information (authors, title, _id)
- * adds empty content field, so that transformation methods can be reused
- * 
- * Throws an exception if an error occurs. In case of
- * a successful result it will 
- * pass the result to the provided callback.
- * 
- * @param {function}
- * @return {function}
- * @throws Error If an internal error occurred.
- */
-GameRepository.prototype._createResultHandlerForGames = function(callback) {
-	// Store the current context as the scope changes in the callback.
-	var self = this;
-	return function(error, result) {
-		if (error) {
-			self._notifyAboutError(error);
-			return;
-		}
-		var games = self._jsonToGame(result);
+		var games = conversionFunction(result);
 		callback(games);
 	};
 };
@@ -117,10 +93,8 @@ GameRepository.prototype._createResultHandlerForGames = function(callback) {
  */
 GameRepository.prototype.findAll = function(callback) {
 	var query = {};
-	this._connection.games.find(query, this._createResultHandlerForGames(callback));
+	this._connection.games.find(query, this._createResultHandler(callback));
 };
-
-
 
 /**
  * 
@@ -145,7 +119,21 @@ GameRepository.prototype.findGameById = function(id, callback) {
 	
 	var query = { _id: ObjectId(id) };
 	
-	this._connection.games.find(query, this._createResultHandler(callback));
+	this._connection.games.find(query, this._createResultHandler(callback, this._jsonToGame));
+};
+
+/**
+ * Takes a MongoDB result and converts its results into Game objects.
+ * 
+ * @param {Object} resultSet
+ * @return {Array} of Games
+ */
+GameRepository.prototype._resultToGames = function(resultSet) {
+	var games = [];
+	for (var i = 0; i < resultSet.length; i++){
+		games[i] = Game.fromJSON(resultSet[i]);
+	}
+	return games;
 };
 
 /**
@@ -158,16 +146,10 @@ GameRepository.prototype.findGameById = function(id, callback) {
  */
 GameRepository.prototype._jsonToGame = function(result) {
 	if (result.length === 0) {
-		// No user was found.
-		return new Array();
+		// No game was found.
+		return null;
 	}
-	var passResult = new Array();
-	var i;
-	for (i = 0; i<result.length; i++){
-		passResult[i] = new Game.fromJSON(result[i]);
-	}
-	return passResult;
-
+	return Game.fromJSON(result[0]);
 };
 
 exports.class = GameRepository;
