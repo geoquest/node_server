@@ -50,7 +50,6 @@ describe('GameRepository', function() {
 
 	    return result;
 	};
-
 	
 	
 	var createFind = function(result) {
@@ -253,13 +252,13 @@ describe('GameRepository', function() {
     		repository.findGameById(game.getId());
     	});
     	
-/*    	it('should return a game with corresponding id and full content', function(done){
-        	connectionMock.games.find = createFind(createResult(10));
-        	repository.findGameById(game)(function(result){
-    			assert.equal(result.length, 10);
+    	it('should return a game', function(done){
+        	connectionMock.games.find = createFind(createResult(1));
+        	repository.findGameById('game-id', function(result){
+    			assert.ok(result instanceof Game.class);
     			done();
     		});
-    	});*/
+    	});
     	
     });
 });  
