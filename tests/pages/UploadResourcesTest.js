@@ -63,6 +63,8 @@ describe('UploadResources Page', function() {
 		describe('GET', function(){
 			beforeEach(function() {
 				request.method = "GET";
+				request.query = {};
+				request.query.gameid = "gameid";
 			});
 			
 			it('should load the upload view',	function() {
