@@ -137,6 +137,12 @@ describe('UploadResources page', function() {
 		assert.equal(response.templateVars.msg, 'Please provide a resource file.');
 	});
 	
+	it('passes game to template ifno file is uploaded', function() {
+		request.files.game = null;
+		resourceUploader.handleRequest(request, response);
+		assert.notEqual(typeof response.templateVars.game, 'undefined');
+	});
+	
 	it('passes uploaded file to GridFS', function(done) {
 		resourceRepository.insert = function(resource) {
 			assert.ok(resource instanceof Resource.class);
