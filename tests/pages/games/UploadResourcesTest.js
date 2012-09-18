@@ -117,6 +117,12 @@ describe('UploadResources page', function() {
 		assert.equal(response.template, 'uploadResources.ejs');
 	});
 	
+	it('passes game to template if page is requested via GET', function() {
+		request.method = 'GET';
+		resourceUploader.handleRequest(request, response);
+		assert.notEqual(typeof response.templateVars.game, 'undefined');
+	});
+	
 	it('does not call GridFS subsystem if no file was uploaded', function() {
 		request.files = {};
 		resourceRepository.insert = function(resource) {
@@ -142,6 +148,11 @@ describe('UploadResources page', function() {
 	it('provides message if resource was uploaded successfully', function() {
 		resourceUploader.handleRequest(request, response);
 		assert.equal(response.templateVars.msg, 'Resource was successfully added.');
+	});
+	
+	it('passes game to template if resource was uploaded successfully', function() {
+		resourceUploader.handleRequest(request, response);
+		assert.notEqual(typeof response.templateVars.game, 'undefined');
 	});
 	
 });
