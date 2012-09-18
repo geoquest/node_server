@@ -204,5 +204,14 @@ describe('GameRepository', function() {
     		});
     	});
     	
+    	it('contains correct content', function() {
+    		connectionMock.games.find = createFind(createResult(1));
+        	repository.findGameById('game-id', function(result){
+    			assert.equal(result.getId(), 0);
+    			assert.equal(result.getName(), "Game 0");
+    			done();
+    		});
+    	});
+    	
     });
 });  
