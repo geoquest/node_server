@@ -179,6 +179,19 @@ describe('User', function() {
 			};
 			assert.ok(User.fromJSON(json) instanceof User.class);
         });
+		it('adds global id if available', function() {
+			var json = {
+				"_id": "mongodb-id",
+				"identifier": "42", 
+				"password": "this_should_be_an_encrypted_password",
+				"firstname": "Max",
+				"lastname": "Mustermann",
+				"loginType": "Facebook",
+				"email": null
+			};
+			var user = User.fromJSON(json);
+			assert.equal(user.getId(), 'mongodb-id');
+		});
 		it('throws exception if no object is provided', function() {
 			assert.throws(function() {
 				User.fromJSON('This is not valid');
@@ -267,6 +280,18 @@ describe('User', function() {
                 user.setEmail("and@lsoBu.bu");
                 user.toJSON();
             });
+        });
+        
+        it('adds database id to JSON object', function() {
+        	user.setId("mongodb-id");
+        	user.setLoginType("GeoQuest");
+            user.setIdentifier("asdf");
+            user.setFirstname("IHate");
+            user.setLastname("LULU!");
+            user.setPassword("whatever");
+            user.setEmail("and@lsoBu.bu");
+            var newJSONObj = user.toJSON();
+            assert.equal(newJSONObj._id, "mongodb-id");
         });
     });
     

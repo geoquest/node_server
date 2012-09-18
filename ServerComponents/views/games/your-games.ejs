@@ -1,0 +1,57 @@
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+<h1>Your Games</h1>
+
+<div id="gameList" style="height: 310px; width:900px; overflow: auto;">
+<ul>
+	<%  games.reverse(); %>
+	<% 
+	for(var index in games) { %>
+		    	<form action="./uploadResources" method="POST" style="display:inline">
+		            <input type="hidden" name="gameid" value=<%=games[index].getId()%>>
+		            <input class="btn" data-inline="true" value="Resource upload" type="submit">
+		        </form>
+		        <div id="game<%= index %>"  style="display:inline" > <%= games[index] %> </div>
+		        
+		        <%if(highlightGameId===games[index].getId()){%>
+		        	<script>
+					$(document).ready(function() {
+    					$('#game<%=index%>').effect("highlight", {}, 3000);
+					});
+					</script>
+		        <%}%>
+		        
+		        <hr style="height:0px; border:0;">
+	<% } 
+	%>
+</ul>
+</div>
+
+
+<hr style="height:3pt">
+<input class="btn" data-inline="true" value="Click to upload new game" type="button" onclick="document.getElementById('Upload').style.display = 'block'">
+
+<!-- Here the upload game form is shown-->
+
+<%
+var displayMode = 'none';
+if(uploadError){ 
+	displayMode = 'block';
+} 
+%>
+<div id='Upload' style="display: <%= displayMode%>" >
+
+
+<h3>Upload Game</h3>
+<p class="alert"> <%= msg %> </p>
+<form action="/games" method="POST" enctype="multipart/form-data">
+	<fieldset>
+		<label for="game">Game as JSON</label>
+		<input name="game" type="file" size="50"/>
+	</fieldset>
+	<input value="Upload" type="submit" class="btn" />
+</form>
+
+</div>

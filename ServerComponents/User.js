@@ -324,6 +324,7 @@ User.prototype.toJSON = function() {
     for (var property in mapping) {
         jsonObj[property] = this[mapping[property]];
     }
+    jsonObj['_id'] = this._id;
     return jsonObj;
 };
 
@@ -361,6 +362,9 @@ var fromJSON = function(jsonObject) {
 		// this property to.
 		var attribute = mapping[property];
 		user[attribute] = jsonObject[property];
+	}
+	if ('_id' in jsonObject) {
+		user._id = jsonObject._id;
 	}
 	return user;
 };

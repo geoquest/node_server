@@ -1,12 +1,15 @@
 /**
  * This module provides function(s) that perform validation of Games 
  * (in JSON format) with respect to the schemas provided in 
- * "./resources/gameValidationSchemas".
+ * "./resources/gameValidationSchemas". On introducing new schemas it is
+ * important to extend the configuration mapping in 
+ * ./ServerComponents/conf/gameSchemas.js appropriately.  
  * 
  * gameValidator.validate(jsonObject);
  * This method returns true if the jsonObject is valid with respect to 
  * any of the schemas, otherwise it will return false.
  */
+
 
 var schemas = require('../../conf/gameSchemas');
 var JSV = require("JSV").JSV;
