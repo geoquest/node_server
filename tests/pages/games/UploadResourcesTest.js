@@ -1,11 +1,11 @@
 var assert = require('assert');
 var fs = require('fs');
+
 var UploadResources = require("../../../ServerComponents/pages/games/UploadResources.js");
 var Request = require("../../../ServerComponents/util/test/Request.js");
 var Response = require("../../../ServerComponents/util/test/Response");
-
+var Resource = require("../../../ServerComponents/Resource");
 var User = require("../../../ServerComponents/User");
-var GameRepository = require("../../../ServerComponents/GameRepository.js");
 
 describe('UploadResources page', function() {
 
@@ -30,22 +30,28 @@ describe('UploadResources page', function() {
 	 */
 	var response = null;
 	
+	var gameRepository = null;
+	
+	var resourceRepository = null;
+	
 	beforeEach(function() {
 		resourceUploader = new UploadResources.class();
-		resourceUploader.setGameRepository({
+		gameRepository = {
 			findGameById: function(id, callback) {
 				var game = new Game.class();
 				game.setId(id);
 				game.addAuthor('user-id');
 				callback(game);
 			}
-		});
+		};
+		resourceUploader.setGameRepository(gameRepository);
 		
-		resourceUploader.setResourceRepository({
+		resourceRepository = {
 			insert: function(resource) {
 				
 			}
-		});
+		};
+		resourceUploader.setResourceRepository(resourceRepository);
 				
 		var user = new User.class();
 		user.setId('user-id');
@@ -72,52 +78,50 @@ describe('UploadResources page', function() {
 		response = null;
 		request = null;
 		resourceUploader = null;
+		resourceRepository = null;
+		gameRepository = null;
 	});
 	
 	it('redirects to error page if game ID is missing', function() {
-		
+		request.params.gameId = undefined;
+		resourceUploader.handleRequest(request, response);
+		assert.equal(response.redirectUrl, '/error/NotFound');
 	});
 	
-	it('requests game with passed id from repository', function() {
-		
+	it('requests game with passed id from repository', function(done) {
+		gameRepository.findGameById = function(id) {
+			assert.equal('12345', id);
+			done();
+		};
+		resourceUploader.handleRequest(request, response);
 	});
 	
 	it('redirects to error page if logged in user is not author of the requested game', function() {
-		
+		request.session.user.setId('another-id');
+		resourceUploader.handleRequest(request, response);
+		assert.equal(response.redirectUrl, '/error/NotFound');
 	});
 	
 	it('renders the upload form if page is requested via GET', function() {
-		
+		request.method = 'GET';
+		resourceUploader.handleRequest(request, response);
+		assert.equal(response.template, 'uploadResources.ejs');
 	});
 	
 	it('does not call GridFS subsystem if no file was uploaded', function() {
-		
+		request.files = {};
+		resourceRepository.insert = function(resource) {
+			assert.fail('Resource repository should not be called.');
+		};
+		resourceUploader.handleRequest(request, response);
 	});
 	
-	it('passes uploaded file to GridFS', function() {
-		
-	});
-	
-	describe('validateGame', function() {	
-		it('succeeds if it finds the game in the DB', function(done) {
-			resourceUploader.validateGame();
-			assert.ok(true);
-		});
-		it('fails if it does not find the game in the DB', function() {
-			assert.ok(true);
-		});
-	});
-	
-	describe('validateRequest', function(){
-		it('fails if any of the fields is not present in the request',function(){
-			console.log(request);
-			assert.ok(!resourceUploader.validateRequest(request));
-		});
-		
-		it('succeeds if all fields are non-null',function() {
-			request.body.gameid = tempGameID;
-			assert.ok(resourceUploader.validateRequest(request));
-		});		
+	it('passes uploaded file to GridFS', function(done) {
+		resourceRepository.insert = function(resource) {
+			assert.ok(resource instanceof Resource.class);
+			done();
+		};
+		resourceUploader.handleRequest(request, response);
 	});
 	
 });
