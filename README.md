@@ -61,6 +61,8 @@ GridFS is used to store files in MongoDB.
 
 [Tutorial to get started](http://mongodb.github.com/node-mongodb-native/api-articles/nodekoarticle2.html)
 
+[Documentation on Github](https://github.com/mongodb/node-mongodb-native/blob/master/docs/gridfs.md)
+
 ## validator ##
 
 Provides functions for several validation tasks (for example checking email addresses).
