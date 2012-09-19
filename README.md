@@ -55,6 +55,12 @@ MongoDB driver that is used to access the database.
 
 [Project on Github](https://github.com/gett/mongojs)
 
+## GridFS ##
+
+GridFS is used to store files in MongoDB.
+
+[Tutorial to get started](http://mongodb.github.com/node-mongodb-native/api-articles/nodekoarticle2.html)
+
 ## validator ##
 
 Provides functions for several validation tasks (for example checking email addresses).
