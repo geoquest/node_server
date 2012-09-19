@@ -12,7 +12,7 @@
 	<% 
 	for(var index in games) { %>
         <div id="game<%= index %>" style="display:inline">
-        	<a href="/games/uploadResources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
+        	<a href="/games/resources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
         	<%= games[index] %>
     	</div>
         

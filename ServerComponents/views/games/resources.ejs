@@ -13,6 +13,9 @@
 ------------------------
 
 <!-- 
+@param {Bool} showDialog
+@param {String} titleModel
+@param {String} msgModal
 @param {String} msg: text showing the status of resource upload
 @param {Object} game: the game of those resources displayed
 @param {Array} resources:  list of resource object
@@ -23,6 +26,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+<% include ../modalDialog %>
 
 <h1>Resource of game <%= game.getName() %></h1>
 
