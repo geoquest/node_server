@@ -24,7 +24,7 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 		var report = this._env.validate(jsonObject, schema);	
 //		console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //		console.log(schema);
-//		console.log(report);			
+		console.log(report);			
 		return (report.errors.length === 0);
 	} else {
 		//the schema was not found so just return false
