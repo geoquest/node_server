@@ -139,7 +139,7 @@ Resources.prototype.constructResource = function(request, game){
 	
 	resource.setFilename(request.files.resource.name);
 	resource.setTempPath(request.files.resource.path);
-	resource.setMineType(request.files.resource.mime);
+	resource.setMimeType(request.files.resource.mime);
 	resource.setUser(request.session.user);
 	
 	resource.setDate(new Date());
