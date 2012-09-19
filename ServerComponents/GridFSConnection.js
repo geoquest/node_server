@@ -62,6 +62,18 @@ GridFSConnection.prototype._openConnection = function(callback) {
  *            should have the form <code>function(error, result) {...}</code>
  *            and will be called after saving of the file succeeded or failed
  */
+
+
+
+GridFSConnection.prototype.executeDBEvent(event){		
+	if (this._state == STATE_OPEN) {
+		event(this._db);
+	} else {
+		this._eventBuffer.push(event);
+		this._openConnection();
+	}
+};
+
 GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 		metadata, callback) {
 
@@ -78,17 +90,12 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 
 		gs.writeFile(fileToWrite, callback);
 	};
-
-	if (this._state == STATE_OPEN) {
-		event(this._db);
-	} else {
-		this._eventBuffer.push(event);
-		this._openConnection();
-	};
+	this.executeDBEvent(event);	
 };
 
 GridFSConnection.prototype.loadGamesList = function(userId, callback){
 	
+	//THIS IS NOT REALLY NEEDED... DELETE IT IF IT REALLY PROVES WORTHLESS :| 
 	
 	var gamesList = [];
 	
@@ -100,8 +107,7 @@ GridFSConnection.prototype.loadGamesList = function(userId, callback){
 		        cursor.toArray(function(err, docs){		        	
 		        	for (i in items){
 		        		gamesList.add(docs[i]._id);	        		
-		        	}
-		        	
+		        	}		        	
 		        	callback(gamesList);
 		        });
 			});
@@ -112,7 +118,13 @@ GridFSConnection.prototype.loadGamesList = function(userId, callback){
 
 GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 	
-	var resourcesIDs = [];	
+	var resourcesIDs = [];
+	//TODO: construct the Resource objects for each resource and pass an array of those objects
+	//just passing the IDs may be insufficient
+	
+	
+	//TODO: (alternative) instead of constructing the Resource objects, let that task for the ResourceRepository and just pass a json with the necessary data
+	
 	var id = ObjectID.createFromHexString(gameId);
 	
 	db.open(function(err, db) {
@@ -124,7 +136,7 @@ GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 		        	for (i in items){
 		        		gamesList.add(docs[i]._id);	        		
 		        	}		        	
-		        	callback(db, resourceIDs);
+		        	callback(resourceIDs);
 		        });
 			});
 		});
@@ -132,30 +144,42 @@ GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 };
 
 
-GridFSConnection.prototype.getResource = function(db, resourceID){
+GridFSConnection.prototype.getResource = function(resourceID,callback){
 	
-	db.open(function(err, db) {
+	filePath = null;	
+	//validate the file path
 	
+	
+	
+	event = function(db,callback) {	
 		var id = ObjectID.createFromHexString(resourecID);	
 		var gridStore = new GridStore(db, id,"r");
 		var fileName = gridStore.filename;
 		
-		gridStore.open(function(err,gridStore){
-					
-			var fileStream = fs.createWriteStream("./"+fileName);
+		
+		//TODO: construct Resource object here and pass it on to the callback  
+		
+		
+		
+		gridStore.open(function(err,gridStore){		
+			
+			//TODO: add the file path instead of the "./" -> the file path should be taken from a config file or smthg ... 
+			
+			var fileStream = fs.createWriteStream("./"+resourceID); //do not pass the file name, but the resourceID - that one's unique and does not cause problems
 			var stream = gridStore.stream(true);
-	
 			stream.on("data", function(chunk) {
 				fileStream.write(chunk);
-	        });
-			
-			
-			stream.on("end", function(err) {							
-				console.log(err);				
-				db.close();
+	        });			
+			stream.on("end", function(err) {
+				console.log(err);
+				var filePath = fileStream.
+				callback();
+				
 			});
-		});
-	});
+		});		
+	};
+	
+	this.executeDBEvent(event);
 };
 
 
