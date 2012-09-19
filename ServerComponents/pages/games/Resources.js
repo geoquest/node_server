@@ -12,7 +12,7 @@ Resources = function() {
 			msg : '',
 			game: null,
 			resources: [],
-			highlightResourceId: null,
+			highlightResourceFilename: null,
 			uploadError: false,			
 	};
 };
@@ -62,6 +62,34 @@ Resources.prototype.handleRequest = function(request, response) {
 	});
 };
 
+
+/*
+ TO REPLACE THE ABOVE CODE ...
+var self = this;
+this._gameRepository.findGameById(gameId, function(game) {
+	if (game === null) {
+		// Game does not exist.
+		response.redirect('error/NotFound');
+		return;
+	}
+	if (game.getAuthors().indexOf(request.session.user.getId()) === -1) {
+		response.redirect('error/NotFound');
+		return;
+	}
+	self._templateVariables.games = games;
+	this._resourceRepository.findAllByGame(game, function(resources) {
+		self._templateVariables.resources = resources;
+		
+		if (request.method === 'POST') {
+			self._handlePOST(request, response, game);
+		} else {//GET request
+			self._setMessage('Please upload your game resources.');
+			self._setGame(game);
+			response.render(self._template, self._templateVariables);
+		}	    
+	});
+});*/
+
 Resources.prototype._handlePOST = function(request, response, game) {
 	if (!this._hasUploadedFile(request)) {
 		this._setMessage('Please provide a resource file.');
@@ -74,6 +102,9 @@ Resources.prototype._handlePOST = function(request, response, game) {
 	this._resourceRepository.insert(resource);
 	this._setMessage('Resource was successfully added.');
 	this._setGame(game);
+	
+	this._templateVariables.resources.push(resource);
+	this._setHighlightResource(resource);
 	response.render(this._template, this._templateVariables);
 };
 
@@ -129,7 +160,7 @@ Resources.prototype._raiseUploadError = function() {
 };
 
 Resources.prototype._setHighlightResource = function(resource) {
-	this._templateVariables.highlightResourceId = resource.toString();
+	this._templateVariables.highlightResourceFilename = resource.toString();
 };
 
 exports.class = Resources;

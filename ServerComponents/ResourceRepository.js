@@ -73,4 +73,18 @@ ResourceRepository.prototype.insert = function(resource) {
 	});
 };
 
+ResourceRepository.prototype.findAllByGame = function(game, callback) {
+	
+	var metadata = {
+			game_id : resource.getGame().getId(),
+		};
+
+	this._gridFS.find(metadata, function(error, fileInfo) {
+		if (error) {
+			console.log(error);
+		}
+		callback(result);
+	});
+};
+
 exports.class = ResourceRepository;

@@ -6,7 +6,7 @@
 @param {String} msg: text showing the status of resource upload
 @param {Object} game: the game of those resources displayed
 @param {Array} resources:  list of resource object
-@param {String} highlightResourceId: the resource just uploaded recently
+@param {String} highlightResourceFilename: the resource just uploaded recently
 @param {Bool} uploadError: Optional. true if something wrong with the upload (no param or internal error, etc)
 -->
 
@@ -15,7 +15,7 @@
 
 <% include ../modalDialog %>
 
-<h1>Resource of game <%= game.getName() %></h1>
+<h1>Resources of game <%= game.getName() %></h1>
 
 <div id="resourceList" style="height: 310px; width:900px; overflow-y: auto;">
 <ul>
@@ -27,11 +27,11 @@
 	<%  resources.reverse(); %>
 	<% 
 	for(var index in resources) { %>
-        <div id="resource<%= index %>" style="display:inline">
+        <div id="resource<%=index%>" style="display:inline">
         	<%= resources[index] %>
     	</div>
         
-        <%if(highlightResourceId===resources[index].getId()){%>
+        <%if(highlightResourceFilename===resources[index].getFilename){%>
         	<script>
 			$(document).ready(function() {
 				$('#resource<%=index%>').effect("highlight", {}, 5000);
