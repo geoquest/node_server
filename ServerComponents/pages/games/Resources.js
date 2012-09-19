@@ -12,7 +12,7 @@ Resources = function() {
 			msg : '',
 			game: null,
 			resources: [],
-			highlightResourceId: null,
+			highlightResourceFilename: null,
 			uploadError: false,			
 	};
 };
@@ -102,6 +102,9 @@ Resources.prototype._handlePOST = function(request, response, game) {
 	this._resourceRepository.insert(resource);
 	this._setMessage('Resource was successfully added.');
 	this._setGame(game);
+	
+	this._templateVariables.resources.push(resource);
+	this._setHighlightResource(resource);
 	response.render(this._template, this._templateVariables);
 };
 
@@ -157,7 +160,7 @@ Resources.prototype._raiseUploadError = function() {
 };
 
 Resources.prototype._setHighlightResource = function(resource) {
-	this._templateVariables.highlightResourceId = resource.toString();
+	this._templateVariables.highlightResourceFilename = resource.toString();
 };
 
 exports.class = Resources;
