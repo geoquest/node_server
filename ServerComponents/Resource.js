@@ -141,7 +141,13 @@ Resource.prototype.validate = function(){
 };
 
 
+Resource.prototype.toString = function() {
+	if (this._filename === null){
+		return 'empty file name';
+	}
+	return this._filename;
 
+};
 
 
 

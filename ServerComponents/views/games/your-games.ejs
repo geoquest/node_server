@@ -17,7 +17,7 @@
         <%if(highlightGameId===games[index].getId()){%>
         	<script>
 			$(document).ready(function() {
-				$('#game<%=index%>').effect("highlight", {}, 3000);
+				$('#game<%=index%>').effect("highlight", {}, 5000);
 			});
 			</script>
         <%}%>
@@ -36,7 +36,7 @@
 
 <%
 var displayMode = 'none';
-if(uploadError){ 
+if(uploadError !== undefined && uploadError === true){ 
 	displayMode = 'block';
 } 
 %>
