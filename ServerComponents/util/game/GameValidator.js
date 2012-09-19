@@ -23,7 +23,7 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 		var schema = require(schemas[atomicGameTypeName]);		
 		var report = this._env.validate(jsonObject, schema);	
 //		console.log(schema);
-		if (report.errors.length === 0) {
+		if (report.errors.length !== 0) {
 			console.log(report.errors); //log only the errors if the validation fails
 		}
 		return (report.errors.length === 0);
