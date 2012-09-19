@@ -61,16 +61,16 @@ describe('Resource', function() {
     	});
     });
 
-    describe('setMineType/getMineType', function() {
-    	it('set the resource mine type', function() {
-    		object.setMineType('image/jpeg');
+    describe('setMimeType/getMimeType', function() {
+    	it('set the resource mime type', function() {
+    		object.setMimeType('image/jpeg');
 
-            assert.equal(object.getMineType(), 'image/jpeg');
+            assert.equal(object.getMimeType(), 'image/jpeg');
         });
     	    	
     	it('throws an exception if null is passed', function() {
     		assert.throws(function() {
-    			object.setMineType(null);
+    			object.setMimeType(null);
     		});
     	});
     });
