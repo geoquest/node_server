@@ -1,0 +1,86 @@
+{
+    "name": "ExampleGameNPCTalk",
+    "gameElements": [
+        {
+            "type": "questionAndAnswer",
+            "id": "QandA",
+            "name": "First QandA",
+            "correctAnswersNeeded": 3,
+            "shuffle": "all",
+            "introText": "This is the intro text",
+            "outroSuccessText": "This is the outroSuccessText text",
+            "outroFailText": "This is the outroFailText text",
+            "questions": [
+                {
+                    "questionText": "Question 1",
+                    "answers": [
+                        {
+                            "correct": 1,
+                            "answerText": "Correct Answer",
+                            "responseText": "Correct, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Another Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        }
+                    ]
+                },
+                {
+                    "questionText": "Question 2",
+                    "answers": [
+                        {
+                            "correct": 1,
+                            "answerText": "Correct Answer",
+                            "responseText": "Correct, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Another Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        }
+                    ]
+                },
+                {
+                    "questionText": "Question 3",
+                    "answers": [
+                        {
+                            "correct": 1,
+                            "answerText": "Correct Answer",
+                            "responseText": "Correct, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Another Wrong Answer",
+                            "responseText": "Wrong, Surprise!"
+                        }
+                    ]
+                }
+            ],
+            "onEnd": [
+                {
+                    "actions": [
+                        {
+                            "method": "endGame"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
