@@ -512,10 +512,11 @@ describe('GameValidator',function() {
 			var testJSON = {
 				"id" : "Intro_QRCode2",
 				"expectedContent" : "35638990",
+				"taskdescription" : "Here you have to find and scan a water bottle.",
 				"onFail": [],
 				"onSuccess" : []
 			};
-			assert.equal(true, gameValidator.validate(testJSON, "qrTagSchema"));
+			assert.equal(true, gameValidator.validate(testJSON, "QRTagReading"));
 		});
 		it('fails for an incorrect QR-Scan game (returns false) ',function() {
 			var testJSON = {
@@ -525,7 +526,7 @@ describe('GameValidator',function() {
 					"onSuccess" : []
 				};
 			assert.equal(false, gameValidator.validate(
-					testJSON, "qrTagSchema"));
+					testJSON, "QRTagReading"));
 		});
 	});
 
