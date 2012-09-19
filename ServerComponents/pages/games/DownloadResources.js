@@ -1,14 +1,16 @@
-var GameRepository = require('../../GameRepository');
+var GameRepository = require('../../ResourceRepository');
 var fs = require('fs');
 
 
 DownloadResources = function() {
-    this._gameRepository = null;
+    this._resourceRepository = null;
 };
+
+
 
 DownloadResources.prototype.handleRequest = function(request, response)
 {
-    var path = "ServerComponents/pages/games/gameResources/" + request.query["res"];
+    var path = __dirname + "/gameResources/" + request.query["res"];
     var img = fs.readFileSync(path);
 
     
@@ -17,5 +19,9 @@ DownloadResources.prototype.handleRequest = function(request, response)
     
 };
 
+
+DownloadResources.prototype.setResourceRepository = function(resourceRepository){
+	this._resourceRepository = resourceRepository;
+};
 
 exports.class = DownloadResources;
