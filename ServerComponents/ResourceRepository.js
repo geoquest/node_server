@@ -74,7 +74,7 @@ ResourceRepository.prototype.insert = function(resource) {
 };
 
 ResourceRepository.prototype.findAllByGame = function(game, callback) {
-	
+	// TODO: Missing infrastructure
 	var metadata = {
 			game_id : resource.getGame().getId(),
 		};
