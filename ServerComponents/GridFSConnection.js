@@ -88,4 +88,33 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 	;
 };
 
+GridFSConnection.prototype.loadGamesList = function(userId){
+	
+	
+	var gamesList = [];
+	
+	db.open(function(err, db) {		
+		
+		
+		
+		//getting the games list for the given author (search is done by ID)
+		db.collection('games', function(err, collection) {
+			collection.find({'authors': userId}, function(err, cursor){
+		        cursor.toArray(function(err, docs){
+		        	
+		        	for (i in items){
+		        		gamesList.add(docs[i]._id);	        		
+		        	}
+		        });
+			});
+		});
+	
+		
+	});
+};
+	
+		
+		
+		
+
 exports.class = GridFSConnection;

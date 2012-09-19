@@ -73,4 +73,22 @@ ResourceRepository.prototype.insert = function(resource) {
 	});
 };
 
+/**
+ * Searches for all resources that are connected to the given game.
+ * 
+ * Passes the Resource objects that were found to the provided
+ * callback:
+ * <code>
+ * var callback = function(resources) {
+ *     // Work with resources here.
+ * };
+ * </code>
+ * 
+ * @param {Game} game
+ * @param {function} callback
+ */
+ResourceRepository.prototype.getResourcesByGame = function(game, callback) {
+	
+};
+
 exports.class = ResourceRepository;
