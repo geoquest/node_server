@@ -10,7 +10,7 @@ ShowAllPublicGames.prototype.setGameRepository = function(gameRepository){
 ShowAllPublicGames.prototype.handleRequest = function(request, response)
 {
 	this._gameRepository.findAll(function(result) {	
-		response.render('games/listPublic.ejs', {'games' : result});
+		response.render('games/public-games.ejs', {'games' : result});
 	});
 };
 
