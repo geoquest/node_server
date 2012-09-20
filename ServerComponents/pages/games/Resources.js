@@ -62,34 +62,6 @@ Resources.prototype.handleRequest = function(request, response) {
 	});
 };
 
-
-/*
- TO REPLACE THE ABOVE CODE ...
-var self = this;
-this._gameRepository.findGameById(gameId, function(game) {
-	if (game === null) {
-		// Game does not exist.
-		response.redirect('error/NotFound');
-		return;
-	}
-	if (game.getAuthors().indexOf(request.session.user.getId()) === -1) {
-		response.redirect('error/NotFound');
-		return;
-	}
-	self._templateVariables.games = games;
-	this._resourceRepository.findAllByGame(game, function(resources) {
-		self._templateVariables.resources = resources;
-		
-		if (request.method === 'POST') {
-			self._handlePOST(request, response, game);
-		} else {//GET request
-			self._setMessage('Please upload your game resources.');
-			self._setGame(game);
-			response.render(self._template, self._templateVariables);
-		}	    
-	});
-});*/
-
 Resources.prototype._handlePOST = function(request, response, game) {
 	if (!this._hasUploadedFile(request)) {
 		this._setMessage('Please provide a resource file.');
