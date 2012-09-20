@@ -83,10 +83,10 @@ describe('GridFSConnection', function() {
 		});
 	});
 	
-	describe('loadResourcesList',function(){
-		var gameIDString = '50586c39ea2ac3d00e000001';
-		var gameID = ObjectID.createFromHexString(gameIDString);
+	describe('readFile',function(){
 		
+		var fileIDString = '12345';
+				
 		beforeEach(function() {
 			
 		});
@@ -95,38 +95,36 @@ describe('GridFSConnection', function() {
 			
 		});
 		
-		it('fails if an invalid game id is given', function(){
-			gameID = "sadfuiy2378";
+		
+		it('throws an error if there is no callback',function(){
 			
-			
-			assert.doesNotThrow(
-					connection.loadResourcesList(gameID, function(){
-						
-					}
-			));
-			
+			assert.throws(function(){
+				connection.readFile(fileIDString);
+			});
 			
 		});
 		
-		
-		it('fails if the id is valid but does not exist', function(){
+		it('throws an error if it does not receive a valid id string', function(){
 			
 			
-		});
-		
-		it('returns an empty list if the game has no resources',function(){
 			
+			assert.throws(function(){
+				connection.readFile(12345);
+			});
+			assert.throws(function(){
+				connection.readFile(null);
+			});
+			assert.throws(function(){
+				connection.readFile(true);
+			});
+		});		
+				
+		it('throws an error if the id is valid but does not exist', function(){
+			assert.throws(function(){
+				connection.readFile(fileIdString,function(){});
+			});
 			
-		});
-		
-		it('successfully retrieves a list of resource IDs, provided a Game ID',function(){
-			
-			
-		});
-		
-		
-		
-		
+		});		
 	});
 	
 	

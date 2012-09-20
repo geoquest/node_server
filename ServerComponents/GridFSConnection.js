@@ -97,19 +97,26 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 	this.executeEvent(event);	
 };
 
-
-
-
 GridFSConnection.prototype.readFile = function(fileID, callback){
 	
 	if (callback === undefined) {
 		throw new Error('Callback function is required.');
 	}
 	
-	var event = function(db) {
-		var id = ObjectID.createFromHexString(resourecID);	
+	var event = function(db){
+		var ObjectID = require('mongodb').ObjectID;
+		var id = ObjectID.createFromHexString(fileID);	
 		var gridStore = new GridStore(db, id,"r");
+		
 		gridStore.open(function(err,gridStore){		
+			
+			if(err!=null){
+				throw new Error(err);				
+			}
+			
+			
+			var fileLength = gridStore.length;
+			
 			
 			var fileContents = null;
 			
@@ -118,13 +125,18 @@ GridFSConnection.prototype.readFile = function(fileID, callback){
 			
 			
 			//when receiving data ...
-			stream.on("data", function(chunk) {
-				
+			stream.on("data", function(chunk) {				
 				if(fileContents == null){
 					fileContents = chunk;					
 				} else {
 					fileContents += chunk;
 				}
+				
+				if(fileContents.length!=fileLength){
+					throw new Error("The length of the retrieved file does not match the one in the database.");					
+				}
+				
+				
 	        });		
 			
 			
@@ -138,85 +150,6 @@ GridFSConnection.prototype.readFile = function(fileID, callback){
 	}
 		
 	this.executeEvent(event);
-};
-
-
-
-
-
-GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
-	
-	var resourcesIDs = [];
-	//TODO: (alternative) instead of constructing the Resource objects, let that task for the ResourceRepository and just pass a json with the necessary data
-	
-	
-	if(!(gameId.constructor === String)){
-		throw Error("the Game ID is invalid. Please pass a valid string.");
-	}
-	
-	var id = ObjectID.createFromHexString(gameId);
-	
-	event = function(db) {
-		
-		//getting the resources list for the given author (search is done by ID)
-		db.collection('fs.files', function(err, collection) {
-			collection.find({"metadata.game_id" : id}, function(err, cursor){				
-		        cursor.toArray(function(err, docs){		        	
-		        	for (i in items){
-		        		gamesList.add(docs[i]._id);	        		
-		        	}		        	
-		        	callback(resourceIDs);
-		        });
-			});
-		});
-	}
-	
-};
-
-
-
-
-
-GridFSConnection.prototype.getResource = function(resourceID,callback){
-	
-	filePath = null;	
-	//validate the file path
-	
-	event = function(db,callback) {	
-		var id = ObjectID.createFromHexString(resourecID);	
-		var gridStore = new GridStore(db, id,"r");
-		var fileName = gridStore.filename;
-		
-		
-		//TODO: construct Resource object here and pass it on to the callback  
-		
-		
-		
-		gridStore.open(function(err,gridStore){		
-			
-			//TODO: add the file path instead of the "./" -> the file path should be taken from a config file or smthg ... 
-			
-			var fileStream = fs.createWriteStream("./"+resourceID); //do not pass the file name, but the resourceID - that one's unique and does not cause problems
-			var stream = gridStore.stream(true);
-			stream.on("data", function(chunk) {
-				fileStream.write(chunk);
-	        });			
-			stream.on("end", function(err) {
-				console.log(err);
-				var filePath = fileStream.
-				callback();
-				
-			});
-		});		
-	};
-	
-	this.executeEvent(event);
-};
-
-
-
-		
-		
-		
+};		
 
 exports.class = GridFSConnection;

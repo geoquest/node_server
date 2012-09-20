@@ -44,6 +44,16 @@ Resource = function() {
 };
 
 
+//gets the id of the file from the current object and passes it on to the callback :)
+Resource.prototype.getContent = function(callback){
+	
+	
+	
+	
+	
+};
+
+
 Resource.prototype.getFilename = function() {
 	return this._filename;
 };

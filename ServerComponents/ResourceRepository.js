@@ -74,6 +74,15 @@ ResourceRepository.prototype.insert = function(resource) {
 	});
 };
 
+
+
+
+
+
+
+
+
+
 /**
  * Searches for all resources that are connected to the given game.
  * 
