@@ -24,6 +24,11 @@ ResourceList.prototype.setResourceRepository = function(resourceRepository){
 ResourceList.prototype.handleRequest = function(request, response)
 {
 	var gameId = request.query["id"];
+	if (gameId === undefined) {
+		response.status(500);
+		response.end();
+		return;
+	}
 	var self = this;
 	this._gameRepo.findGameById(gameId, function(game) {
 		if(game == null) {
