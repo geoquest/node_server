@@ -5,6 +5,35 @@ var User = require('./User');
 Resource = function() {
 
 	/**
+	 * Injected connection that is used to load the 
+	 * content of the resource.
+	 * 
+	 * @var {Object}
+	 */
+	this._gridFSConnection = null;
+	
+	/**
+	 * The internal id of the resource.
+	 * 
+	 * @var {String}
+	 */
+	this._id = null;
+	
+	/**
+	 * The id of the game this resource belongs to.
+	 * 
+	 * @var {String}
+	 */
+	this._gameId = null;
+	
+	/**
+	 * The id of the user that created the resource.
+	 * 
+	 * @var {String}
+	 */
+	this._userId = null;
+	
+	/**
 	 * @var {String}
 	 */
 	this._filename = null;
@@ -43,32 +72,69 @@ Resource = function() {
 	
 };
 
+/**
+ * Injects the GridFS connection.
+ * 
+ * The connection is used to load the content of this resource.
+ * 
+ * @param {String}
+ */
 Resource.prototype.setGridFSConnection = function(connection) {
-	
+	this._gridFSConnection = connection;
 };
 
+/**
+ * Sets the resource id.
+ * 
+ * @param {String}
+ */
 Resource.prototype.setId = function(id) {
-	
+	this._id = id;
 };
 
+/**
+ * The id of this resource.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getId = function() {
-	
+	return this._id;
 };
 
+/**
+ * Sets the game id.
+ * 
+ * @param {String}
+ */
 Resource.prototype.setGameId = function(id) {
-	
+	this._gameId = id;
 };
 
+/**
+ * The id of the game that this resource belongs to.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getGameId = function() {
-	
+	return this._gameId;
 };
 
+/**
+ * Sets the user id.
+ * 
+ * @param {String}
+ */
 Resource.prototype.setUserId = function(id) {
-	
+	this._userId = id;
 };
 
+/**
+ * The id of the user that created this resource.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getUserId = function() {
-	
+	return this._userId;
 };
 
 Resource.prototype.getFilename = function() {
