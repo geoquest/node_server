@@ -1,7 +1,11 @@
-var GameRepository = require('../../ResourceRepository');
 var fs = require('fs');
 
 
+/**
+ * 
+ * @returns {DownloadResources}
+ * @deprecated Replaced by ResourceList and DownloadResource
+ */
 DownloadResources = function() {
     this._resourceRepository = null;
 };

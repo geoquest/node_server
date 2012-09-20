@@ -7,7 +7,7 @@ var dbconf = {
 	host: host,
 	port: port,
 	url: host + ":" + port + "/" + dbname
-  , collections : ["users", "games", "gameStates"]
+  , collections : ["users", "games", "gameStates", "fs.files", "fs.chunks"]
 };
 
 module.exports = dbconf;
