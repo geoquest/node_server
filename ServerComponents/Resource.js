@@ -146,7 +146,7 @@ Resource.prototype.setDate = function(date) {
  * };
  * </code>
  * 
- * @param callback
+ * @param {function} callback
  */
 Resource.prototype.getContent = function(callback) {
 	
@@ -185,9 +185,5 @@ Resource.prototype.toString = function() {
 	return this._filename;
 
 };
-
-
-
-
 
 exports.class = Resource;
