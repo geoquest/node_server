@@ -12,4 +12,3 @@ var atomicGameSchemas = {
 };
 
 module.exports = atomicGameSchemas;
-//module.exports.gameSchema = gameSchema;

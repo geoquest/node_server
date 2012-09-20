@@ -23,6 +23,10 @@ var schema = {
 			"type":"string",
 			"required":true
 		},
+		"nextButtonText": {
+			"type":"string",
+			"required":false
+		},
 		"outroSuccessText":{
 			"type":"string",
 			"required":true

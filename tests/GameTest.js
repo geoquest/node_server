@@ -81,22 +81,33 @@ describe('Game', function() {
         });
     	
     });
-    
+
     describe('setId/getId', function() {
     	it('should set the Id', function() {
     		object.setId("123xdqree4aaxc");
             assert.deepEqual(object.getId(), "123xdqree4aaxc");
         });
-    	
+
     	it('should accept not null as id', function() {
     		assert.throws(function(){
     			object.setId(null);
     		});
         });
-    	
     });
-    
-    
+
+    describe('setVersion/getVersion', function() {
+    	it('should set the Version', function() {
+    		object.setVersion(10);
+            assert.deepEqual(object.getVersion(), 10);
+        });
+
+    	it('should not accept null as version', function() {
+    		assert.throws(function(){
+    			object.setVersion(null);
+    		});
+        });
+    });
+
 	describe('toJSON', function() {
 		it('maps properties correctly (check if conversion is performed correctly)', function() {
 			object.addAuthor("whatever");
@@ -112,6 +123,7 @@ describe('Game', function() {
 		it('returns a Game object', function() {
 			var json = {
 				"authors" : ["author 1", "author 2"],
+				"version": 10,
 				"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
 			};
 			assert.ok(Game.fromJSON(json) instanceof Game.class);
@@ -127,16 +139,19 @@ describe('Game', function() {
 		it('maps properties correctly', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
+					"version": 5,
 					"content": {"mission" : "best mission ever", "mission" : "best mission 2 ever"}
 				};
 			var game = Game.fromJSON(json);
 			assert.ok(game instanceof Game.class);
 			assert.deepEqual(game.getContent(), {"mission" : "best mission ever", "mission" : "best mission 2 ever"});
+			assert.deepEqual(game.getVersion(), 5);
         });
 		
 		it('works with empty content', function() {
 			var json = {
 					"authors" : ["author 1", "author 2"],
+					"version": 7,
 					"content": {}
 				};
 			assert.ok(Game.fromJSON(json) instanceof Game.class);
@@ -174,8 +189,3 @@ describe('Game', function() {
 	});
 	
 });
-    
-    
-    
-    
-    

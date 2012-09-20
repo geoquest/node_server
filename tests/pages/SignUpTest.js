@@ -18,6 +18,10 @@ describe('SignUp page', function() {
 			// The object remembers the last rendered template
 			// for later checks.
 			template: null,
+			redirectUrl: '',
+			redirect : function(url){
+				this.redirectUrl = url;
+			},
 			//simulate variables in template
 			templateVars: null, 
 			render: function(template, templateVars) {
@@ -146,8 +150,8 @@ describe('SignUp page', function() {
 			request.params.email = 'agile@lab.com';
 						
 			page.handleRequest(request, response);
-			assert.equal('home.ejs', response.template);
-			assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.fName + '!'}, response.templateVars);
+			assert.equal('/games?showDialog=true', response.redirectUrl);
+			//assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.fName + '!'}, response.templateVars);
 			
 		});
 		
