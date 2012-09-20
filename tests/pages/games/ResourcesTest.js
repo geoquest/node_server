@@ -134,7 +134,7 @@ describe('Resources page', function() {
 	it('provides message if no file is uploaded', function() {
 		request.files.resource = null;
 		resourcesController.handleRequest(request, response);
-		assert.equal(response.templateVars.msg, 'Please provide a resource file.');
+		assert.equal(response.templateVars.msgUploadResource, 'Please provide a resource file.');
 	});
 	
 	it('passes game to template ifno file is uploaded', function() {
@@ -150,11 +150,12 @@ describe('Resources page', function() {
 		};
 		resourcesController.handleRequest(request, response);
 	});
-	
-	it('provides message if resource was uploaded successfully', function() {
-		resourcesController.handleRequest(request, response);
-		assert.equal(response.templateVars.msg, 'Resource was successfully added.');
-	});
+
+// Don't render this msg anymore
+//	it('provides message if resource was uploaded successfully', function() {
+//		resourcesController.handleRequest(request, response);
+//		assert.equal(response.templateVars.msgUploadResource, 'Resource was successfully added.');
+//	});
 	
 	it('passes game to template if resource was uploaded successfully', function() {
 		resourcesController.handleRequest(request, response);

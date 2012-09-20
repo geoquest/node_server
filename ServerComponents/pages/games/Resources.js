@@ -9,7 +9,8 @@ Resources = function() {
 			showDialog: false,
 			titleModel : '',
 			msgModal : '',
-			msg : '',
+			msgUploadResource : '',
+			msgUploadGame : '',
 			game: null,
 			resources: [],
 			highlightResourceFilename: '',
@@ -75,7 +76,8 @@ Resources.prototype.handleRequest = function(request, response) {
 				self._handlePOST(request, response, game);
 			} 
 			else {//GET request with valid gameid
-				self._setMessage('Please upload your game resources.');
+				self._setMessageUploadResource('Please upload your game resources.');
+				self._setMessageUploadGame('Please upload your game Json.');
 				self._setGame(game);
 				response.render(self._template, self._templateVariables);
 			}
@@ -85,8 +87,12 @@ Resources.prototype.handleRequest = function(request, response) {
 
 
 Resources.prototype._handlePOST = function(request, response, game) {
+	
+	this._setMessageUploadGame('Please upload your game Json.');
+	
 	if (!this._hasUploadedFile(request)) {
-		this._setMessage('Please provide a resource file.');
+		this._setMessageUploadResource('Please provide a resource file.');
+		
 		this._raiseUploadError();
 	}else{
 		// Current user is author of the game and allowed to add resources.
@@ -94,7 +100,7 @@ Resources.prototype._handlePOST = function(request, response, game) {
 		this._resourceRepository.insert(resource);
 		this._setHighlightResource(resource);
 		this._templateVariables.resources.push(resource);
-		this._setMessage('Resource was successfully added.');
+		this._setMessageUploadResource('Please upload your game resources.');
 	}
 	this._setGame(game);	
 	
@@ -118,7 +124,7 @@ Resources.prototype._hasUploadedFile = function(request) {
 	
 	//we add this check because the two if above seem to be insufficient
 	if (!request.files || !request.files.resource || !request.files.resource.path || !request.files.resource.name) {
-		this._setMessage('Error! Please choose a file to upload.');
+		this._setMessageUploadResource('Error! Please choose a file to upload.');
 		this._raiseUploadError();
 		return false;
 	}
@@ -149,9 +155,15 @@ Resources.prototype.constructResource = function(request, game){
 	return resource;
 };
 
-Resources.prototype._setMessage = function(message) {
-	this._templateVariables.msg = message;
+Resources.prototype._setMessageUploadResource = function(message) {
+	this._templateVariables.msgUploadResource = message;
 };
+
+Resources.prototype._setMessageUploadGame = function(message) {
+	this._templateVariables.msgUploadGame = message;
+};
+
+
 
 Resources.prototype._setGame = function(game) {
 	this._templateVariables.game = game;

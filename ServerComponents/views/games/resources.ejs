@@ -66,7 +66,7 @@ if(uploadError !== undefined && uploadError === true){
 <div id='UploadResource' style="display: <%= displayMode%>" >
 
 <h3>Upload resource</h3>
-<p class="alert"><%= msg %></p>
+<p class="alert"><%= msgUploadResource %></p>
 <form action="/games/resources?gameId=<%= game.getId() %>" method="POST" enctype="multipart/form-data">
 	<fieldset>
 		<label for="game">Upload Game Resources <b><i>Images/Audio/Video</i></b></label>
@@ -79,10 +79,10 @@ if(uploadError !== undefined && uploadError === true){
 
 
 
-<div id='UploadGame' style="display: <%= displayMode%>" >
+<div id='UploadGame' style="display: none" >
 
 <h3>Edit Game</h3>
-<p class="alert"> <%= msg %> </p>
+<p class="alert"> <%= msgUploadGame %> </p>
 <form action="/games" method="POST" enctype="multipart/form-data">
 	<fieldset>
 		<label for="game">Game as JSON</label>
