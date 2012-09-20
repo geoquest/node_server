@@ -50,13 +50,17 @@ describe('ResourceList', function() {
 		response = null;
 	});
 	
+	it('should return status code 500 if game id is not provided', function(){
+		request.query.id = undefined;
+		page.handleRequest(request,response);
+		assert.equal(response.statusCode, 500);
+	});
 	
 	it('should call findAllByGame in ResourceRepository', function(done){
         resourceRepo.findAllByGame = function(game, callback){
         	callback([]);
         	done();
         };
-        	
 		page.handleRequest(request,response);
 		
 	});
