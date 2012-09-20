@@ -22,13 +22,17 @@ Resource = function() {
 	this._mimeType = null;
 
 	/**
-	 * @var {Game}
+	 * The id of the game this resource belongs to.
+	 * 
+	 * @var {String}
 	 */
 	this._game = null;
 
 	
 	/**
-	 * @var {User}
+	 * The id of the user that created this resource.
+	 * 
+	 * @var {String}
 	 */
 	this._user = null;
 	
