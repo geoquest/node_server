@@ -160,6 +160,30 @@ describe('Resource', function() {
     	});
     });
     
+    describe('getId', function() {
+    	it('returns correct value', function() {
+    		
+    	});
+    });
+    
+    describe('getGameId', function() {
+    	it('returns correct value', function() {
+    		
+    	});
+    });
+    
+    describe('getUserId', function() {
+    	it('returns correct value', function() {
+    		
+    	});
+    });
+    
+    describe('setGridFSConnection injects connection', function() {
+    	it('returns correct value', function() {
+    		
+    	});
+    });
+    
     describe('validate', function(){
     	beforeEach(function() {
     		object._filename = "file";
