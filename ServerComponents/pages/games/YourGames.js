@@ -11,7 +11,7 @@ YourGames = function() {
 			titleModel : '',
 			msgModal : '',
 			uploadError: false,
-			highlightGameId: null,
+			highlightGameId: '',
 			msg : '',
 			game: []
 	};

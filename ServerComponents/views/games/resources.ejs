@@ -26,7 +26,8 @@
         	<%= resources[index] %>
     	</div>
         
-        <%if(highlightResourceFilename===resources[index].getFilename){%>
+        <%
+        if(highlightResourceFilename==resources[index].getFilename()){%>
         	<script>
 			$(document).ready(function() {
 				$('#resource<%=index%>').effect("highlight", {}, 5000);

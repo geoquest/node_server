@@ -12,7 +12,7 @@ Resources = function() {
 			msg : '',
 			game: null,
 			resources: [],
-			highlightResourceFilename: null,
+			highlightResourceFilename: '',
 			uploadError: false,			
 	};
 };
