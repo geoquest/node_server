@@ -49,13 +49,13 @@ ResourceRepository.prototype.insert = function(resource) {
 	if (!(resource instanceof Resource.class)) {
 		throw new Error('Object to be inserted must be an instance of Resource');
 	}
-
+	
 	var metadata = {
-		game_id : resource.getGameId(),
-		user_id : resource.getUserId(),
+		game_id : "" + resource.getGameId(),
+		user_id : "" + resource.getUserId(),
 		date : resource.getDate()
 	};
-
+	
 	this._gridFS.saveFile(resource.getFilename(), resource.getTempPath(), metadata, function(error, fileInfo) {
 		if (error) {
 			console.log(error);
@@ -81,10 +81,9 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
 	if (callback === undefined) {
 		throw new Error('Result callback is required.');
 	}
+	
 	var query = {
-		'metadata': {
-			'game_id': game.getId()
-		}
+		'metadata.game_id': game.getId()
 	};
 	this._connection['fs.files'].find(query, this._createResultHandler(callback, this._resultToResources));
 };

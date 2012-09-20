@@ -71,7 +71,7 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 	
 	var event = function(db) {
 		var gs = GridStore(db, newFilename, "w");
-
+		
 		if (metadata != null) {
 			gs.options.metadata = metadata;
 		}
