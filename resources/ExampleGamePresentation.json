@@ -1,0 +1,168 @@
+{
+    "name": "Game Presentation Example2",
+    "gameElements": [
+        {
+            "type": "npcTalk",
+            "id": "npcTalk01",
+            "name": "Tutorial mission",
+            "nextdialogbuttontext": "More ...",
+            "endbuttontext": "Start ...",
+            "dialogItem": [
+                {
+                    "text": "Welcome to this GeoQuest Game!\n Here you will learn about the basic game elements. The current game element is an NPCTalk element.\n By clicking on the 'More...' button, you can make the next dialog item appear."
+                },
+                {
+                    "text": "Well done... Try again..."
+                },
+                {
+                    "text": "Great! Now let's have a look at the next mission type."
+                }
+            ],
+            "onEnd": [
+                {
+                    "actions": [
+                        {
+                            "method": "startMission",
+                            "arguments": {
+                                "id": "QA01"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "questionAndAnswer",
+            "id": "QA01",
+            "name": "Question & Answer mission",
+            "correctAnswersNeeded": 2,
+            "shuffle": "all",
+            "introText": "This is a basic Question-and-Answer mission. To succeed you need to give at least two correct answers.",
+            "nextButtonText": "Go on...",
+            "outroSuccessText": "Well done. Let's have a look at the next mission type.",
+            "outroFailText": "Sorry, but not enough questions have been answered correctly. Try again...",
+            "questions": [
+                {
+                    "questionText": "What is the type of the mission you are currently playing?",
+                    "answers": [
+                        {
+                            "correct": 1,
+                            "answerText": "QuestionAndAnswer",
+                            "responseText": "Well done..."
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "NPCTalk",
+                            "responseText": "No, sorry..."
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "QRScan",
+                            "responseText": "No, sorry..."
+                        }
+                    ]
+                },
+                {
+                    "questionText": "What do you think about the Lab 'Agile Software Development'",
+                    "answers": [
+                        {
+                            "correct": 1,
+                            "answerText": "Great. Fun. Outstanding...",
+                            "responseText": "Yeah. Right..."
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "Good Lab, lazy participants...",
+                            "responseText": "NO!"
+                        },
+                        {
+                            "correct": 0,
+                            "answerText": "No comment...",
+                            "responseText": "Really? Come on..."
+                        }
+                    ]
+                }
+            ],
+            "onEnd": [
+                {
+                	"conditions":["QA01.state == success"],
+                    "actions": [
+                        {
+                            "method": "startMission",
+                            "arguments": {
+                                "id": "QRScan01"
+                            }
+                       }
+                    ]
+                },
+                {
+                	"conditions":["QA01.state != success"],
+                    "actions": [
+                        {
+                            "method": "startMission",
+                            "arguments": {
+                                "id": "QA01"
+                            }
+                       }
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "type": "QRTagReading",
+            "id": "QRScan01",
+            "taskdescription" : "This is a QRScan mission. The task of such missions is to successfully scan some barcode. Here you have to find and scan a water bottle to succeed.",
+            "expectedContent": "3700123302957",
+            "outroSuccessText" : "Well done. Now the last mission will be finding a hotspot. Hope you can swim...",
+			"outroFailText" : "Wrong item. Please try again.",
+			"endButtonText" : "Yeah yeah...",
+			"onEnd" : [
+				{
+                	"conditions":["QRScan01.state == success"],
+					"actions" : [
+                        {
+                            "method": "setHotspotVisibility",
+                            "arguments": {
+                                "id": "hotspot01",
+                                "visible": true
+                            }
+                        },
+						{
+							"method": "showMap"
+						}
+					]
+				},
+				{
+                	"conditions":["QRScan01.state != success"],
+					"actions" : [
+						{
+							"method" : "startMission",
+							"arguments": {
+                                "id": "QRScan01"
+                            }
+						}
+					]
+				}
+			]
+        }        
+    ],
+    "hotspots": [
+        {
+            "id": "hotspot01",
+            "latitude": "50.724",
+            "longitude": "7.121",
+            "radius": "20",
+            "onEnter": [
+                {
+					"actions": [
+                        {
+                            "method": "endGame"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+    
+}
