@@ -93,12 +93,19 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
  * 
  * @param {String} id
  * @param {function} callback
+ * @throws Error If id or callback is missing.
  */
 ResourceRepository.prototype.findById = function(id, callback) {
+	if (id === undefined) {
+		throw new Error('Resource id is required.');
+	}
+	if (callback === undefined) {
+		throw new Error('Result callback is required.');
+	}
 	var query = {
 		'_id': id
 	};
-	this.connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResource));
+	this._connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResource));
 };
 
 /**
@@ -151,7 +158,9 @@ ResourceRepository.prototype._createResultHandler = function(callback, conversio
 			return;
 		}
 		// Convert result to model.
-		callback(conversionFunction(result));
+		// Make sure that the conversion function is called
+		// in the context of this repository.
+		callback(conversionFunction.call(self, result));
 	};
 };
 

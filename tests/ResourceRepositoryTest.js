@@ -210,7 +210,7 @@ describe('ResourceRepository', function() {
 
     });
     
-    describe('findbyId()', function() {
+    describe('findById()', function() {
     	it('should throw an exception if provided id is undefined', function() {
     		assert.throws(function() {
     			repository.findById(undefined, function() {});
