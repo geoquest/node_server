@@ -513,8 +513,7 @@ describe('GameValidator',function() {
 				"id" : "Intro_QRCode2",
 				"expectedContent" : "35638990",
 				"taskdescription" : "Here you have to find and scan a water bottle.",
-				"onFail": [],
-				"onSuccess" : []
+				"onEnd": [],
 			};
 			assert.equal(true, gameValidator.validate(testJSON, "QRTagReading"));
 		});
@@ -522,8 +521,7 @@ describe('GameValidator',function() {
 			var testJSON = {
 					"id" : "Intro_QRCode2",
 					"expectedContent" : 3563899,
-					"onFail": [],
-					"onSuccess" : []
+					"onEnd": [],
 				};
 			assert.equal(false, gameValidator.validate(
 					testJSON, "QRTagReading"));
