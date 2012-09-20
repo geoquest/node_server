@@ -223,20 +223,44 @@ describe('ResourceRepository', function() {
     		});
     	});
     	
-    	it('should return null if resource record was not found', function() {
-    		
+    	it('should return null if resource record was not found', function(done) {
+    		var resultHandler = function(resource) {
+    			assert.strictEqual(resource, null);
+    			done();
+    		};
+    		repository.findById('12345', resultHandler);
     	});
     	
-    	it('should return Resource object if record was found', function() {
-    		
+    	it('should return Resource object if record was found', function(done) {
+    		connection.fs.files.find = createFind(createResult(1));
+    		var resultHandler = function(resource) {
+    			assert.ok(resource instanceof Resource.class);
+    			done();
+    		};
+    		repository.findById('12345', resultHandler);
     	});
     	
-    	it('should populate the Resource object correctly', function() {
-    		
+    	it('should populate the Resource object correctly', function(done) {
+    		connection.fs.files.find = createFind(createResult(1));
+    		var resultHandler = function(resource) {
+    			assert.equal(resource.getId(), 0);
+    			assert.equal(resource.getFilename(), 'lulufile0.txt');
+    			assert.equal(resource.getGameId(), 'game-lulu');
+    			assert.equal(resource.getUserId(), 'user-huhu');
+    			assert.equal(resource.getDate(), new Date('2012-09-20 11:55:00'));
+    			assert.equal(resource.getMimeType(), 'text/plain');
+    			done();
+    		};
+    		repository.findById('12345', resultHandler);
     	});
     	
-    	it('should inject GridFS connection into resource object', function() {
-    		
+    	it('should inject GridFS connection into resource object', function(done) {
+    		connection.fs.files.find = createFind(createResult(1));
+    		var resultHandler = function(resource) {
+    			assert.strictEqual(resource._gridFSConnection, gridFS);
+    			done();
+    		};
+    		repository.findById('12345', resultHandler);
     	});
     });
     
