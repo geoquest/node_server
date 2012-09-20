@@ -57,7 +57,7 @@ YourGames.prototype.handleRequest = function(request, response) {
 			response.render(self._template, self._templateVariables);
 	    }
 	    else{
-	    	var params = {showDialog : false, title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
+	    	//var params = {showDialog : false, title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
 	    	self._templateVariables.showDialog = false;
 	    	self._templateVariables.titleModel = '';
 	    	self._templateVariables.msgModal = '';
@@ -102,10 +102,11 @@ YourGames.prototype._handleUpload = function(request) {
 	// Upload successful
 	var gameData = {
 		'authors': [request.session.user.getId()],
+		'version': 1,
 		'content': content
 	};
-    var game = new Game.fromJSON(gameData);      
- 
+    var game = new Game.fromJSON(gameData);
+
 	this._gameRepository.insert(game);
 	
 	//TODO: here we just push the game into game list without actually query the database,

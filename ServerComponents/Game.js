@@ -2,7 +2,8 @@ var mapping = {
     // Expected JSON property -> private Game attributes 
     'authors': '_authors',
     'content': '_content',
-    '_id': '__id'
+    '_id': '__id',
+    'version': '_version'
 };
 
 Game = function() {
@@ -25,12 +26,19 @@ Game = function() {
 	this._content = null;
 	
 	/**
-	 * ID of the uploaded Game
+	 * Version of the uploaded Game
 	 * has two underscores, since id is prefixed with underscore in db already
 	 * 
 	 * @var {String}
 	 */
 	this.__id = null;
+	
+	/**
+	 * Version of the uploaded Game
+	 * 
+	 * @var {int}
+	 */
+	this._version = null;
 	
 };
 
@@ -67,6 +75,17 @@ Game.prototype.getId = function() {
 	return this.__id;
 };
 
+Game.prototype.setVersion = function(version) {
+	if(version !== null) {
+		this._version = version;
+	} else {
+		throw new Error("No game version passed. Please give your version.");
+	}
+};
+
+Game.prototype.getVersion = function() {
+	return this._version;
+};
 
 Game.prototype.getContent = function() {
 	return this._content;
@@ -131,7 +150,7 @@ var fromJSON = function(jsonObject) {
 	var game = new Game();
 	for (var property in mapping) {
 		if (!jsonObject.hasOwnProperty(property)) {
-			if (property == '_id'){
+			if ((property == '_id') || (property == 'version')) {
 				// in this case the game hasn't been inserted into the database yet
 				continue;
 			}
