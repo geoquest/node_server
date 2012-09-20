@@ -40,6 +40,7 @@ ResourceList.prototype.handleRequest = function(request, response)
 					mimeType: resourceList[key].getMimeType()
 				});
 			}
+			response.setHeader("Content-Type", "application/json");
 			response.write(JSON.stringify(result));
 			response.end();
 		});
