@@ -8,6 +8,7 @@
             "correctAnswersNeeded": 3,
             "shuffle": "all",
             "introText": "This is the intro text",
+            "nextButtonText": "Go on",
             "outroSuccessText": "This is the outroSuccessText text",
             "outroFailText": "This is the outroFailText text",
             "questions": [
