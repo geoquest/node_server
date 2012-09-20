@@ -101,11 +101,9 @@ describe('ResourceRepository', function() {
 			}
 		};
 		connection = {
-			fs: {
-				files: {
-					// Simulates an empty result set per default.
-					find: createFind(createResult(0))
-				}
+			'fs.files': {
+				// Simulates an empty result set per default.
+				find: createFind(createResult(0))
 			}
 		};
 		repository = new ResourceRepository.class(gridFS, connection);
@@ -229,7 +227,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should return Resource object if record was found', function(done) {
-    		connection.fs.files.find = createFind(createResult(1));
+    		connection['fs.files'].find = createFind(createResult(1));
     		var resultHandler = function(resource) {
     			assert.ok(resource instanceof Resource.class);
     			done();
@@ -238,7 +236,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should populate the Resource object correctly', function(done) {
-    		connection.fs.files.find = createFind(createResult(1));
+    		connection['fs.files'].find = createFind(createResult(1));
     		var resultHandler = function(resource) {
     			assert.equal(resource.getId(), 0);
     			assert.equal(resource.getFilename(), 'lulufile0.txt');
@@ -252,7 +250,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should inject GridFS connection into resource object', function(done) {
-    		connection.fs.files.find = createFind(createResult(1));
+    		connection['fs.files'].find = createFind(createResult(1));
     		var resultHandler = function(resource) {
     			assert.strictEqual(resource._gridFSConnection, gridFS);
     			done();
@@ -289,7 +287,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should return the correct number of resources', function(done) {
-    		connection.fs.files.find = createFind(createResult(5));
+    		connection['fs.files'].find = createFind(createResult(5));
     		var resultHandler = function(resources) {
     			assert.ok(util.isArray(resources));
     			assert.equal(resources.length, 5);
@@ -299,7 +297,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should return an array of Resource objects', function(done) {
-    		connection.fs.files.find = createFind(createResult(3));
+    		connection['fs.files'].find = createFind(createResult(3));
     		var resultHandler = function(resources) {
     			for (var index in resources) {
     				assert.ok(resources[index] instanceof Resource.class);
@@ -310,7 +308,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should populate the Resource objects correctly', function(done) {
-    		connection.fs.files.find = createFind(createResult(1));
+    		connection['fs.files'].find = createFind(createResult(1));
     		var resultHandler = function(resources) {
     			assert.equal(resources.length, 1);
     			var resource = resources[0];
@@ -326,7 +324,7 @@ describe('ResourceRepository', function() {
     	});
     	
     	it('should inject GridFS connection into all resource objects', function(done) {
-    		connection.fs.files.find = createFind(createResult(1));
+    		connection['fs.files'].find = createFind(createResult(1));
     		var resultHandler = function(resources) {
     			assert.equal(resources.length, 1);
     			var resource = resources[0];
