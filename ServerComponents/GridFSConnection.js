@@ -88,4 +88,12 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 	;
 };
 
+
+GridFSConnection.prototype.readFile = function(fileId, callback) {
+
+	if (callback === undefined) {
+		throw new Error('Callback function is required.');
+	};
+};
+
 exports.class = GridFSConnection;
