@@ -41,14 +41,14 @@ GridFSConnection.prototype._openConnection = function(callback) {
 				for ( var i in self._eventBuffer) {
 					self._eventBuffer[i](db);
 				}
-				;
+				
 			}
 			if (callback) {
 				callback(error, db);
 			}
 		});
 	}
-	;
+	
 };
 
 /**
@@ -65,11 +65,11 @@ GridFSConnection.prototype._openConnection = function(callback) {
 
 
 
-GridFSConnection.prototype.executeDBEvent(event){		
+GridFSConnection.prototype.executeEvent(callback){		
 	if (this._state == STATE_OPEN) {
-		event(this._db);
+		callback(this._db);
 	} else {
-		this._eventBuffer.push(event);
+		this._eventBuffer.push(callback);
 		this._openConnection();
 	}
 };
@@ -79,7 +79,7 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 
 	if (callback === undefined) {
 		throw new Error('Callback function is required.');
-	};
+	}
 	
 	var event = function(db) {
 		var gs = GridStore(db, newFilename, "w");
@@ -90,44 +90,33 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 
 		gs.writeFile(fileToWrite, callback);
 	};
-	this.executeDBEvent(event);	
+	
+	this.executeEvent(event);	
 };
 
-GridFSConnection.prototype.loadGamesList = function(userId, callback){
-	
-	//THIS IS NOT REALLY NEEDED... DELETE IT IF IT REALLY PROVES WORTHLESS :| 
-	
-	var gamesList = [];
-	
-	db.open(function(err, db) {
-		
-		//getting the games list for the given author (search is done by ID)
-		db.collection('games', function(err, collection) {
-			collection.find({'authors': userId}, function(err, cursor){
-		        cursor.toArray(function(err, docs){		        	
-		        	for (i in items){
-		        		gamesList.add(docs[i]._id);	        		
-		        	}		        	
-		        	callback(gamesList);
-		        });
-			});
-		});
-	});
-};
+
 
 
 GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 	
 	var resourcesIDs = [];
-	//TODO: construct the Resource objects for each resource and pass an array of those objects
-	//just passing the IDs may be insufficient
-	
-	
 	//TODO: (alternative) instead of constructing the Resource objects, let that task for the ResourceRepository and just pass a json with the necessary data
+	
+	
+	if(!(gameId.constructor === String)){
+		throw Error("the Game ID is invalid. Please pass a valid string.");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	var id = ObjectID.createFromHexString(gameId);
 	
-	db.open(function(err, db) {
+	event = function(db) {
 		
 		//getting the resources list for the given author (search is done by ID)
 		db.collection('fs.files', function(err, collection) {
@@ -140,7 +129,8 @@ GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 		        });
 			});
 		});
-	});	
+	}
+	
 };
 
 
@@ -148,8 +138,6 @@ GridFSConnection.prototype.getResource = function(resourceID,callback){
 	
 	filePath = null;	
 	//validate the file path
-	
-	
 	
 	event = function(db,callback) {	
 		var id = ObjectID.createFromHexString(resourecID);	
@@ -179,7 +167,7 @@ GridFSConnection.prototype.getResource = function(resourceID,callback){
 		});		
 	};
 	
-	this.executeDBEvent(event);
+	this.executeEvent(event);
 };
 
 

@@ -3,6 +3,7 @@
  */
 
 var Resource = require('./Resource');
+var Game = require('./Game');
 
 ResourceRepository = function(gridFSConnection) {
 	if (gridFSConnection === undefined) {
@@ -88,6 +89,15 @@ ResourceRepository.prototype.insert = function(resource) {
  * @param {function} callback
  */
 ResourceRepository.prototype.getResourcesByGame = function(game, callback) {
+	if (!(game instanceof Game.class)) {
+		throw new Error('Object to be inserted must be an instance of Resource');
+	}
+	
+	this._gridFS.saveFile(resource.getFilename(), resource.getTempPath(), metadata, function(error, fileInfo) {
+		if (error) {
+			console.log(error);
+		}
+	});
 	
 };
 

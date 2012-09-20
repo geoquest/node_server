@@ -1,5 +1,8 @@
 var assert = require("assert");
 var fs = require('fs');
+var ObjectID = require('mongodb').ObjectID;
+
+
 
 var GridFSConnection = require("../ServerComponents/GridFSConnection.js");
 
@@ -77,6 +80,52 @@ describe('GridFSConnection', function() {
 				connection.saveFile("newFile", fileToSave, metadata);
 			});
 		});
+	});
+	
+	describe('loadResourcesList',function(){
+		var gameIDString = '50586c39ea2ac3d00e000001';
+		var gameID = ObjectID.createFromHexString(gameIDString);
+		
+		beforeEach(function() {
+			
+		});
+
+		afterEach(function() {
+			
+		});
+		
+		it('fails if an invalid game id is given', function(){
+			gameID = "sadfuiy2378";
+			
+			
+			assert.doesNotThrow(
+					connection.loadResourcesList(gameID, function(){
+						
+					}
+			));
+			
+			
+		});
+		
+		
+		it('fails if the id is valid but does not exist', function(){
+			
+			
+		});
+		
+		it('returns an empty list if the game has no resources',function(){
+			
+			
+		});
+		
+		it('successfully retrieves a list of resource IDs, provided a Game ID',function(){
+			
+			
+		});
+		
+		
+		
+		
 	});
 	
 	
