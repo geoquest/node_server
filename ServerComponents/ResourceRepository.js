@@ -82,7 +82,15 @@ ResourceRepository.prototype.insert = function(resource) {
  * @param {function} callback
  */
 ResourceRepository.prototype.findAllByGame = function(game, callback) {
-	
+	if (callback === undefined) {
+		throw new Error('Result callback is required.');
+	}
+	var query = {
+		'metadata': {
+			'game_id': game.getId()
+		}
+	};
+	this._connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResources));
 };
 
 /**
@@ -178,6 +186,20 @@ ResourceRepository.prototype._resultToResource = function(result) {
 	}
 	var record = result[0];
 	return this._recordToResource(record);
+};
+
+/**
+ * Converts a database result set into an array of Resource objects.
+ * 
+ * @param {Object} result
+ * @return {Array} of Resource objects.
+ */
+ResourceRepository.prototype._resultToResources = function(result) {
+	var resources = [];
+	for (var i = 0; i < result.length; i++) {
+		resources.push(this._recordToResource(result[i]));
+	}
+	return resources;
 };
 
 /**
