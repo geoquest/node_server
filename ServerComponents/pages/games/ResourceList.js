@@ -2,6 +2,14 @@ ResourceList = function() {
     
 };
 
+ResourceList.prototype.setGameRepository = function(gameRepository){
+	this._gameRepo = gameRepository;
+};
+
+ResourceList.prototype.setResourceRepository = function(resourceRepository){
+	this._resourceRepo = resourceRepository;
+};
+
 /**
  * Requires a game id and returns a list of all resources that
  * are connected to it.

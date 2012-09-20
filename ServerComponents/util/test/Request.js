@@ -12,6 +12,7 @@ Request = function()
 	this.params = {};
 	this.session = {};
 	this.body = null;
+	this.query = {};
 	// Simulate passing this request object to the  validation middleware.
 	// The middleware will add several function that can be used for checking
 	// input parameters.
