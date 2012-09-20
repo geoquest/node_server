@@ -247,7 +247,7 @@ describe('ResourceRepository', function() {
     			assert.equal(resource.getFilename(), 'lulufile0.txt');
     			assert.equal(resource.getGameId(), 'game-lulu');
     			assert.equal(resource.getUserId(), 'user-huhu');
-    			assert.equal(resource.getDate(), new Date('2012-09-20 11:55:00'));
+    			assert.equal(resource.getDate().toString(), new Date('2012-09-20 11:55:00').toString());
     			assert.equal(resource.getMimeType(), 'text/plain');
     			done();
     		};
@@ -321,7 +321,7 @@ describe('ResourceRepository', function() {
     			assert.equal(resource.getFilename(), 'lulufile0.txt');
     			assert.equal(resource.getGameId(), 'game-lulu');
     			assert.equal(resource.getUserId(), 'user-huhu');
-    			assert.equal(resource.getDate(), new Date('2012-09-20 11:55:00'));
+    			assert.equal(resource.getDate().toString(), new Date('2012-09-20 11:55:00').toString());
     			assert.equal(resource.getMimeType(), 'text/plain');
     			done();
     		};
