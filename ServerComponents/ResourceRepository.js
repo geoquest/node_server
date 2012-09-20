@@ -86,7 +86,7 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
 			'game_id': game.getId()
 		}
 	};
-	this._connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResources));
+	this._connection['fs.files'].find(query, this._createResultHandler(callback, this._resultToResources));
 };
 
 /**
@@ -109,7 +109,7 @@ ResourceRepository.prototype.findById = function(id, callback) {
 	var query = {
 		'_id': id
 	};
-	this._connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResource));
+	this._connection['fs.files'].find(query, this._createResultHandler(callback, this._resultToResource));
 };
 
 /**
