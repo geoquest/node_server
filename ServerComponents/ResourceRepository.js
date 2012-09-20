@@ -189,6 +189,7 @@ ResourceRepository.prototype._resultToResource = function(result) {
  */
 ResourceRepository.prototype._recordToResource = function(record) {
 	var resource = new Resource.class();
+	resource.setGridFSConnection(this._gridFS);
 	resource.setId(record['_id']);
 	resource.setFilename(record['filename']);
 	resource.setMimeType(record['contentType']);
