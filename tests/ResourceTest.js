@@ -189,42 +189,4 @@ describe('Resource', function() {
     	});
     });
     
-    describe('validate', function(){
-    	beforeEach(function() {
-    		object._filename = "file";
-    		object._tempPath = "C:\some\path\to\file";
-    		object._game = new Game.class();		
-    		object._user = new User.class();
-    	});
-    	
-    	it('succeeds if it contains : a game, a user, a file name and a path to the file ',function(){
-    		assert.ok(object.validate());
-    	});
-    	
-    	it('fails if it has no filename',function(){
-    		object._filename = null;
-    		assert.ok(!object.validate());
-    	});
-    	
-    	it('fails if it has no tempPath',function(){
-    		object._tempPath = null;
-    		assert.ok(!object.validate());
-    	});
-    	
-    	
-    	
-    	it('fails if it has no game object',function(){
-    		object._game = null;
-    		assert.ok(!object.validate());
-    	});
-    	
-    	it('fails if it has no user object',function(){
-    		object._user = null;
-    		assert.ok(!object.validate());
-    	});
-    });
-    
-    
 });
-
-    
