@@ -11,6 +11,7 @@ Response = function()
 	this.statusCode = 200;
 	this.ended = false;
 	this.body = '';
+	this.headers = {};
 };
 
 /**
@@ -77,6 +78,16 @@ Response.prototype.end = function(chunk) {
 		this.write(chunk);
 	}
 	this.ended = true;
+};
+
+/**
+ * Simulates setting HTTP headers.
+ * 
+ * @param {String} name
+ * @param {String} value
+ */
+Response.prototype.setHeader = function(name, value) {
+	this.headers[name] = value;
 };
 
 exports.class = Response;

@@ -90,6 +90,11 @@ describe('ResourceList', function() {
 		assert.equal(response.ended, true);
 	});
 	
+	it('should send JSON header', function(){
+		page.handleRequest(request,response);
+		assert.equal(response.headers['Content-Type'], 'application/json');
+	});
+	
 	it('should return correct number of resources', function() {
 		resourceRepo.findAllByGame = function(game, callback) {
 			var resources = [];
