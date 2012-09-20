@@ -71,7 +71,7 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 	
 	var event = function(db) {
 		var gs = GridStore(db, newFilename, "w");
-
+		
 		if (metadata != null) {
 			gs.options.metadata = metadata;
 		}
@@ -86,6 +86,14 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 		this._openConnection();
 	}
 	;
+};
+
+
+GridFSConnection.prototype.readFile = function(fileId, callback) {
+
+	if (callback === undefined) {
+		throw new Error('Callback function is required.');
+	};
 };
 
 exports.class = GridFSConnection;

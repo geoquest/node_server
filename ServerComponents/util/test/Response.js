@@ -10,6 +10,8 @@ Response = function()
 	this.redirectStatus = null;
 	this.statusCode = 200;
 	this.ended = false;
+	this.body = '';
+	this.headers = {};
 };
 
 /**
@@ -58,10 +60,34 @@ Response.prototype.status = function(code) {
 };
 
 /**
- * Simulates the termination of the response.
+ * Simulates the write() function.
+ * 
+ * @param {String} chunk
  */
-Response.prototype.end = function() {
+Response.prototype.write = function(chunk) {
+	this.body += chunk;
+};
+
+/**
+ * Simulates the termination of the response.
+ * 
+ * @param {String} chunk Optional content.
+ */
+Response.prototype.end = function(chunk) {
+	if (chunk) {
+		this.write(chunk);
+	}
 	this.ended = true;
+};
+
+/**
+ * Simulates setting HTTP headers.
+ * 
+ * @param {String} name
+ * @param {String} value
+ */
+Response.prototype.setHeader = function(name, value) {
+	this.headers[name] = value;
 };
 
 exports.class = Response;

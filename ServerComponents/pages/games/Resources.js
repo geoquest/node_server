@@ -55,23 +55,9 @@ Resources.prototype.handleRequest = function(request, response) {
 			return;
 		}
 
-		//this._resourceRepository.findAllByGame(game, function(resources) {
-			//self._templateVariables.resources = resources;
+		self._resourceRepository.findAllByGame(game, function(resources) {
+			self._templateVariables.resources = resources;
 		
-			//making some fake resources for display because the db query method above is not done yet
-			for(var i = 0; i < 5; i++){
-				var resource1 = new Resource.class();
-				
-				resource1.setGame(game);	
-				resource1.setFilename("Fake resource " + i);
-				resource1.setTempPath("C:\\");
-				resource1.setMimeType("jpeg");
-				resource1.setUser(request.session.user);
-				resource1.setDate(new Date());
-				self._templateVariables.resources.push(resource1);
-			}
-
-				
 			if (request.method === 'POST') {
 				self._handlePOST(request, response, game);
 			} 
@@ -81,10 +67,9 @@ Resources.prototype.handleRequest = function(request, response) {
 				self._setGame(game);
 				response.render(self._template, self._templateVariables);
 			}
-		//}		
+		});
 	});
 };
-
 
 Resources.prototype._handlePOST = function(request, response, game) {
 	
@@ -143,13 +128,11 @@ Resources.prototype._hasUploadedFile = function(request) {
 Resources.prototype.constructResource = function(request, game){
 	var resource = new Resource.class();
 	
-	resource.setGame(game);	
-	
+	resource.setGameId(game.getId());	
+	resource.setUserId(request.session.user.getId());
 	resource.setFilename(request.files.resource.name);
 	resource.setTempPath(request.files.resource.path);
 	resource.setMimeType(request.files.resource.mime);
-	resource.setUser(request.session.user);
-	
 	resource.setDate(new Date());
 	
 	return resource;
