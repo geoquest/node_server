@@ -107,12 +107,11 @@ Resources.prototype._hasUploadedFile = function(request) {
 Resources.prototype.constructResource = function(request, game){
 	var resource = new Resource.class();
 	
-	resource.setGame(game);	
-	
+	resource.setGameId(game.getId());	
+	resource.setUserId(request.session.user.getId());
 	resource.setFilename(request.files.resource.name);
 	resource.setTempPath(request.files.resource.path);
 	resource.setMimeType(request.files.resource.mime);
-	resource.setUser(request.session.user);
 	
 	resource.setDate(new Date());
 	
