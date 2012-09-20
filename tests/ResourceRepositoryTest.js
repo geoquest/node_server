@@ -207,6 +207,28 @@ describe('ResourceRepository', function() {
     		repository.insert(resource);
     	});
 
-    }); 
+    });
+    
+    describe('findbyId()', function() {
+    	it('should throw an exception if provided id is undefined', function() {
+    		
+    	});
+    	
+    	it('should return null if resource record was not found', function() {
+    		
+    	});
+    	
+    	it('should return Resource object if record was found', function() {
+    		
+    	});
+    	
+    	it('should populate the Resource object if correctly', function() {
+    		
+    	});
+    	
+    	it('should inject GridFS conenction into resource object', function() {
+    		
+    	});
+    });
 
 });  
