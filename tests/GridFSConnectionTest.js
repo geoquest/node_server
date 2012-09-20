@@ -2,9 +2,10 @@ var assert = require("assert");
 var fs = require('fs');
 var ObjectID = require('mongodb').ObjectID;
 
-
-
 var GridFSConnection = require("../ServerComponents/GridFSConnection.js");
+
+
+
 
 describe('GridFSConnection', function() {
 	var connection = null;

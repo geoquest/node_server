@@ -1,0 +1,99 @@
+{
+    "name": "MYOTHERTHINGY",
+    "gameElements": [
+        {
+            "type": "npcTalk",
+            "id": "KEBAB",
+            "name": "HEZBOLLAH",
+            "charimage": "Schatzkarte-0.png",
+            "nextdialogbuttontext": "Weiter ...",
+            "endbuttontext": "Caching starten...",
+            "dialogItem": [
+                {
+                    "text": "FirstMission this is dialog 1"
+                },
+                {
+                    "text": "FirstMission this is dialog 2"
+                },
+                {
+                    "text": "FirstMission this is dialog 3"
+                }
+            ],
+            "onEnd": [
+                {
+                    "conditions": [
+                        "Second.state == new"
+                    ],
+                    "actions": [
+                        {
+                            "method": "showMessage",
+                            "arguments": {
+                                "message": "Wurde ausgef‹hrt! Davor"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "conditions": [
+                        "First.state == success"
+                    ],
+                    "actions": [
+                        {
+                            "method": "showMessage",
+                            "arguments": {
+                                "message": "Servus!"
+                            }
+                        },
+                        {
+                            "method": "startMission",
+                            "arguments": {
+                                "id": "Second"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "actions": [
+                        {
+                            "method": "showMessage",
+                            "arguments": {
+                                "message": "Wurde ausgef‹hrt!"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "npcTalk",
+            "id": "Second",
+            "name": "SecondMission",
+            "charimage": "Schatzkarte-0.png",
+            "nextdialogbuttontext": "Weiter , JUNGE!",
+            "endbuttontext": "Fertig, JUNGE",
+            "dialogItem": [
+                {
+                    "text": "SecondMission this is dialog 11"
+                },
+                {
+                    "text": "SecondMission this is dialog 22"
+                }
+            ],
+            "onEnd": [
+                {
+                    "actions": [
+                        {
+                            "method": "vibrate",
+                            "arguments": {
+                                "duration": 5000
+                            }
+                        },
+                        {
+                            "method": "endGame"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

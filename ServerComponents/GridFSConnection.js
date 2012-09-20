@@ -3,6 +3,8 @@ var Db = require('mongodb').Db;
 var Server = require('mongodb').Server;
 var dbconf = require('./conf/dbconf');
 var GridStore = mongodb.GridStore;
+var ObjectID = require('mongodb').ObjectID;
+
 
 var STATE_CLOSED = 0;
 var STATE_OPENING = 1;
@@ -65,7 +67,7 @@ GridFSConnection.prototype._openConnection = function(callback) {
 
 
 
-GridFSConnection.prototype.executeEvent(callback){		
+GridFSConnection.prototype.executeEvent = function(callback){		
 	if (this._state == STATE_OPEN) {
 		callback(this._db);
 	} else {
