@@ -14,11 +14,18 @@ ResourceRepository = function(gridFSConnection, connection) {
 	}
 
 	/**
-	 * The MongoDB database connection.
+	 * The GridFS connection.
 	 * 
 	 * @var {Object}
 	 */
 	this._gridFS = gridFSConnection;
+	
+	/**
+	 * The MongoDB database connection.
+	 * 
+	 * @var {Object}
+	 */
+	this._connection = connection;
 
 	/**
 	 * Function callbacks that are invoked whenever an internal error occurs.
@@ -88,7 +95,10 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
  * @param {function} callback
  */
 ResourceRepository.prototype.findById = function(id, callback) {
-	
+	var query = {
+		'_id': id
+	};
+	this.connection.fs.files.find(query, this._createResultHandler(callback, this._resultToResource));
 };
 
 /**
@@ -143,6 +153,40 @@ ResourceRepository.prototype._createResultHandler = function(callback, conversio
 		// Convert result to model.
 		callback(conversionFunction(result));
 	};
+};
+
+/**
+ * Converts a result set into a single resource object.
+ * 
+ * Returns null if the result set is empty.
+ * 
+ * @param {Object} result
+ * @return {Resource}|null
+ */
+ResourceRepository.prototype._resultToResource = function(result) {
+	if (result.length === 0) {
+		return null;
+	}
+	var record = result[0];
+	return this._recordToResource(record);
+};
+
+/**
+ * Converts a MongoDB record (just a record, not a whole result set)
+ * into a resource object.
+ * 
+ * @param {Object} record
+ * @return {Resource}
+ */
+ResourceRepository.prototype._recordToResource = function(record) {
+	var resource = new Resource.class();
+	resource.setId(record['_id']);
+	resource.setFilename(record['filename']);
+	resource.setMimeType(record['contentType']);
+	resource.setGameId(record['metadata']['game_id']);
+	resource.setUserId(record['metadata']['user_id']);
+	resource.setDate(record['metadata']['date']);
+	return resource;
 };
 
 exports.class = ResourceRepository;
