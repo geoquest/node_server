@@ -85,6 +85,11 @@ describe('ResourceList', function() {
 		});
 	});
 	
+	it('should end the response', function(){
+		page.handleRequest(request,response);
+		assert.equal(response.ended, true);
+	});
+	
 	it('should return correct number of resources', function() {
 		resourceRepo.findAllByGame = function(game, callback) {
 			var resources = [];
