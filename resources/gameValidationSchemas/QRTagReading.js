@@ -16,16 +16,11 @@ var schema = {
 		"type" : "string",
 		"required" : true
 	  },
-	  "onSuccess": {
-	    "description": "The event to be executed on success of reading of QR-Code",
-	    "type": "array",
-	    "required": false
-	  },
-	  "onFail": {
-	    "description": "The event to be executed on fail of reading of QR-Code",
-	    "type": "array", 
-	    "required": false
-	  }
+	  "onEnd": {
+		    "description": "The event to be executed after the mission",
+		    "type": "array", 
+		    "required": false
+		  }
 	}
 };
 module.exports = schema;
