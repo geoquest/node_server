@@ -91,4 +91,17 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
 	
 };
 
+/**
+ * Searches for the resource with the provided id.
+ * 
+ * Passes the resource that was found to the callback.
+ * Passes null if no resource was found.
+ * 
+ * @param {String} id
+ * @param {function} callback
+ */
+ResourceRepository.prototype.findById = function(id, callback) {
+	
+};
+
 exports.class = ResourceRepository;
