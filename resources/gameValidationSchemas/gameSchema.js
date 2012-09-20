@@ -16,6 +16,13 @@ var schema = {
 							}
 						}
 					}
+				},
+				"hotspots" : {
+					"type" : "array",
+					"items" : {
+						"description" : "Should be valid hotspots",
+						"type" : "object"
+					}
 				}
 			}
 		};

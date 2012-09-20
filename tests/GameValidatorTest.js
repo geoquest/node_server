@@ -507,6 +507,27 @@ describe('GameValidator',function() {
 			assert.equal(false, gameValidator.validate(
 					testJSON, "hotspot"));
 		});
+		
+		it('validates a correct QR-Scan game (returns true) ', function() {
+			var testJSON = {
+				"id" : "Intro_QRCode2",
+				"expectedContent" : "35638990",
+				"taskdescription" : "Here you have to find and scan a water bottle.",
+				"onFail": [],
+				"onSuccess" : []
+			};
+			assert.equal(true, gameValidator.validate(testJSON, "QRTagReading"));
+		});
+		it('fails for an incorrect QR-Scan game (returns false) ',function() {
+			var testJSON = {
+					"id" : "Intro_QRCode2",
+					"expectedContent" : 3563899,
+					"onFail": [],
+					"onSuccess" : []
+				};
+			assert.equal(false, gameValidator.validate(
+					testJSON, "QRTagReading"));
+		});
 	});
 
 });

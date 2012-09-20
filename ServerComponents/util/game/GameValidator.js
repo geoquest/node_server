@@ -22,13 +22,15 @@ GameValidator.prototype.validate = function(jsonObject, atomicGameTypeName){
 		//the schema for the type is defined, so proceed with validation
 		var schema = require(schemas[atomicGameTypeName]);		
 		var report = this._env.validate(jsonObject, schema);	
-//		console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //		console.log(schema);
-//		console.log(report);			
+		if (report.errors.length !== 0) {
+			 // EVIL! Write in a file! console.log(report.errors); //log only the errors if the validation fails
+		}
 		return (report.errors.length === 0);
 	} else {
 		//the schema was not found so just return false
 		//(may extend later to throw exception for this)
+        // EVIL! Write in a file!  console.log("That schema type has not been defined: " + atomicGameTypeName)
 		return false;
 	}
 };
@@ -42,10 +44,14 @@ GameValidator.prototype.validateGame = function(jsonObject){
 			var elem = gameElements[i];
 			var type = elem["type"];
 			var valid = this.validate(elem, type);
-			if(valid == false) return false;
+			if(!valid){
+                // EVIL! Write in a file! console.log(report.errors); //log only the errors if the validation fails
+                return false;
+            }
 		}
 		return true;
 	}
+    // EVIL! Write in a file!  console.log(report.errors); //log only the errors if the validation fails
 	return false;
 };
 

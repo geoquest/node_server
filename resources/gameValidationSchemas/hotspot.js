@@ -23,7 +23,7 @@ var schema = {
 				"initialVisibility" : {
 					"type" : "boolean",
 					"required" : false,
-					"default" : true
+					"default" : false
 				},
 				"onEnter" : {
 					"type" : "array",

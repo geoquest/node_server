@@ -1,20 +1,20 @@
 var assert = require('assert');
 
-var UploadResources = require("../../../ServerComponents/pages/games/UploadResources");
+var Resources = require("../../../ServerComponents/pages/games/Resources");
 var Request = require("../../../ServerComponents/util/test/Request");
 var Response = require("../../../ServerComponents/util/test/Response");
 var Resource = require("../../../ServerComponents/Resource");
 var User = require("../../../ServerComponents/User");
 var Game = require("../../../ServerComponents/Game");
 
-describe('UploadResources page', function() {
+describe('Resources page', function() {
 
 	/**
 	 * System under test.
 	 * 
-	 * @var {UploadResources}
+	 * @var {Resources}
 	 */
-	var resourceUploader = null;
+	var resourcesController = null;
 	
 	/**
 	 * A simulated request object.
@@ -45,7 +45,7 @@ describe('UploadResources page', function() {
 	var resourceRepository = null;
 	
 	beforeEach(function() {
-		resourceUploader = new UploadResources.class();
+		resourcesController = new Resources.class();
 		gameRepository = {
 			findGameById: function(id, callback) {
 				var game = new Game.class();
@@ -54,13 +54,13 @@ describe('UploadResources page', function() {
 				callback(game);
 			}
 		};
-		resourceUploader.setGameRepository(gameRepository);
+		resourcesController.setGameRepository(gameRepository);
 		
 		resourceRepository = {
 			insert: function(resource) {
 			}
 		};
-		resourceUploader.setResourceRepository(resourceRepository);
+		resourcesController.setResourceRepository(resourceRepository);
 				
 		var user = new User.class();
 		user.setId('user-id');
@@ -69,7 +69,7 @@ describe('UploadResources page', function() {
 		request.method = 'POST';
 		request.session.user = user;
 		request.files = {
-			"game" : {
+			"resource" : {
 				"path" : "C:/path/to/file",
 				"name" : "file",
 				"type" : "text",
@@ -86,14 +86,14 @@ describe('UploadResources page', function() {
 	afterEach(function() {
 		response = null;
 		request = null;
-		resourceUploader = null;
+		resourcesController = null;
 		resourceRepository = null;
 		gameRepository = null;
 	});
 	
 	it('redirects to error page if game ID is missing', function() {
 		request.params.gameId = undefined;
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 		assert.equal(response.redirectUrl, 'error/NotFound');
 	});
 	
@@ -102,24 +102,24 @@ describe('UploadResources page', function() {
 			assert.equal('12345', id);
 			done();
 		};
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 	});
 	
 	it('redirects to error page if logged in user is not author of the requested game', function() {
 		request.session.user.setId('another-id');
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 		assert.equal(response.redirectUrl, 'error/NotFound');
 	});
 	
 	it('renders the upload form if page is requested via GET', function() {
 		request.method = 'GET';
-		resourceUploader.handleRequest(request, response);
-		assert.equal(response.template, 'uploadResources.ejs');
+		resourcesController.handleRequest(request, response);
+		assert.equal(response.template, 'games/resources.ejs');
 	});
 	
 	it('passes game to template if page is requested via GET', function() {
 		request.method = 'GET';
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 		assert.notEqual(typeof response.templateVars.game, 'undefined');
 	});
 	
@@ -128,18 +128,18 @@ describe('UploadResources page', function() {
 		resourceRepository.insert = function(resource) {
 			assert.fail('Resource repository should not be called.');
 		};
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 	});
 	
 	it('provides message if no file is uploaded', function() {
-		request.files.game = null;
-		resourceUploader.handleRequest(request, response);
+		request.files.resource = null;
+		resourcesController.handleRequest(request, response);
 		assert.equal(response.templateVars.msg, 'Please provide a resource file.');
 	});
 	
 	it('passes game to template ifno file is uploaded', function() {
-		request.files.game = null;
-		resourceUploader.handleRequest(request, response);
+		request.files.resource = null;
+		resourcesController.handleRequest(request, response);
 		assert.notEqual(typeof response.templateVars.game, 'undefined');
 	});
 	
@@ -148,16 +148,16 @@ describe('UploadResources page', function() {
 			assert.ok(resource instanceof Resource.class);
 			done();
 		};
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 	});
 	
 	it('provides message if resource was uploaded successfully', function() {
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 		assert.equal(response.templateVars.msg, 'Resource was successfully added.');
 	});
 	
 	it('passes game to template if resource was uploaded successfully', function() {
-		resourceUploader.handleRequest(request, response);
+		resourcesController.handleRequest(request, response);
 		assert.notEqual(typeof response.templateVars.game, 'undefined');
 	});
 	

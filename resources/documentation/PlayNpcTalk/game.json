@@ -1,0 +1,20 @@
+{
+    "name" : "Joke_1",
+    "gameElements" :[
+        {
+            "id" : "Joke_1",
+            "type": "npcTalk",
+            "name" : "Joke_1",
+            "charimage" : "Schatzkarte-0.png",
+            "nextdialogbuttontext" : "Next ...",
+            "endbuttontext" : "End...",
+            "dialogItem" : [ {
+                "text" : "A computer science student is studying under a tree and another pulls up on a flashy new bike.  The first student asks, Where did you get that?"
+            }, {
+                "text" : "The student on the bike replies, While I was studying outside, a beautiful girl pulled up on her bike.  She took off all her clothes and said, You can have anything you want."
+            }, {
+                "text" : "The first student responds, Good choice!  Her clothes probably would not have fit you."
+            } ]
+        }
+    ]   
+}

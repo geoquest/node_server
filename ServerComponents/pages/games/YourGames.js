@@ -1,13 +1,19 @@
 var Game = require("../../Game.js");
 var fs = require('fs');
+var url = require('url')
 
 YourGames = function() {
 	this._gameRepository = null;
 	this._gameValidator = null;
 	this._template = 'games/your-games.ejs';
 	this._templateVariables = {
+			showDialog: false,
+			titleModel : '',
+			msgModal : '',
 			uploadError: false,
-			highlightGameId: null
+			highlightGameId: null,
+			msg : '',
+			game: []
 	};
 };
 
@@ -38,7 +44,27 @@ YourGames.prototype.handleRequest = function(request, response) {
 		if (request.method === 'POST') {
 			self._handleUpload(request);
 		}
-		response.render(self._template, self._templateVariables);
+		
+		
+		var url_parts = url.parse(request.url, true);
+	    var query = url_parts.query;
+	    
+	    if(query.showDialog){
+	    	
+	    	self._templateVariables.showDialog = true;
+	    	self._templateVariables.titleModel = 'GeoQuest Landing Page';
+	    	self._templateVariables.msgModal = 'Welcome ' + user + '!';
+			response.render(self._template, self._templateVariables);
+	    }
+	    else{
+	    	var params = {showDialog : false, title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
+	    	self._templateVariables.showDialog = false;
+	    	self._templateVariables.titleModel = '';
+	    	self._templateVariables.msgModal = '';
+	    	
+			response.render(self._template, self._templateVariables);
+	    }
+	    
 	});
 	
 };

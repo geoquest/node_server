@@ -54,6 +54,9 @@ describe('GeoQuestLogin page', function() {
 			template: null,
 			render: function(template) {
 				this.template = template;
+			},
+			redirect : function(url){
+				return url;
 			}
 		};
 		userRepository = {
@@ -151,6 +154,7 @@ describe('GeoQuestLogin page', function() {
 				user.setLoginType('GeoQuest');
 				user.setIdentifier('max.mustermann');
 				user.setPassword('secret');
+				
 				callback(user);
 				done();
 			};

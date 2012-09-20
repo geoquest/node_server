@@ -2,29 +2,36 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+<% include ../modalDialog %>
+
 <h1>Your Games</h1>
 
-<div id="gameList" style="height: 310px; width:900px; overflow: auto;">
-<table>
-	<%  games.reverse(); %>
-	<% 
-	for(var index in games) { %>
-        <div id="game<%= index %>" style="display:inline">
-        	<a href="/games/uploadResources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
-        	<%= games[index] %>
-    	</div>
-        
-        <%if(highlightGameId===games[index].getId()){%>
-        	<script>
-			$(document).ready(function() {
-				$('#game<%=index%>').effect("highlight", {}, 3000);
-			});
-			</script>
-        <%}%>
-        
-        <hr style="height:0px; border:0;">
-	<% } 
-	%>
+<div id="gameList" style="height: 310px; width:900px; overflow-y: auto;">
+<ul>
+	<%
+	if(games.length == 0){%>
+		<p>You don't have any game yet. Please click the button below to add a new game.</p>
+	<%
+	}else{
+		games.reverse();
+		
+		for(var index in games) { %>
+	        <div id="game<%= index %>" style="display:inline">
+	        	<a href="/games/resources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
+	        	<%= games[index] %>
+	    	</div>
+	        
+	        <%if(highlightGameId===games[index].getId()){%>
+	        	<script>
+				$(document).ready(function() {
+					$('#game<%=index%>').effect("highlight", {}, 5000);
+				});
+				</script>
+	        <%}%>
+	        
+	        <hr style="height:0px; border:0;">
+		<%}
+	}%>
 </ul>
 </div>
 
@@ -36,11 +43,12 @@
 
 <%
 var displayMode = 'none';
-if(uploadError){ 
+if(uploadError !== undefined && uploadError === true){ 
 	displayMode = 'block';
 } 
 %>
 <div id='Upload' style="display: <%= displayMode%>" >
+
 
 
 <h3>Upload Game</h3>

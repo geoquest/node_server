@@ -36,8 +36,8 @@ var pages = {
 		'module': 'games/YourGames',
 		'restrictedTo': 'user'
 	},
-	'/games/uploadResources': {
-		'module': 'games/UploadResources',
+	'/games/resources': {
+		'module': 'games/Resources',
 		'restrictedTo': 'user'
 	},
 	'/games/findAll': {

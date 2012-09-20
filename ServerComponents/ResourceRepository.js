@@ -88,6 +88,7 @@ ResourceRepository.prototype.insert = function(resource) {
  * @param {Game} game
  * @param {function} callback
  */
+
 ResourceRepository.prototype.getResourcesByGame = function(game, callback) {
 	if (!(game instanceof Game.class)) {
 		throw new Error('Object to be inserted must be an instance of Resource');
@@ -98,6 +99,22 @@ ResourceRepository.prototype.getResourcesByGame = function(game, callback) {
 			console.log(error);
 		}
 	});
+=======
+ResourceRepository.prototype.findAllByGame = function(game, callback) {
+	
+};
+
+/**
+ * Searches for the resource with the provided id.
+ * 
+ * Passes the resource that was found to the callback.
+ * Passes null if no resource was found.
+ * 
+ * @param {String} id
+ * @param {function} callback
+ */
+ResourceRepository.prototype.findById = function(id, callback) {
+
 	
 };
 

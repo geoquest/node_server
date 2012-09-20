@@ -19,16 +19,20 @@ Resource = function() {
 	 * like image, video, audio...(to be defined...)
 	 * @var {String}
 	 */
-	this._mineType = null;
+	this._mimeType = null;
 
 	/**
-	 * @var {Game}
+	 * The id of the game this resource belongs to.
+	 * 
+	 * @var {String}
 	 */
 	this._game = null;
 
 	
 	/**
-	 * @var {User}
+	 * The id of the user that created this resource.
+	 * 
+	 * @var {String}
 	 */
 	this._user = null;
 	
@@ -57,6 +61,7 @@ Resource.prototype.getTempPath = function() {
 	return this._tempPath;
 };
 
+
 Resource.prototype.setTempPath = function(tempPath) {
 	if(tempPath !== null) {
 		this._tempPath = tempPath;
@@ -66,22 +71,32 @@ Resource.prototype.setTempPath = function(tempPath) {
 };
 
 
-Resource.prototype.getMineType = function() {
-	return this._mineType;
+Resource.prototype.getMimeType = function() {
+	return this._mimeType;
 };
 
-Resource.prototype.setMineType = function(mineType) {
-	if(mineType !== null) {
-		this._mineType = mineType;
+Resource.prototype.setMimeType = function(mimeType) {
+	if(mimeType !== null) {
+		this._mimeType = mimeType;
 	} else {
-		throw new Error("No resource mine type passed. Please provide the type.");
+		throw new Error("No resource mime type passed. Please provide the type.");
 	}
 };
 
+/**
+ * Returns the id of the game that this resource belongs to.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getGame = function() {
 	return this._game;
 };
 
+/**
+ * Sets the game or game id.
+ * 
+ * @param {Game}|{String} game
+ */
 Resource.prototype.setGame = function(game) {
 	if(game !== null && (game instanceof Game.class)) {
 		this._game = game;
@@ -90,10 +105,20 @@ Resource.prototype.setGame = function(game) {
 	}
 };
 
+/**
+ * Returns the id of the user that created this resource.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getUser = function() {
 	return this._user;
 };
 
+/**
+ * Sets the user or user id.
+ * 
+ * @param {User}|{String} game
+ */
 Resource.prototype.setUser = function(user) {
 	if(user !== null && (user instanceof User.class)) {
 		this._user = user;
@@ -115,11 +140,27 @@ Resource.prototype.setDate = function(date) {
 	}
 };
 
+/**
+ * Returns the content of this resource.
+ * 
+ * The content is passed to the provided callback:
+ * <code>
+ * var callback = function(wholeContent) {
+ * 
+ * };
+ * </code>
+ * 
+ * @param {function} callback
+ */
+Resource.prototype.getContent = function(callback) {
+	
+};
 
 /**
  * Validates if the resource has all fields required for being persisted to the database.
  * 
  * @returns {Boolean} true if the resource is valid, else false
+ * @deprecated Is this used anywhere?
  */
 Resource.prototype.validate = function(){
 	var valid = true;
@@ -141,10 +182,12 @@ Resource.prototype.validate = function(){
 };
 
 
+Resource.prototype.toString = function() {
+	if (this._filename === null){
+		return 'empty file name';
+	}
+	return this._filename;
 
-
-
-
-
+};
 
 exports.class = Resource;

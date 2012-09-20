@@ -1,0 +1,76 @@
+
+<!-- 
+@param {Bool} showDialog
+@param {String} titleModel
+@param {String} msgModal
+@param {String} msg: text showing the status of resource upload
+@param {Object} game: the game of those resources displayed
+@param {Array} resources:  list of resource object
+@param {String} highlightResourceFilename: the resource just uploaded recently
+@param {Bool} uploadError: Optional. true if something wrong with the upload (no param or internal error, etc)
+-->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+<% include ../modalDialog %>
+
+<h1>Resources of game <%= game.getName() %></h1>
+
+<div id="resourceList" style="height: 310px; width:900px; overflow-y: auto;">
+<ul>
+	<br/>
+	<br/>
+	<br/>
+	<p>A list of uploaded resources will be shown here.</p>
+	<p>But the querying to the gridFS database is not done yet.</p>
+	<p>You will only see the last added resource.</p>
+	<p>That's not an error. That's just magic.</p>
+	<p>If you more question please ask Song...</p>
+	<%  resources.reverse(); %>
+	<% 
+	for(var index in resources) { %>
+        <div id="resource<%=index%>" style="display:inline">
+        	<%= resources[index] %>
+    	</div>
+        
+        <%if(highlightResourceFilename===resources[index].getFilename){%>
+        	<script>
+			$(document).ready(function() {
+				$('#resource<%=index%>').effect("highlight", {}, 5000);
+			});
+			</script>
+        <%}%>
+        
+        <hr style="height:0px; border:0;">
+	<% } 
+	%>
+</ul>
+</div>
+
+
+<hr style="height:3pt">
+<input class="btn" data-inline="true" value="Click to add new resource for game <%= game.getName() %>" type="button" onclick="document.getElementById('Upload').style.display = 'block'">
+
+<!-- Here the upload resource form is shown-->
+
+<%
+
+var displayMode = 'none';
+if(uploadError !== undefined && uploadError === true){ 
+	displayMode = 'block';
+} 
+%>
+<div id='Upload' style="display: <%= displayMode%>" >
+
+<h3>Upload resource</h3>
+<p class="alert"><%= msg %></p>
+<form action="/games/resources?gameId=<%= game.getId() %>" method="POST" enctype="multipart/form-data">
+	<fieldset>
+		<label for="game">Upload Game Resources <b><i>Images/Audio/Video</i></b></label>
+		<input name="resource" type="file" size="50"/>
+	</fieldset>
+	<input value="Upload" type="submit" class="btn" />
+</form>
+
+</div>

@@ -1,0 +1,22 @@
+<% if(showDialog) { %>
+<script>
+var delay = 2000;
+setTimeout(function(){
+	console.log('hide division');
+	$('#myModal').hide();
+
+},delay);
+</script>
+
+	<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			
+			<h3 id="myModalLabel"><%= titleModel%></h3>
+		</div>
+		
+		<div class="modal-body">
+		<p><%= msgModal%></p>
+		</div>
+	
+	</div>
+<%}%>

@@ -17,6 +17,7 @@ describe('list games template', function() {
 	beforeEach(function() {
 		templatePath = __dirname + '/../../../ServerComponents/views/games/your-games.ejs';
 		templatePath = fs.realpathSync(templatePath);
+		
 	});
 
 	/**
@@ -45,7 +46,7 @@ describe('list games template', function() {
  				}
  			}
  		];
- 		ejs.renderFile(templatePath, {'games': games, 'msg': 'Hello', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
+ 		ejs.renderFile(templatePath, {showDialog: false, titleModel : '', msgModal : '', 'games': games, 'msg': 'Hello', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
  			if (error) {
  				assert.fail('Rendering error: ' + error);
  			}
@@ -56,7 +57,7 @@ describe('list games template', function() {
 	});
 	
 	it('shows provided message', function(done) {
-		ejs.renderFile(templatePath, {'games': [], 'msg': 'Hello World!', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
+		ejs.renderFile(templatePath, {showDialog: false, titleModel : '', msgModal : '','games': [], 'msg': 'Hello World!', 'uploadError' : false, 'highlightGameId' : '7xq9t57z39yqsu9p'}, function(error, html) {
  			if (error) {
  				assert.fail('Rendering error: ' + error);
  			}

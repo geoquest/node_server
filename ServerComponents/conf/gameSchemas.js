@@ -7,7 +7,8 @@ var atomicGameSchemas = {
 		"questionAndAnswer":schemasDir+"questionAndAnswer",
 		"hotspot": schemasDir + "hotspot",
 		"rule" : schemasDir + "rule",
-		"testSchema":schemasDir+"testSchema"
+		"testSchema":schemasDir+"testSchema",
+		"QRTagReading":schemasDir+"QRTagReading"
 };
 
 module.exports = atomicGameSchemas;
