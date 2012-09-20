@@ -49,7 +49,7 @@ var pages = {
 	'/games/downloadResources': {
 		'module': 'games/DownloadResources'
 	},
-	'/games/resources': {
+	'/games/resource-list': {
 		'module': 'games/ResourceList'
 	},
 	'/games/listPublic': {
