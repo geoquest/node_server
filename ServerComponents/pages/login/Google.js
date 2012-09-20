@@ -31,8 +31,12 @@ GoogleLogin.prototype.handleRequest = function(request, response){
                user = userOrNull;
             }
             request.session.user = user;
-            var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
-    		response.render('home.ejs', params);
+            
+            //login behaviour change
+    		response.redirect(301,'/games?showDialog=true');
+            
+    		//var params = {title: 'GeoQuest Landing Page', msg: 'Welcome ' + user + '!'};
+    		//response.render('home.ejs', params);
         });
     } else {
         // page url entered in browser

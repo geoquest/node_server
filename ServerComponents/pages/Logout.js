@@ -10,7 +10,7 @@ Logout = function() {
 Logout.prototype.handleRequest = function(request, response)
 {
 	request.session.destroy(function(e){
-		console.log('User is logged out successfully');
+		//console.log('User is logged out successfully');
 	});
 	
 	
