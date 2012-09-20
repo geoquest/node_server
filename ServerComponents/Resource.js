@@ -43,6 +43,33 @@ Resource = function() {
 	
 };
 
+Resource.prototype.setGridFSConnection = function(connection) {
+	
+};
+
+Resource.prototype.setId = function(id) {
+	
+};
+
+Resource.prototype.getId = function() {
+	
+};
+
+Resource.prototype.setGameId = function(id) {
+	
+};
+
+Resource.prototype.getGameId = function() {
+	
+};
+
+Resource.prototype.setUserId = function(id) {
+	
+};
+
+Resource.prototype.getUserId = function() {
+	
+};
 
 Resource.prototype.getFilename = function() {
 	return this._filename;
