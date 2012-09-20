@@ -57,6 +57,7 @@ Resource.prototype.getTempPath = function() {
 	return this._tempPath;
 };
 
+
 Resource.prototype.setTempPath = function(tempPath) {
 	if(tempPath !== null) {
 		this._tempPath = tempPath;
@@ -135,11 +136,27 @@ Resource.prototype.setDate = function(date) {
 	}
 };
 
+/**
+ * Returns the content of this resource.
+ * 
+ * The content is passed to the provided callback:
+ * <code>
+ * var callback = function(wholeContent) {
+ * 
+ * };
+ * </code>
+ * 
+ * @param callback
+ */
+Resource.prototype.getContent = function(callback) {
+	
+};
 
 /**
  * Validates if the resource has all fields required for being persisted to the database.
  * 
  * @returns {Boolean} true if the resource is valid, else false
+ * @deprecated Is this used anywhere?
  */
 Resource.prototype.validate = function(){
 	var valid = true;
