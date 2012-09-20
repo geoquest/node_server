@@ -76,6 +76,7 @@ GridFSConnection.prototype.executeEvent = function(callback){
 	}
 };
 
+
 GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 		metadata, callback) {
 
@@ -99,6 +100,50 @@ GridFSConnection.prototype.saveFile = function(newFilename, fileToWrite,
 
 
 
+GridFSConnection.prototype.readFile = function(fileID, callback){
+	
+	if (callback === undefined) {
+		throw new Error('Callback function is required.');
+	}
+	
+	var event = function(db) {
+		var id = ObjectID.createFromHexString(resourecID);	
+		var gridStore = new GridStore(db, id,"r");
+		gridStore.open(function(err,gridStore){		
+			
+			var fileContents = null;
+			
+			
+			var stream = gridStore.stream(true);
+			
+			
+			//when receiving data ...
+			stream.on("data", function(chunk) {
+				
+				if(fileContents == null){
+					fileContents = chunk;					
+				} else {
+					fileContents += chunk;
+				}
+	        });		
+			
+			
+			//when data receipt has finished
+			stream.on("end", function(err) {
+				console.log(err);				
+				callback(fileContents);
+				
+			});
+		});
+	}
+		
+	this.executeEvent(event);
+};
+
+
+
+
+
 GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 	
 	var resourcesIDs = [];
@@ -108,13 +153,6 @@ GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 	if(!(gameId.constructor === String)){
 		throw Error("the Game ID is invalid. Please pass a valid string.");
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	var id = ObjectID.createFromHexString(gameId);
 	
@@ -134,6 +172,9 @@ GridFSConnection.prototype.loadResourcesList = function(gameId, callback){
 	}
 	
 };
+
+
+
 
 
 GridFSConnection.prototype.getResource = function(resourceID,callback){
