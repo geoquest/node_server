@@ -49,21 +49,6 @@ Resource = function() {
 	 * @var {String}
 	 */
 	this._mimeType = null;
-
-	/**
-	 * The id of the game this resource belongs to.
-	 * 
-	 * @var {String}
-	 */
-	this._game = null;
-
-	
-	/**
-	 * The id of the user that created this resource.
-	 * 
-	 * @var {String}
-	 */
-	this._user = null;
 	
 	/**
 	 * @var {Date}
