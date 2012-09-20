@@ -80,7 +80,7 @@ describe('ResourceList', function() {
 	
 	it('should return valid JSON', function(){
 		page.handleRequest(request,response);
-		assert.notThrows(function() {
+		assert.doesNotThrow(function() {
 			JSON.parse(response.body);
 		});
 	});
@@ -116,8 +116,8 @@ describe('ResourceList', function() {
 			callback(resources);
 		};
 		page.handleRequest(request,response);
+		assert.notEqual(response.body.indexOf('resource-0'), -1);
 		assert.notEqual(response.body.indexOf('resource-1'), -1);
-		assert.notEqual(response.body.indexOf('resource-2'), -1);
 	});
 	
 

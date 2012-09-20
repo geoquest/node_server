@@ -1,5 +1,6 @@
 ResourceList = function() {
-    
+    this._gameRepo = null;
+    this._resourceRepo = null;
 };
 
 ResourceList.prototype.setGameRepository = function(gameRepository){
@@ -23,6 +24,26 @@ ResourceList.prototype.setResourceRepository = function(resourceRepository){
 ResourceList.prototype.handleRequest = function(request, response)
 {
 	var gameId = request.query["id"];
+	var self = this;
+	this._gameRepo.findGameById(gameId, function(game) {
+		if(game == null) {
+			response.status(500);
+			response.end();
+			return;
+		}
+		self._resourceRepo.findAllByGame(game, function(resourceList){
+			var result = [];
+			for(var key in resourceList){
+				result.push({
+					id: resourceList[key].getId(),
+					filename: resourceList[key].getFilename(),
+					mimeType: resourceList[key].getMimeType()
+				});
+			}
+			response.write(JSON.stringify(result));
+			response.end();
+		});
+	});
 
 };
 
