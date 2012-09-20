@@ -222,11 +222,33 @@ describe('ResourceRepository', function() {
     		
     	});
     	
-    	it('should populate the Resource object if correctly', function() {
+    	it('should populate the Resource object correctly', function() {
     		
     	});
     	
-    	it('should inject GridFS conenction into resource object', function() {
+    	it('should inject GridFS connection into resource object', function() {
+    		
+    	});
+    });
+    
+    describe('findAllByGame()', function() {
+    	it('should return an empty array if no resource was found', function() {
+    		
+    	});
+    	
+    	it('should return the correct number of resources', function() {
+    		
+    	});
+    	
+    	it('should return an array of Resource objects', function() {
+    		
+    	});
+    	
+    	it('should populate the Resource objects correctly', function() {
+    		
+    	});
+    	
+    	it('should inject GridFS connection into all resource objects', function() {
     		
     	});
     });
