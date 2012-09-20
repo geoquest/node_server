@@ -28,8 +28,9 @@ GeoQuestLogin.prototype.setUserRepository = function(repository)
  */
 GeoQuestLogin.prototype.handleRequest = function(request, response)
 {
+	var params;
 	if (request.method === 'GET') {
-		var params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
+		params = { title: 'GeoQuest Author Management' , msg: 'login using your GeoQuest account'};
 		response.render('login.ejs', params);
 	}
 	
@@ -39,7 +40,8 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
         
         this._userRepository.byGeoQuestIdentifier(username, function(userOrNull) {
         	if (userOrNull === null) {
-        		response.render('login.ejs', { title: 'GeoQuest Author Management', msg: 'User not found. Please sign up.'});
+        		params = {title: 'GeoQuest Author Management.', msg: 'User not found. Please sign up.', showDialog: false};
+        		response.render('login.ejs', params);
         		return;
         	}
         	var user = userOrNull;
@@ -52,7 +54,8 @@ GeoQuestLogin.prototype.handleRequest = function(request, response)
         		
         	} else {
         		// Wrong password provided.
-        		response.render('login.ejs', { title: 'GeoQuest Author Management.', msg: 'Log in Failed. Please retry.'});
+        		params = {title: 'GeoQuest Author Management.', msg: 'Log in Failed. Please retry.', showDialog: false};
+        		response.render('login.ejs', params);
         	}
         });
 	}
