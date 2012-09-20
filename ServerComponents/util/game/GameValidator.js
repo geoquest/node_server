@@ -71,6 +71,15 @@ GameValidator.prototype.validateGame = function(jsonObject){
                 return false;
             }
 		}
+		var hotspots = jsonObject["hotspots"];
+		for(var i in hotspots){
+			var elem = hotspots[i];
+			var valid = this.validate(elem, "hotspot");
+			if(!valid){
+                // EVIL! Write in a file! console.log(report.errors); //log only the errors if the validation fails
+                return false;
+            }
+		}
 		return true;
 	}
     // EVIL! Write in a file!  console.log(report.errors); //log only the errors if the validation fails
