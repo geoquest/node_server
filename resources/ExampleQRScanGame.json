@@ -10,7 +10,7 @@
 				{
 					"actions" : [
 						{
-							"method" : "startMission"
+							"method" : "startMission",
 							"arguments": {
                                 "id": "qr_scan_2"
                             }
@@ -28,7 +28,7 @@
 				{
 					"actions" : [
 						{
-							"method" : "startMission"
+							"method" : "startMission",
 							"arguments": {
                                 "id": "qr_scan_3"
                             }
