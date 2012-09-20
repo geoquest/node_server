@@ -27,6 +27,7 @@ GeoQuestSignUp.prototype.handleRequest = function(request, response)
 	if (request.method === 'POST') {
 				
 		request.assert('username', 'Username must be at least 6 characters.').len(6);
+		request.assert('password', 'Password must not be empty').len(1);
 		request.assert('password', 'Password not matched. Please retry.').equals(request.param('confirmPassword'));
 		request.assert('fName','Please provide your first name.').notEmpty();
 		request.assert('lName','Please provide your last name.').notEmpty();
