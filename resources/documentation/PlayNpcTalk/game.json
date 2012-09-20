@@ -5,7 +5,7 @@
             "id" : "Joke_1",
             "type": "npcTalk",
             "name" : "Joke_1",
-            "charimage" : "Schatzkarte-0.png",
+            "charimage" : "walkingcomputergeek.jpg",
             "nextdialogbuttontext" : "Next ...",
             "endbuttontext" : "End...",
             "dialogItem" : [ {
