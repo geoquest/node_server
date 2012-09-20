@@ -5,24 +5,15 @@
             "type": "QRTagReading",
             "id": "qr_scan_1",
             "taskdescription" : "Here you have to find and scan a water bottle.",
-            "expectedContent": "9780596517748",
-            "onSuccess": [
-                {
-                    "actions": [
-                        {
-                            "method": "startMission",
-                            "arguments": {
-                                "id": "qr_scan_2"
-                            }
-                        }
-                    ]
-                }
-            ],
-			"onFail" : [
+            "expectedContent": "3700123302957",
+			"onEnd" : [
 				{
 					"actions" : [
 						{
-							"method" : "endGame"
+							"method" : "startMission",
+							"arguments": {
+                                "id": "qr_scan_2"
+                            }
 						}
 					]
 				}
@@ -31,25 +22,16 @@
         {
             "type": "QRTagReading",
             "id": "qr_scan_2",
-            "taskdescription" : "This is some secret, and can be solved by scanning osme books.",
-            "expectedContent": "3700123302957",
-            "onSuccess": [
-                {
-                    "actions": [
-                        {
-                            "method": "startMission",
-                            "arguments": {
-                                "id": "qr_scan_3"
-                            }
-                        }
-                    ]
-                }
-            ],
-			"onFail" : [
+            "taskdescription" : "This is some secret, and can be solved by scanning some books.",
+            "expectedContent": "9780596517748",
+			"onEnd" : [
 				{
 					"actions" : [
 						{
-							"method" : "endGame"
+							"method" : "startMission",
+							"arguments": {
+                                "id": "qr_scan_3"
+                            }
 						}
 					]
 				}
@@ -59,17 +41,8 @@
             "type": "QRTagReading",
             "id": "qr_scan_3",
             "taskdescription" : "It's the time to study, so please stop playing with me..",
-            "expectedContent": "X0000W6XAH",
-            "onSuccess": [
-                {
-                    "actions": [
-                        {
-                            "method": "endGame"
-                        }
-                    ]
-                }
-            ],
-			"onFail" : [
+            "expectedContent": "XOOOOW6XAH",
+			"onEnd" : [
 				{
 					"actions" : [
 						{
