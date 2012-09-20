@@ -6,13 +6,7 @@ var schema = {
 			"type" : "array",
 			"items" : {
 				"description" : "Syntax of condition: <var> <op> <value>, e.g.: myVar == 3",
-				"type" : "object",
-				"properties" : {
-					"cond" :{
-						"type" : "string",
-						"required" : true
-					}
-				}
+				"type" : "string"
 			}
 		},
 		"actions" : {
