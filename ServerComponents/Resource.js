@@ -19,7 +19,7 @@ Resource = function() {
 	 * like image, video, audio...(to be defined...)
 	 * @var {String}
 	 */
-	this._mineType = null;
+	this._mimeType = null;
 
 	/**
 	 * @var {Game}
@@ -66,15 +66,15 @@ Resource.prototype.setTempPath = function(tempPath) {
 };
 
 
-Resource.prototype.getMineType = function() {
-	return this._mineType;
+Resource.prototype.getMimeType = function() {
+	return this._mimeType;
 };
 
-Resource.prototype.setMineType = function(mineType) {
-	if(mineType !== null) {
-		this._mineType = mineType;
+Resource.prototype.setMimeType = function(mimeType) {
+	if(mimeType !== null) {
+		this._mimeType = mimeType;
 	} else {
-		throw new Error("No resource mine type passed. Please provide the type.");
+		throw new Error("No resource mime type passed. Please provide the type.");
 	}
 };
 

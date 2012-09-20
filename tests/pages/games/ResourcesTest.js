@@ -114,7 +114,7 @@ describe('Resources page', function() {
 	it('renders the upload form if page is requested via GET', function() {
 		request.method = 'GET';
 		resourcesController.handleRequest(request, response);
-		assert.equal(response.template, 'uploadResources.ejs');
+		assert.equal(response.template, 'games/resources.ejs');
 	});
 	
 	it('passes game to template if page is requested via GET', function() {

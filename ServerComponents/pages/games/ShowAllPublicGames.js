@@ -15,3 +15,4 @@ ShowAllPublicGames.prototype.handleRequest = function(request, response)
 };
 
 exports.class = ShowAllPublicGames;
+

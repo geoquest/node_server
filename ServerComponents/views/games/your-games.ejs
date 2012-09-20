@@ -8,25 +8,30 @@
 
 <div id="gameList" style="height: 310px; width:900px; overflow-y: auto;">
 <ul>
-	<%  games.reverse(); %>
-	<% 
-	for(var index in games) { %>
-        <div id="game<%= index %>" style="display:inline">
-        	<a href="/games/resources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
-        	<%= games[index] %>
-    	</div>
-        
-        <%if(highlightGameId===games[index].getId()){%>
-        	<script>
-			$(document).ready(function() {
-				$('#game<%=index%>').effect("highlight", {}, 5000);
-			});
-			</script>
-        <%}%>
-        
-        <hr style="height:0px; border:0;">
-	<% } 
-	%>
+	<%
+	if(games.length == 0){%>
+		<p>You don't have any game yet. Please click the button below to add a new game.</p>
+	<%
+	}else{
+		games.reverse();
+		
+		for(var index in games) { %>
+	        <div id="game<%= index %>" style="display:inline">
+	        	<a href="/games/resources?gameId=<%= games[index].getId() %>" class="btn btn-small">Resource upload</a>
+	        	<%= games[index] %>
+	    	</div>
+	        
+	        <%if(highlightGameId===games[index].getId()){%>
+	        	<script>
+				$(document).ready(function() {
+					$('#game<%=index%>').effect("highlight", {}, 5000);
+				});
+				</script>
+	        <%}%>
+	        
+	        <hr style="height:0px; border:0;">
+		<%}
+	}%>
 </ul>
 </div>
 
