@@ -72,7 +72,7 @@ var dependencies = {
 	},
 	'setResourceRepository': function() {
 		var ResourceRepository = require('./ResourceRepository');
-		return new ResourceRepository.class(this.setGridFSConnection());
+		return new ResourceRepository.class(this.setGridFSConnection(), this.setDatabaseConnection());
 	},
 	'setGameValidator': function() {
 		var GameValidator = require('./util/game/GameValidator');
