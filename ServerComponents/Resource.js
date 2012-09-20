@@ -78,10 +78,20 @@ Resource.prototype.setMimeType = function(mimeType) {
 	}
 };
 
+/**
+ * Returns the id of the game that this resource belongs to.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getGame = function() {
 	return this._game;
 };
 
+/**
+ * Sets the game or game id.
+ * 
+ * @param {Game}|{String} game
+ */
 Resource.prototype.setGame = function(game) {
 	if(game !== null && (game instanceof Game.class)) {
 		this._game = game;
@@ -90,10 +100,20 @@ Resource.prototype.setGame = function(game) {
 	}
 };
 
+/**
+ * Returns the id of the user that created this resource.
+ * 
+ * @return {String}
+ */
 Resource.prototype.getUser = function() {
 	return this._user;
 };
 
+/**
+ * Sets the user or user id.
+ * 
+ * @param {User}|{String} game
+ */
 Resource.prototype.setUser = function(user) {
 	if(user !== null && (user instanceof User.class)) {
 		this._user = user;
