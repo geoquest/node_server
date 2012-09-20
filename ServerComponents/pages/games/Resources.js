@@ -54,32 +54,17 @@ Resources.prototype.handleRequest = function(request, response) {
 			return;
 		}
 
-		//this._resourceRepository.findAllByGame(game, function(resources) {
-			//self._templateVariables.resources = resources;
+		self._resourceRepository.findAllByGame(game, function(resources) {
+			self._templateVariables.resources = resources;
 		
-			//making some fake resources for display because the db query method above is not done yet
-			for(var i = 0; i < 5; i++){
-				var resource1 = new Resource.class();
-				
-				resource1.setGameId(game.getId());	
-				resource1.setFilename("Fake resource " + i);
-				resource1.setTempPath("C:\\");
-				resource1.setMimeType("jpeg");
-				resource1.setUserId(request.session.user.getId());
-				resource1.setDate(new Date());
-				self._templateVariables.resources.push(resource1);
-			}
-
-				
 			if (request.method === 'POST') {
 				self._handlePOST(request, response, game);
-			} 
-			else {//GET request with valid gameid
+			} else {//GET request with valid gameid
 				self._setMessage('Please upload your game resources.');
 				self._setGame(game);
 				response.render(self._template, self._templateVariables);
 			}
-		//}		
+		});
 	});
 };
 

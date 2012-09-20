@@ -58,6 +58,9 @@ describe('Resources page', function() {
 		
 		resourceRepository = {
 			insert: function(resource) {
+			},
+			findAllByGame: function(game, callback) {
+				callback([]);
 			}
 		};
 		resourcesController.setResourceRepository(resourceRepository);
