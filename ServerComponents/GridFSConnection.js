@@ -135,9 +135,7 @@ GridFSConnection.prototype.readFile = function(fileID, callback){
 				if(fileContents.length!=fileLength){
 					throw new Error("The length of the retrieved file does not match the one in the database.");					
 				}
-				
-				
-	        });		
+	        });
 			
 			
 			//when data receipt has finished

@@ -106,8 +106,6 @@ describe('GridFSConnection', function() {
 		
 		it('throws an error if it does not receive a valid id string', function(){
 			
-			
-			
 			assert.throws(function(){
 				connection.readFile(12345);
 			});
@@ -124,7 +122,13 @@ describe('GridFSConnection', function() {
 				connection.readFile(fileIdString,function(){});
 			});
 			
-		});		
+		});
+		
+		it('throws an error if the length of the data buffer is different than the length of the file in the FS',function(){			
+			connection.readFile("5059c7477e7de4300e000001", function(fileContents){				
+				assert.ok(fileContents.length==3580);
+			});
+		})
 	});
 	
 	
