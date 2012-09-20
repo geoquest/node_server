@@ -51,8 +51,8 @@ ResourceRepository.prototype.insert = function(resource) {
 	}
 
 	var metadata = {
-		game_id : resource.getGame().getId(),
-		user_id : resource.getUser().getId(),
+		game_id : resource.getGameId(),
+		user_id : resource.getUserId(),
 		date : resource.getDate()
 	};
 

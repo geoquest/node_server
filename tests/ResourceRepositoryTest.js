@@ -143,8 +143,9 @@ describe('ResourceRepository', function() {
     		resource = new Resource.class();
     		resource._filename = "file";
     		resource._tempPath = "C:\some\path\to\file";
-    		resource._game = new Game.class();		
-    		resource._user = new User.class();
+    		resource.setGameId('game-lulu');	
+    		resource.setUserId('user-lulu');
+    		resource.setDate(new Date('2012-09-20 15:30:00'));
     	});
 
     	it('fails if parameter to insert is not an instance of Resource', function() {
@@ -167,7 +168,7 @@ describe('ResourceRepository', function() {
 
     	it('fails if the passed resource is invalid', function() {
         	assert.throws(function() {
-        		repository.insert(new Resource.class());
+        		repository.insert({});
         	});
     	});
 
@@ -195,15 +196,11 @@ describe('ResourceRepository', function() {
     	it('calls the saveFile function with the appropriate metadata', function(done){
     		
     		gridFS.saveFile = function(fileName, filePath, metadata) {
-    			assert.equal(metadata.game_id, "123456789");
-    			assert.equal(metadata.user_id, "09875");
-    			assert.equal(metadata.date, "1234");
+    			assert.equal(metadata.game_id, "game-lulu");
+    			assert.equal(metadata.user_id, "user-lulu");
+    			assert.equal(metadata.date.toString(), new Date('2012-09-20 15:30:00').toString());
     			done();
     		};
-    		
-    		resource._game.__id = "123456789";
-    		resource._user._id = "09875";
-    		resource._date = "1234";
     		
     		repository.insert(resource);
     	});
