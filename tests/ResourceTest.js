@@ -162,25 +162,30 @@ describe('Resource', function() {
     
     describe('getId', function() {
     	it('returns correct value', function() {
-    		
+    		object.setId('lulu');
+    		assert.equal(object.getId(), 'lulu');
     	});
     });
     
     describe('getGameId', function() {
     	it('returns correct value', function() {
-    		
+    		object.setGameId('lulu');
+    		assert.equal(object.getGameId(), 'lulu');
     	});
     });
     
     describe('getUserId', function() {
     	it('returns correct value', function() {
-    		
+    		object.setUserId('lulu');
+    		assert.equal(object.getUserId(), 'lulu');
     	});
     });
     
     describe('setGridFSConnection injects connection', function() {
     	it('returns correct value', function() {
-    		
+    		var connection = {};
+    		object.setGridFSConnection(connection);
+    		assert.equal(object._gridFSConnection, connection);
     	});
     });
     
