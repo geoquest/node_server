@@ -29,19 +29,6 @@ ResourceRepository = function(gridFSConnection, connection) {
 };
 
 /**
- * Notifies all registered error callback about an error that occurred recently.
- * 
- * @param {String}
- *            error
- */
-ResourceRepository.prototype._notifyAboutError = function(error) {
-	for ( var i = 0; i < this._errorHandlers.length; i++) {
-		// Pass the error to each handler.
-		this._errorHandlers[i](error);
-	}
-};
-
-/**
  * Persists a given resource to the database. The file represented by the
  * resource is saved using GridFS (@see{GridFSConnection}).
  * 
@@ -102,6 +89,60 @@ ResourceRepository.prototype.findAllByGame = function(game, callback) {
  */
 ResourceRepository.prototype.findById = function(id, callback) {
 	
+};
+
+/**
+ * Notifies all registered error callback about an error that occurred recently.
+ * 
+ * @param {String}
+ *            error
+ */
+ResourceRepository.prototype._notifyAboutError = function(error) {
+	for ( var i = 0; i < this._errorHandlers.length; i++) {
+		// Pass the error to each handler.
+		this._errorHandlers[i](error);
+	}
+};
+
+/**
+ * Registers an additional error handler that is called whenever an
+ * internal MongoDB error occurs.
+ * 
+ * Example:
+ * <code>
+ * repository.addErrorHandler(function(error) {
+ *     // Handle error here.
+ * });
+ * </code>
+ * 
+ * @param {function} callback
+ */
+ResourceRepository.prototype.addErrorHandler = function(callback)
+{
+	this.errorHandlers.push(callback);
+};
+
+/**
+ * Creates a callback that handles a MongoDB result.
+ * 
+ * In case of a successful result it will convert the result 
+ * set and pass it to the provided callback.
+ * 
+ * @param {function}
+ * @param {function} The function that is used to convert the result set.
+ * @return {function}
+ */
+ResourceRepository.prototype._createResultHandler = function(callback, conversionFunction) {
+	// Store the current context as the scope changes in the callback.
+	var self = this;
+	return function(error, result) {
+		if (error) {
+			self._notifyAboutError(error);
+			return;
+		}
+		// Convert result to model.
+		callback(conversionFunction(result));
+	};
 };
 
 exports.class = ResourceRepository;
