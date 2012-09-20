@@ -1,4 +1,5 @@
 var assert = require("assert");
+var util = require("util");
 
 var Resource = require("../ServerComponents/Resource.js");
 var ResourceRepository = require("../ServerComponents/ResourceRepository.js");
@@ -211,7 +212,15 @@ describe('ResourceRepository', function() {
     
     describe('findbyId()', function() {
     	it('should throw an exception if provided id is undefined', function() {
-    		
+    		assert.throws(function() {
+    			repository.findById(undefined, function() {});
+    		});
+    	});
+    	
+    	it('should throw an exception if callback is omitted', function() {
+    		assert.throws(function() {
+    			repository.findById('12345');
+    		});
     	});
     	
     	it('should return null if resource record was not found', function() {
@@ -232,24 +241,78 @@ describe('ResourceRepository', function() {
     });
     
     describe('findAllByGame()', function() {
-    	it('should return an empty array if no resource was found', function() {
-    		
+    	var game = null;
+    	
+    	beforeEach(function() {
+    		game = new Game.class();
+    		game.setId('12345');
     	});
     	
-    	it('should return the correct number of resources', function() {
-    		
+    	afterEach(function() {
+    		game = null;
     	});
     	
-    	it('should return an array of Resource objects', function() {
-    		
+    	it('should throw an exception if callback is omitted', function() {
+    		assert.throws(function() {
+    			repository.findAllByGame(game);
+    		});
     	});
     	
-    	it('should populate the Resource objects correctly', function() {
-    		
+    	it('should return an empty array if no resource was found', function(done) {
+    		var resultHandler = function(resources) {
+    			assert.ok(util.isArray(resources));
+    			assert.equal(resources.length, 0);
+    			done();
+    		};
+    		repository.findAllByGame(game, resultHandler);
     	});
     	
-    	it('should inject GridFS connection into all resource objects', function() {
-    		
+    	it('should return the correct number of resources', function(done) {
+    		connection.fs.files.find = createFind(createResult(5));
+    		var resultHandler = function(resources) {
+    			assert.ok(util.isArray(resources));
+    			assert.equal(resources.length, 5);
+    			done();
+    		};
+    		repository.findAllByGame(game, resultHandler);
+    	});
+    	
+    	it('should return an array of Resource objects', function(done) {
+    		connection.fs.files.find = createFind(createResult(3));
+    		var resultHandler = function(resources) {
+    			for (var index in resources) {
+    				assert.ok(resources[index] instanceof Resource.class);
+    			}
+    			done();
+    		};
+    		repository.findAllByGame(game, resultHandler);
+    	});
+    	
+    	it('should populate the Resource objects correctly', function(done) {
+    		connection.fs.files.find = createFind(createResult(1));
+    		var resultHandler = function(resources) {
+    			assert.equal(resources.length, 1);
+    			var resource = resources[0];
+    			assert.equal(resource.getId(), 0);
+    			assert.equal(resource.getFilename(), 'lulufile0.txt');
+    			assert.equal(resource.getGameId(), 'game-lulu');
+    			assert.equal(resource.getUserId(), 'user-huhu');
+    			assert.equal(resource.getDate(), new Date('2012-09-20 11:55:00'));
+    			assert.equal(resource.getMimeType(), 'text/plain');
+    			done();
+    		};
+    		repository.findAllByGame(game, resultHandler);
+    	});
+    	
+    	it('should inject GridFS connection into all resource objects', function(done) {
+    		connection.fs.files.find = createFind(createResult(1));
+    		var resultHandler = function(resources) {
+    			assert.equal(resources.length, 1);
+    			var resource = resources[0];
+    			assert.strictEqual(resource._gridFSConnection, gridFS);
+    			done();
+    		};
+    		repository.findAllByGame(game, resultHandler);
     	});
     });
 
