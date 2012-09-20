@@ -547,13 +547,9 @@ describe('GameValidator',function() {
 				"onStart" : [
 				             { 
 				            	"conditions": [
-				            	            {
-				            	            	 "cond" : "myVar == 3"
-				            	            },
+				            	            "myVar == 3",
+				            	            "myVar < 5"
 				            	            
-				            	            {
-				            	            	"cond" : "myVar < 5"
-				            	            }
 				            	],
 				            	"actions" : [
 				            	             {
