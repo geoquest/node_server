@@ -4,7 +4,7 @@
 
 var Resource = require('./Resource');
 
-ResourceRepository = function(gridFSConnection) {
+ResourceRepository = function(gridFSConnection, connection) {
 	if (gridFSConnection === undefined) {
 		throw new Error("Connection parameter omitted!");
 	}

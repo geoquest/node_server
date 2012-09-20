@@ -20,13 +20,77 @@ describe('ResourceRepository', function() {
 	var repository = null;
 
 	/**
-	 * Simple object that is used to simulate the mongodb connection.
+	 * Simple object that is used to simulate the GridFS connection.
 	 * 
 	 * @var {Object}
 	 */
 	var gridFS = null;
 	
+	/**
+	 * Simple object that is used to simulate the MongoDB connection.
+	 * 
+	 * @var {Object}
+	 */
+	var connection = null;
 
+	/**
+	 * Simulates a MongoDB result set that contains the
+	 * requested number of files.
+	 * 
+	 * @param {integer} numberOfFiles
+	 * @return {Object}
+	 */
+	var createResult = function(numberOfFiles) {
+		var result = {};
+		// Simulate the requested number of file meta data entries.
+		for (var i = 0; i < numberOfFiles; i++) {
+			result[i] = {
+				"_id": i,
+				"filename": "lulufile" + i + ".txt",
+				"contentType": "text/plain",
+				"metadata": {
+					"game_id": "game-lulu",
+					"user_id": "user-huhu",
+					"date": new Date('2012-09-20 11:55:00')
+				}
+			};
+		}
+		// Simulate the length property that is available
+		// on result collection.
+		result.length = numberOfFiles;
+
+	    return result;
+	};
+	
+	/**
+	 * Creates a simulated find method.
+	 * 
+	 * If a string is provided then an error will be
+	 * simulated. Otherwise the given result will be 
+	 * returned.
+	 * 
+	 * @param {Object}|{String} Result or error message.
+	 * @return {function}
+	 */
+	var createFind = function(result) {
+		/**
+		 * Simulates the find() function of MongoDB.
+		 * 
+		 * @param {Object} query JSON object that specifies the query criteria.
+		 * @param {function} callback Callback that receives an error and the result.
+		 */
+		var find = function(query, callback) {
+			if ((typeof result) === 'string') {
+				// Simulate an error.
+				callback(result, createResult(0));
+			} else {
+				// Simulate a returned collection.
+				callback(null, result);
+			}
+		};
+		return find;
+	};
+	
 	/**
 	 * Is executed before each test runs and sets up the environment.
 	 */
@@ -35,7 +99,15 @@ describe('ResourceRepository', function() {
 			saveFile: function() {
 			}
 		};
-		repository = new ResourceRepository.class(gridFS);
+		connection = {
+			fs: {
+				files: {
+					// Simulates an empty result set per default.
+					find: createFind(createResult(0))
+				}
+			}
+		};
+		repository = new ResourceRepository.class(gridFS, connection);
 	});
 
 	/**
@@ -44,6 +116,7 @@ describe('ResourceRepository', function() {
 	afterEach(function() {
 		gridFS = null;
 		repository = null;
+		connection = null;
 	});
 
     describe('constructor', function() {
