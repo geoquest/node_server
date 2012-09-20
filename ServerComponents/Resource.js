@@ -1,6 +1,3 @@
-var Game = require('./Game');
-var User = require('./User');
-
 
 Resource = function() {
 
