@@ -50,10 +50,6 @@ ResourceRepository.prototype.insert = function(resource) {
 		throw new Error('Object to be inserted must be an instance of Resource');
 	}
 
-	if (!resource.validate) {
-		throw new Error('Resource to be inserted is not valid.');
-	}
-
 	var metadata = {
 		game_id : resource.getGame().getId(),
 		user_id : resource.getUser().getId(),
