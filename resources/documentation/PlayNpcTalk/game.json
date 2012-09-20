@@ -15,16 +15,14 @@
             }, {
                 "text" : "The first student responds, Good choice!  Her clothes probably would not have fit you."
             }            
-            ]
-        }
-    ],
-    "onEnd" : [{
+            ],
+            "onEnd" : [{
                 "actions" : [
                     {
                         "method" : "endGame"
                     }
                 ]
-       }
-              
-     ]   
+            }]
+        }
+    ]    
 }
