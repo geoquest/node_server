@@ -12,7 +12,7 @@ Resources = function() {
 			msg : '',
 			game: null,
 			resources: [],
-			highlightResourceFilename: null,
+			highlightResourceFilename: '',
 			uploadError: false,			
 	};
 };
@@ -37,6 +37,7 @@ Resources.prototype.setResourceRepository = function(resourceRepository) {
 
 Resources.prototype.handleRequest = function(request, response) {
 	var gameId = request.param('gameId');
+	
 	if (gameId === undefined) {
 		response.redirect('error/NotFound');
 		return;
@@ -52,59 +53,51 @@ Resources.prototype.handleRequest = function(request, response) {
 			response.redirect('error/NotFound');
 			return;
 		}
-		if (request.method === 'POST') {
-			self._handlePOST(request, response, game);
-		} else {
-			self._setMessage('Please upload your game resources.');
-			self._setGame(game);
-			response.render(self._template, self._templateVariables);
-		}
+
+		//this._resourceRepository.findAllByGame(game, function(resources) {
+			//self._templateVariables.resources = resources;
+		
+			//making some fake resources for display because the db query method above is not done yet
+			for(var i = 0; i < 5; i++){
+				var resource1 = new Resource.class();
+				
+				resource1.setGame(game);	
+				resource1.setFilename("Fake resource " + i);
+				resource1.setTempPath("C:\\");
+				resource1.setMimeType("jpeg");
+				resource1.setUser(request.session.user);
+				resource1.setDate(new Date());
+				self._templateVariables.resources.push(resource1);
+			}
+
+				
+			if (request.method === 'POST') {
+				self._handlePOST(request, response, game);
+			} 
+			else {//GET request with valid gameid
+				self._setMessage('Please upload your game resources.');
+				self._setGame(game);
+				response.render(self._template, self._templateVariables);
+			}
+		//}		
 	});
 };
 
 
-/*
- TO REPLACE THE ABOVE CODE ...
-var self = this;
-this._gameRepository.findGameById(gameId, function(game) {
-	if (game === null) {
-		// Game does not exist.
-		response.redirect('error/NotFound');
-		return;
-	}
-	if (game.getAuthors().indexOf(request.session.user.getId()) === -1) {
-		response.redirect('error/NotFound');
-		return;
-	}
-	self._templateVariables.games = games;
-	this._resourceRepository.findAllByGame(game, function(resources) {
-		self._templateVariables.resources = resources;
-		
-		if (request.method === 'POST') {
-			self._handlePOST(request, response, game);
-		} else {//GET request
-			self._setMessage('Please upload your game resources.');
-			self._setGame(game);
-			response.render(self._template, self._templateVariables);
-		}	    
-	});
-});*/
-
 Resources.prototype._handlePOST = function(request, response, game) {
 	if (!this._hasUploadedFile(request)) {
 		this._setMessage('Please provide a resource file.');
-		this._setGame(game);
-		response.render(this._template, this._templateVariables);
-		return;
+		this._raiseUploadError();
+	}else{
+		// Current user is author of the game and allowed to add resources.
+		var resource = this.constructResource(request, game);
+		this._resourceRepository.insert(resource);
+		this._setHighlightResource(resource);
+		this._templateVariables.resources.push(resource);
+		this._setMessage('Resource was successfully added.');
 	}
-	// Current user is author of the game and allowed to add resources.
-	var resource = this.constructResource(request, game);
-	this._resourceRepository.insert(resource);
-	this._setMessage('Resource was successfully added.');
-	this._setGame(game);
+	this._setGame(game);	
 	
-	this._templateVariables.resources.push(resource);
-	this._setHighlightResource(resource);
 	response.render(this._template, this._templateVariables);
 };
 
@@ -119,9 +112,17 @@ Resources.prototype._hasUploadedFile = function(request) {
 		return false;
 	}
 	if (!('resource' in request.files) || request.files.resource ===null || (typeof request.files.resource) !== 'object') {
-		// We are expecting a file named "game".
+		// We are expecting a file named "resource".
 		return false;
 	}
+	
+	//we add this check because the two if above seem to be insufficient
+	if (!request.files || !request.files.resource || !request.files.resource.path || !request.files.resource.name) {
+		this._setMessage('Error! Please choose a file to upload.');
+		this._raiseUploadError();
+		return false;
+	}
+	
 	var requiredAttributes = ['path', 'name', 'type'];
 	for (var i = 0; i < requiredAttributes.length; i++) {
 		var attribute = requiredAttributes[i];
@@ -129,6 +130,7 @@ Resources.prototype._hasUploadedFile = function(request) {
 			return false;
 		}
 	}
+	
 	return true;
 };
 
@@ -160,7 +162,7 @@ Resources.prototype._raiseUploadError = function() {
 };
 
 Resources.prototype._setHighlightResource = function(resource) {
-	this._templateVariables.highlightResourceFilename = resource.toString();
+	this._templateVariables.highlightResourceFilename = resource.getFilename();
 };
 
 exports.class = Resources;

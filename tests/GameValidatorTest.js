@@ -513,7 +513,8 @@ describe('GameValidator',function() {
 				"id" : "Intro_QRCode2",
 				"expectedContent" : "35638990",
 				"taskdescription" : "Here you have to find and scan a water bottle.",
-				"onEnd": [],
+				"onFail": [],
+				"onSuccess" : []
 			};
 			assert.equal(true, gameValidator.validate(testJSON, "QRTagReading"));
 		});
@@ -521,11 +522,127 @@ describe('GameValidator',function() {
 			var testJSON = {
 					"id" : "Intro_QRCode2",
 					"expectedContent" : 3563899,
-					"onEnd": [],
+					"onFail": [],
+					"onSuccess" : []
 				};
 			assert.equal(false, gameValidator.validate(
 					testJSON, "QRTagReading"));
 		});
+		
+		it('validates a correct NPCTalk game including some rules (returns true) ', function() {
+			var testJSON = {
+				"id" : "Intro_2",
+				"name" : "Intro",
+				"charimage" : "Schatzkarte-0.png",
+				"nextdialogbuttontext" : "Weiter ...",
+				"endbuttontext" : "Caching starten...",
+				"dialogItem" : [ {
+					"text" : "this is dialog 1"
+				}, {
+					"text" : "this is dialog 2"
+				}, {
+					"text" : "this is dialog 3"
+				} ],
+				"onEnd" : [],
+				"onStart" : [
+				             { 
+				            	"conditions": [
+				            	            {
+				            	            	 "cond" : "myVar == 3"
+				            	            },
+				            	            
+				            	            {
+				            	            	"cond" : "myVar < 5"
+				            	            }
+				            	],
+				            	"actions" : [
+				            	             {
+				            	            	"method" : "endGame",
+				            	            	"arguments" : {"message" : "hello world!"}
+				            	             }
+				            	]
+				             }
+				]
+			};
+			assert.equal(true, gameValidator.validate(testJSON, "npcTalk"));
+		});
+		
+		
+		it('validates a incorrect NPCTalk game including some rules (returns false) ', function() {
+			var testJSON = {
+				"id" : "Intro_2",
+				"name" : "Intro",
+				"charimage" : "Schatzkarte-0.png",
+				"nextdialogbuttontext" : "Weiter ...",
+				"endbuttontext" : "Caching starten...",
+				"dialogItem" : [ {
+					"text" : "this is dialog 1"
+				}, {
+					"text" : "this is dialog 2"
+				}, {
+					"text" : "this is dialog 3"
+				} ],
+				"onEnd" : [],
+				"onStart" : [
+				             { 
+				            	"conditions": [
+				            	            {
+				            	            	 "cond" : "myVar == 3"
+				            	            },
+				            	            
+				            	            {
+				            	            	"cond" : "myVar < 5"
+				            	            }
+				            	],
+				            	"actions" : [
+				            	             {
+				            	            	
+				            	             }
+				            	]
+				             }
+				]
+			};
+			assert.equal(false, gameValidator.validate(testJSON, "npcTalk"));
+		});
+		
+		it('validates another incorrect NPCTalk game including some rules (returns false) ', function() {
+			var testJSON = {
+				"id" : "Intro_2",
+				"name" : "Intro",
+				"charimage" : "Schatzkarte-0.png",
+				"nextdialogbuttontext" : "Weiter ...",
+				"endbuttontext" : "Caching starten...",
+				"dialogItem" : [ {
+					"text" : "this is dialog 1"
+				}, {
+					"text" : "this is dialog 2"
+				}, {
+					"text" : "this is dialog 3"
+				} ],
+				"onEnd" : [],
+				"onStart" : [
+				             { 
+				            	"conditions": [
+				            	            {
+				            	            	 "cond" : "myVar == 3"
+				            	            },
+				            	            
+				            	            {
+				            	            	"cond" : "myVar < 5"
+				            	            }
+				            	],
+				            	"actions" : [
+				            	             {
+				            	            	"method" : 123,
+				            	            	"arguments" : {"message" : "hello world!"}
+				            	             }
+				            	]
+				             }
+				]
+			};
+			assert.equal(false, gameValidator.validate(testJSON, "npcTalk"));
+		});
+		
 	});
 
 });
