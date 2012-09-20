@@ -120,7 +120,7 @@ Game.prototype.toString = function() {
 	if (this._content === null){
 		return 'No Description Available';
 	}
-	return this.getName();
+	return this.getName() + " v" + this._version;
 
 };
 
