@@ -143,7 +143,9 @@ describe('FacebookLogin page', function() {
 		});
 		it('renders (any) template on successful login', function() {
 			page.handleRequest(request, response);
-			assert.notEqual(response.template, null);
+			
+			assert.equal('/games?showDialog=true', response.redirectUrl);
+			//assert.notEqual(response.template, null);
 		});
 		it('redirects to Facebook login if page if url was entered manually', function() {
 			// Remove facebookUser data from session.

@@ -150,8 +150,6 @@ describe('SignUp page', function() {
 			request.params.email = 'agile@lab.com';
 						
 			page.handleRequest(request, response);
-			//response.redirect(url)
-			//console.log(response);
 			assert.equal('/games?showDialog=true', response.redirectUrl);
 			//assert.deepEqual({title: 'GeoQuest Landing Page', msg: 'Welcome ' + request.params.fName + '!'}, response.templateVars);
 			
