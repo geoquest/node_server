@@ -1,11 +1,10 @@
 {
-    "name" : "Joke_1",
+    "name" : "Joke_1 No Resources",
     "gameElements" :[
         {
-            "id" : "Joke_1",
+            "id" : "Joke_1NR",
             "type": "npcTalk",
-            "name" : "Joke_1",
-            "charimage" : "walkingcomputergeek.jpg",
+            "name" : "Joke_1 No Res",
             "nextdialogbuttontext" : "Next ...",
             "endbuttontext" : "End...",
             "dialogItem" : [ {

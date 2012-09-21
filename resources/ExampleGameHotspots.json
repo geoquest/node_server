@@ -77,8 +77,7 @@
         {
             "type": "npcTalk",
             "id": "First",
-            "name": "FirstMission",
-            "charimage": "Schatzkarte-0.png",
+            "name": "FirstMission",           
             "nextdialogbuttontext": "Next ...",
             "endbuttontext": "Start Caching...",
             "dialogItem": [
@@ -118,8 +117,7 @@
         {
             "type": "npcTalk",
             "id": "Second",
-            "name": "SecondMission",
-            "charimage": "Schatzkarte-0.png",
+            "name": "SecondMission",            
             "nextdialogbuttontext": "NEXT!",
             "endbuttontext": "Get the last hotspot",
             "dialogItem": [
