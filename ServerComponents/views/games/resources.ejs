@@ -43,16 +43,20 @@
 </div>
 
 
-<hr style="height:3pt">
-<input class="btn" data-inline="true" value="Click to add a new resource for game <%= game.getName() %>" type="button" onclick="
+<hr style="height:3pt"/>
+<input class="btn" data-inline="true" value="Add new resource" type="button" onclick="
 document.getElementById('UploadResource').style.display = 'block'
 document.getElementById('UploadGame').style.display = 'none'
 ">
-
-<input class="btn" data-inline="true" value="Click to Edit game Json for <%= game.getName() %>" type="button" onclick="
+ for your game <%= game.getName() %>
+<p/><p/>
+<input class="btn" data-inline="true" value="Edit specification" type="button" onclick="
 document.getElementById('UploadResource').style.display = 'none'
 document.getElementById('UploadGame').style.display = 'block'
 ">
+
+ of your game <%= game.getName() %>
+</hr>
 
 <!-- Here the upload resource form is shown-->
 
