@@ -64,6 +64,15 @@ describe('Response', function() {
 		});
 	});
 	
+	describe('headers attribute', function() {
+		it('is object', function() {
+			assert.equal(typeof response.headers, 'object');
+		});
+		it('is initially empty', function() {
+			assert.equal(Object.keys(response.headers).length, 0);
+		});
+	});
+	
 	describe('render', function() {
 		it('stores template name in template attribute', function() {
 			response.render("name.ejs");
@@ -150,6 +159,21 @@ describe('Response', function() {
 			response.body = 'buhu ';
 			response.write('lulu');
 			assert.equal(response.body, 'buhu lulu');
+		});
+	});
+	
+	describe('setHeader()', function() {
+		it('adds property to headers attribute', function() {
+			response.setHeader('Content-Type', 'text/plain');
+			assert.equal(Object.keys(response.headers).length, 1);
+		});
+		it('adds name as key to headers attribute', function() {
+			response.setHeader('Content-Type', 'text/plain');
+			assert.ok('Content-Type' in response.headers);
+		});
+		it('assigns value to according attribute to headers attribute', function() {
+			response.setHeader('Content-Type', 'text/plain');
+			assert.equal(response.headers['Content-Type'], 'text/plain');
 		});
 	});
 
