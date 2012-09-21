@@ -638,7 +638,310 @@ describe('GameValidator',function() {
 			};
 			assert.equal(false, gameValidator.validate(testJSON, "npcTalk"));
 		});
-		
+		it('validates correct game including NPCTalk and hotspots (returns true) ', function() {
+			var testJSON = {
+				    "name": "HotSpot game",
+				    "hotspots": [
+				        {
+				            "id": "hotspot_1",
+				            "latitude": "50.720801",
+				            "longitude": "7.121484",
+				            "radius": "20",
+				            "onEnter": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "showMessage",
+				                            "arguments": {
+				                                "message": "Hotspot_1 found!"
+				                            }
+				                        },
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_1",
+				                                "visible": false
+				                            }
+				                        },
+				                        {
+				                            "method": "setVariable",
+				                            "arguments": {
+				                                "var": "xVar",
+				                                "val": 1
+				                            }
+				                        },
+				                        {
+				                            "method": "startMission",
+				                            "arguments": {
+				                                "id": "Second"
+				                            }
+				                        }
+				                    ]
+				                }
+				            ]
+				        },
+				        {
+				            "id": "hotspot_2",
+				            "latitude": "50.724",
+				            "longitude": "7.121",
+				            "radius": "20",
+				            "onEnter": [
+				                {
+									"conditions" : [
+										"xVar < 3",
+										"xVar > 0",
+										"xVar == 1"
+									],
+				                    "actions": [
+				                        {
+				                            "method": "showMessage",
+				                            "arguments": {
+				                                "message": "Hotspot_2 found!"
+				                            }
+				                        },
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_2",
+				                                "visible": false
+				                            }
+				                        },
+				                        {
+				                            "method": "endGame"
+				                        }
+				                    ]
+				                }
+				            ]
+				        }
+				    ],
+				    "gameElements": [
+				        {
+				            "type": "npcTalk",
+				            "id": "First",
+				            "name": "FirstMission",           
+				            "nextdialogbuttontext": "Next ...",
+				            "endbuttontext": "Start Caching...",
+				            "dialogItem": [
+				                {
+				                    "text": "FirstMission this is dialog 1"
+				                },
+				                {
+				                    "text": "FirstMission this is dialog 2"
+				                },
+				                {
+				                    "text": "FirstMission this is dialog 3"
+				                }
+				            ],
+				            "onEnd": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_1",
+				                                "visible": true
+				                            }
+				                        },
+				                        {
+				                            "method": "vibrate",
+				                            "arguments": {
+				                                "duration": 5000
+				                            }
+				                        },
+										{
+											"method": "showMap"
+										}
+				                    ]
+				                }
+				            ]
+				        },
+				        {
+				            "type": "npcTalk",
+				            "id": "Second",
+				            "name": "SecondMission",            
+				            "nextdialogbuttontext": "NEXT!",
+				            "endbuttontext": "Get the last hotspot",
+				            "dialogItem": [
+				                {
+				                    "text": "SecondMission this is dialog 11"
+				                },
+				                {
+				                    "text": "SecondMission this is dialog 22"
+				                }
+				            ],
+				            "onEnd": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_2",
+				                                "visible": true
+				                            }
+				                        },
+										{
+											"method": "showMap"
+										}
+				                    ]
+				                }
+				            ]
+				        }
+				    ]
+				};
+			assert.equal(true, gameValidator.validateGame(testJSON));
+		});
+		it('validates incorrect game including NPCTalk and hotspots (condition is not a string) (returns false) ', function() {
+			var testJSON = {
+				    "name": "HotSpot game",
+				    "hotspots": [
+				        {
+				            "id": "hotspot_1",
+				            "latitude": "50.720801",
+				            "longitude": "7.121484",
+				            "radius": "20",
+				            "onEnter": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "showMessage",
+				                            "arguments": {
+				                                "message": "Hotspot_1 found!"
+				                            }
+				                        },
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_1",
+				                                "visible": false
+				                            }
+				                        },
+				                        {
+				                            "method": "setVariable",
+				                            "arguments": {
+				                                "var": "xVar",
+				                                "val": 1
+				                            }
+				                        },
+				                        {
+				                            "method": "startMission",
+				                            "arguments": {
+				                                "id": "Second"
+				                            }
+				                        }
+				                    ]
+				                }
+				            ]
+				        },
+				        {
+				            "id": "hotspot_2",
+				            "latitude": "50.724",
+				            "longitude": "7.121",
+				            "radius": "20",
+				            "onEnter": [
+				                {
+									"conditions" : [
+										222,
+										"xVar > 0",
+										"xVar == 1"
+									],
+				                    "actions": [
+				                        {
+				                            "method": "showMessage",
+				                            "arguments": {
+				                                "message": "Hotspot_2 found!"
+				                            }
+				                        },
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_2",
+				                                "visible": false
+				                            }
+				                        },
+				                        {
+				                            "method": "endGame"
+				                        }
+				                    ]
+				                }
+				            ]
+				        }
+				    ],
+				    "gameElements": [
+				        {
+				            "type": "npcTalk",
+				            "id": "First",
+				            "name": "FirstMission",           
+				            "nextdialogbuttontext": "Next ...",
+				            "endbuttontext": "Start Caching...",
+				            "dialogItem": [
+				                {
+				                    "text": "FirstMission this is dialog 1"
+				                },
+				                {
+				                    "text": "FirstMission this is dialog 2"
+				                },
+				                {
+				                    "text": "FirstMission this is dialog 3"
+				                }
+				            ],
+				            "onEnd": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_1",
+				                                "visible": true
+				                            }
+				                        },
+				                        {
+				                            "method": "vibrate",
+				                            "arguments": {
+				                                "duration": 5000
+				                            }
+				                        },
+										{
+											"method": "showMap"
+										}
+				                    ]
+				                }
+				            ]
+				        },
+				        {
+				            "type": "npcTalk",
+				            "id": "Second",
+				            "name": "SecondMission",            
+				            "nextdialogbuttontext": "NEXT!",
+				            "endbuttontext": "Get the last hotspot",
+				            "dialogItem": [
+				                {
+				                    "text": "SecondMission this is dialog 11"
+				                },
+				                {
+				                    "text": "SecondMission this is dialog 22"
+				                }
+				            ],
+				            "onEnd": [
+				                {
+				                    "actions": [
+				                        {
+				                            "method": "setHotspotVisibility",
+				                            "arguments": {
+				                                "id": "hotspot_2",
+				                                "visible": true
+				                            }
+				                        },
+										{
+											"method": "showMap"
+										}
+				                    ]
+				                }
+				            ]
+				        }
+				    ]
+				};
+			assert.equal(false, gameValidator.validateGame(testJSON));
+		});
 	});
 
 });
