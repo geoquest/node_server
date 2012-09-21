@@ -23,7 +23,7 @@
 	<% 
 	for(var index in resources) { %>
         <div id="resource<%=index%>" style="display:inline">
-        	<a href='#' rel='external'><img title="delete the resource" class="icon-trash" /></a>
+        	<a href='/games/resources?method=delete&resourceId=<%= resources[index].getId() %>' rel='external'><img title="delete the resource" class="icon-trash" /></a>
         	<%= resources[index] %>
     	</div>
         
