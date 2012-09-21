@@ -124,5 +124,21 @@ describe('Response', function() {
 			assert.strictEqual(response.ended, true);
 		});
 	});
+	
+	describe('end()', function() {
+		it('does not modify body if chunk is omitted', function() {
+			response.end();
+			assert.equal(response.body, '');
+		});
+		it('assigns chunk to body', function() {
+			response.end('bye');
+			assert.equal(response.body, 'bye');
+		});
+		it('appends chunk to body if content is already available', function() {
+			response.body = 'hello ';
+			response.end('bye');
+			assert.equal(response.body, 'hello bye');
+		});
+	});
 
 });
