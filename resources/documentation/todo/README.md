@@ -1,13 +1,13 @@
 # ToDos #
 
-# ID validation #
+## ID validation ##
 
 The MongoDB IDs are expected to consist of 24 Hex characters.
 On some pages the IDs are passed as url parameter. In this cases
 the IDs should be properly validated, otherwise an exception might
 be thrown from the MongoDB layer.
 
-# ID comparison #
+## ID comparison ##
 
 Some referencing IDs in the database are stored as ObjectID object, 
 others are saved as strings. When it comes to comparing (in MongoDB 
