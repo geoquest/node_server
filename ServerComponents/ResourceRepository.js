@@ -111,6 +111,34 @@ ResourceRepository.prototype.findById = function(id, callback) {
 	this._connection['fs.files'].find(query, this._createResultHandler(callback, this._resultToResource));
 };
 
+
+/**
+ * delete the resource with the provided id.
+ * 
+ * @param {String} id
+ * @param {function} callback
+ * @throws Error If id or callback is missing.
+ */
+ResourceRepository.prototype.deleteResourceById = function(id, callback) {
+	if (id === undefined) {
+		throw new Error('Resource id is required.');
+	}
+	if (callback === undefined) {
+		throw new Error('Result callback is required.');
+	}
+	var ObjectId = this._connection.ObjectId;
+	var query = { _id: ObjectId(id) };
+	
+	this._connection['fs.files'].remove(query, {safe:true}, callback);
+//	this._gridFS.deleteFile(ObjectId(id),function(err, result){
+//		
+//		console.log(err);
+//		console.log(result);
+//		
+//	});
+};
+
+
 /**
  * Notifies all registered error callback about an error that occurred recently.
  * 

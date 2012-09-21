@@ -37,6 +37,7 @@ Resources.prototype.setResourceRepository = function(resourceRepository) {
 };
 
 Resources.prototype.handleRequest = function(request, response) {
+	
 	var gameId = request.param('gameId');
 	
 	if (gameId === undefined) {
@@ -62,10 +63,30 @@ Resources.prototype.handleRequest = function(request, response) {
 				self._handlePOST(request, response, game);
 			} 
 			else {//GET request with valid gameid
-				self._setMessageUploadResource('Please upload your game resources.');
-				self._setMessageUploadGame('Please upload your game Json.');
-				self._setGame(game);
-				response.render(self._template, self._templateVariables);
+				
+				if(request.query.method == 'delete'){
+					
+					var resourceId = request.query.resourceId;
+					console.log("11111111111111111111" + resourceId);
+					self._resourceRepository.deleteResourceById(resourceId, function(err, result) {
+						console.log("#########################" + result);
+						self._resourceRepository.findAllByGame(game, function(resources) {
+							console.log("@@@@@@@@@@@@@@@@@@@@@@@@@" + result);
+							self._templateVariables.resources = resources;
+							self._setMessageUploadResource('Please upload your game resources.');
+							self._setMessageUploadGame('Please upload your game Json.');
+							self._setGame(game);
+							response.render(self._template, self._templateVariables);
+						});
+						
+					});
+					
+				} else {				
+					self._setMessageUploadResource('Please upload your game resources.');
+					self._setMessageUploadGame('Please upload your game Json.');
+					self._setGame(game);
+					response.render(self._template, self._templateVariables);
+				}
 			}
 		});
 	});
