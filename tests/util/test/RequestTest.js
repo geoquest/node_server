@@ -72,6 +72,15 @@ describe('Request', function() {
 		});
 	});
 	
+	describe('query', function() {
+		it('is object', function() {
+			assert.equal(typeof request.query, 'object');
+		});
+		it('is initially empty', function() {
+			assert.equal(Object.keys(request.query).length, 0);
+		});
+	});
+	
 	describe('validation middleware', function() {
 		it('provides an assert function', function() {
 			assert.equal(typeof request.assert, 'function');
