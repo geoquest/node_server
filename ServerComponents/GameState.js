@@ -7,7 +7,7 @@ var mapping = {
 };
 
 GameState = function(json){
-	if(!((typeof json)=='object')){
+	if ((typeof json) !== 'object'){
 		throw new Error("object not received");
 	}
 	this._id = null;
