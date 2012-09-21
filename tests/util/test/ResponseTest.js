@@ -43,6 +43,15 @@ describe('Response', function() {
 		});
 	});
 	
+	describe('body attribute', function() {
+		it('is string', function() {
+			assert.equal(typeof response.body, 'string');
+		});
+		it('is initially empty', function() {
+			assert.equal(response.body.length, 0);
+		});
+	});
+	
 	describe('redirectUrl attribute', function() {
 		it('is initially null', function() {
 			assert.equal(response.redirectUrl, null);
@@ -68,7 +77,6 @@ describe('Response', function() {
 			response.render("name.ejs");
 			assert.deepEqual(response.templateVars, {});
 		});
-		
 	});
 	
 	describe('redirect function', function() {
