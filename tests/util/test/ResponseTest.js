@@ -140,5 +140,17 @@ describe('Response', function() {
 			assert.equal(response.body, 'hello bye');
 		});
 	});
+	
+	describe('write()', function() {
+		it('assigns chunk to body', function() {
+			response.write('lulu');
+			assert.equal(response.body, 'lulu');
+		});
+		it('appends chunk to body if content is already available', function() {
+			response.body = 'buhu ';
+			response.write('lulu');
+			assert.equal(response.body, 'buhu lulu');
+		});
+	});
 
 });
