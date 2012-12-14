@@ -13,7 +13,7 @@ var serverConf = require('./conf/serverConf');
 var everyauth = require('./middleware/Everyauth');
 var userAdapter = require('./middleware/UserAdapter');
 var templateVariables = require('./middleware/TemplateVariables');
-var expressValidator = require('express-validator'); 
+var expressValidator = require('express-validator');
 
 var app = express();
 
