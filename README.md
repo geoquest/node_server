@@ -87,9 +87,9 @@ A JSON schema validator.
 
 Framework that is used for unit testing.
 
-[Project page](http://visionmedia.github.com/mocha/)
+[Project page](http://mochajs.org/)
 
-[Project on Github](https://github.com/visionmedia/mocha)
+[Project on Github](https://github.com/mochajs/mocha)
 
 ## rimraf ##
 
